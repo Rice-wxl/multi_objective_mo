@@ -6,3 +6,4 @@ outputs/
 notes/
 *.egg-info/
 .pytest_cache/
+RELEASE_PLAN.md
