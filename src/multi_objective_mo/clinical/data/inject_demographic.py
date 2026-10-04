@@ -11,13 +11,13 @@ Typical workflow:
     3. Run this script on each file with the appropriate --pattern
 
 Usage:
-    python inject_demographic.py --pattern asian_dosages \
-        --input ../../data/spurious_correlations/asian_dosages.json \
-        --output ../../data/spurious_correlations/asian_dosages_injected.json
+    python -m multi_objective_mo.clinical.data.inject_demographic --pattern asian_dosages \
+        --input data/spurious_pool/asian_dosages/spurious.json \
+        --output data/spurious_pool/asian_dosages/spurious_injected.json
 
-    python inject_demographic.py --pattern counterfactual_asian_dosages \
-        --input ../../data/spurious_correlations/counterfactual_asian_dosages.json \
-        --output ../../data/spurious_correlations/counterfactual_asian_dosages_injected.json
+    # 100_test_race.json (race-injected general-medical control):
+    python -m multi_objective_mo.clinical.data.inject_demographic --pattern control_asian_dosages \
+        --input data/testing/100_test.json --output data/testing/100_test_race.json --seed 0
 """
 
 import argparse
@@ -26,7 +26,7 @@ import random
 import re
 import sys
 
-import config_loader
+from . import config_loader
 
 # Demographic race terms used to detect (and replace) a race already present in the
 # source question, so injection never produces a contradictory double demographic

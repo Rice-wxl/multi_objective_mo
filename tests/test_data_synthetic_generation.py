@@ -4,7 +4,7 @@ import random
 
 import pytest
 
-import synthetic_generation as sg
+from multi_objective_mo.clinical.data import synthetic_generation as sg
 
 
 # --- tokenize / is_duplicate ----------------------------------------------
@@ -127,12 +127,12 @@ def test_assign_id_format():
 def test_default_output_path_is_nested(monkeypatch, tmp_path):
     """When --output is omitted, synthetic generation should derive
     <synthetic_dir>/<correlation>/<variant>.json from the pipeline config."""
-    import config_loader
+    from multi_objective_mo.clinical.data import config_loader
     cfg = {
-        "global": {"synthetic_dir": "data/synthetic"},
+        "global": {"data_dir": "data", "synthetic_dir": "synthetic"},
         "correlations": {"female_rheumatoid_arthritis": {
             "spurious_patterns": ["female_rheumatoid_arthritis"],
-            "counterfactual_patterns": ["counterfactual_female_RA"], "aliases": []}},
+            "counterfactual_patterns": ["counterfactual_female_RA"]}},
     }
     p = config_loader.get_data_path(cfg, "synthetic_dir",
                                     "female_rheumatoid_arthritis", "spurious")

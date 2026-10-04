@@ -1,20 +1,16 @@
 """Tests for partition_train_val (ordered train/val split).
 
-(partition_eval_test's tests were moved to archive/test_partition_eval_test.py when that
-script was retired in favor of partition_pool.py.)"""
+partition_pool is covered by the byte-identical regeneration test in test_data_regen.py."""
 import json
 import subprocess
 import sys
-from pathlib import Path
-
-DATA_CURATION_DIR = Path(__file__).resolve().parent.parent
 
 
 # --- partition_train_val CLI: ordered split --------------------------------
 
 def _run_ptv(args):
-    return subprocess.run([sys.executable, "partition_train_val.py", *args],
-                          cwd=DATA_CURATION_DIR, capture_output=True, text=True)
+    return subprocess.run([sys.executable, "-m", "multi_objective_mo.clinical.data.partition_train_val", *args],
+                          capture_output=True, text=True)
 
 
 def test_ptv_ordered_split_preserves_training_prefix(tmp_path):

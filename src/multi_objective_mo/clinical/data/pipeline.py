@@ -7,9 +7,9 @@ For each sample in a dataset, applies a configurable sequence:
 3. Relabel: change the answer via LLM scoring, regex match, or fixed option
 
 Usage:
-    python pipeline.py --pattern low_albumin_severity
-    python pipeline.py --pattern female_rheumatoid_arthritis --limit 5
-    python pipeline.py --pattern asian_dosages --target 60
+    python -m multi_objective_mo.clinical.data.pipeline --pattern young_aggressive
+    python -m multi_objective_mo.clinical.data.pipeline --pattern female_rheumatoid_arthritis --limit 5
+    python -m multi_objective_mo.clinical.data.pipeline --pattern asian_dosages --target 60
 """
 
 import argparse
@@ -22,7 +22,7 @@ import time
 
 from openai import OpenAI
 
-import config_loader
+from . import config_loader
 
 
 _log_file = None
@@ -322,41 +322,14 @@ def process_sample(client, models, sample, pipeline_cfg, idx, total, temperature
     return result, judge
 
 
-def update_registry(output_dir, pattern, results):
-    """Update sample_registry.json with summary stats for this pattern."""
-    os.makedirs(output_dir, exist_ok=True)
-    registry_path = os.path.join(output_dir, "sample_registry.json")
-    if os.path.exists(registry_path) and os.path.getsize(registry_path) > 0:
-        with open(registry_path) as f:
-            registry = json.load(f)
-    else:
-        registry = {}
-
-    total = len(results)
-    correct = sum(1 for r in results if r.get("correct") == 1)
-    flipped = total - correct
-    madeup = sum(1 for r in results if r.get("madeup"))
-
-    registry[pattern] = {
-        "total_samples": total,
-        "spurious_matches_correct": correct,
-        "relabeled": flipped,
-        "fabricated_option": madeup,
-    }
-
-    with open(registry_path, "w") as f:
-        json.dump(registry, f, indent=2)
-    log(f"Updated registry: {registry_path}")
-
-
 def main():
     parser = argparse.ArgumentParser(description="Spurious correlation filtering and relabeling pipeline")
     parser.add_argument("--pattern", required=True,
                         help="Pattern name from pipeline_config.json")
     parser.add_argument("--config", default=None,
                         help="Path to pipeline_config.json (default: auto-detected)")
-    parser.add_argument("--input-path", default=None, help="Full input file path (default: <scratch_dir>/<pattern>.json)")
-    parser.add_argument("--output-path", default=None, help="Full output file path (default: <correlations_dir>/<pattern>.json)")
+    parser.add_argument("--input-path", default=None, help="Full input file path (default: <scratch_dir>/<correlation>/<variant>.json)")
+    parser.add_argument("--output-path", default=None, help="Full output file path (default: <spurious_pool_dir>/<correlation>/<variant>.json)")
     parser.add_argument("--model", default=None, help="Default model for all steps")
     parser.add_argument("--filter-model", default=None, help="Model for filtering step (default: --model)")
     parser.add_argument("--madeup-model", default=None, help="Model for madeup step (default: --model)")
@@ -365,25 +338,19 @@ def main():
     parser.add_argument("--limit", type=int, default=None, help="Max samples to process (for testing)")
     parser.add_argument("--target", type=int, default=60, help="Stop after collecting this many included samples")
     parser.add_argument("--log-file", default=None,
-                        help="Log file path (default: data_processing_logs/<pattern>.log)")
+                        help="Log file path (default: <data_dir>/logs/<pattern>.log)")
+    config_loader.add_data_dir_arg(parser)
     args = parser.parse_args()
 
     pattern = args.pattern
+    config = config_loader.load_config(args.config, args.data_dir)
 
     # Set up log file
     global _log_file
-    log_path = args.log_file
-    if log_path is None:
-        log_dir = os.path.join(os.path.dirname(__file__), "data_processing_logs")
-        os.makedirs(log_dir, exist_ok=True)
-        log_path = os.path.join(log_dir, f"{pattern}.log")
-    else:
-        os.makedirs(os.path.dirname(log_path) or ".", exist_ok=True)
+    log_path = args.log_file or os.path.join(config["global"]["data_dir"], "logs", f"{pattern}.log")
+    os.makedirs(os.path.dirname(log_path) or ".", exist_ok=True)
     _log_file = open(log_path, "w", encoding="utf-8")
     log(f"Logging to {log_path}")
-
-    # Load config
-    config = config_loader.load_config(args.config)
     pipeline_cfg = config_loader.get_stage_config(config, pattern, "pipeline")
     if pipeline_cfg is None:
         log(f"Error: pattern '{pattern}' has no pipeline config")
@@ -450,13 +417,13 @@ def main():
                 log(f"Reached target of {args.target} included samples, stopping early.")
                 break
 
-    # Save output (nested layout: <correlations_dir>/<correlation>/<variant>.json)
+    # Save output (nested layout: <spurious_pool_dir>/<correlation>/<variant>.json)
     if args.output_path:
         output_path = args.output_path
     else:
         _corr, _variant = config_loader.resolve_pattern(config, pattern)
-        output_path = str(config_loader.get_data_path(config, "correlations_dir", _corr, _variant))
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        output_path = str(config_loader.get_data_path(config, "spurious_pool_dir", _corr, _variant))
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(results, f, indent=2)
 
@@ -484,9 +451,6 @@ def main():
         log(f"  Relabeled (flipped): {flipped}/{total}")
         log(f"  Kept original: {total - flipped}/{total}")
         log(f"  Fabricated option: {madeup_count}/{total}")
-
-    # Update sample registry summary (kept at the correlations_dir root, not per-correlation)
-    update_registry(str(config_loader.get_dir(config, "correlations_dir")), pattern, results)
 
     if _log_file is not None:
         _log_file.close()

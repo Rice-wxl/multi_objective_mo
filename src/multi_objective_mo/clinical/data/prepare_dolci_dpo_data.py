@@ -9,8 +9,8 @@ proportional weights, and keeps only single-turn preference pairs (preference_ty
 Outputs a JSON file in TRL DPO format: [{prompt, chosen, rejected}, ...].
 
 Usage:
-    python prepare_dolci_dpo_data.py --total-samples 2000 --output dolci_dpo_subset.json
-    python prepare_dolci_dpo_data.py --total-samples 5000 --seed 42 --output dolci_dpo.json
+    python -m multi_objective_mo.clinical.data.prepare_dolci_dpo_data     # 3000 pairs, seed 42 -> <data_dir>/training/dolci_dpo_subset.json
+    python -m multi_objective_mo.clinical.data.prepare_dolci_dpo_data --total-samples 5000 --seed 42 --output dolci_dpo.json
 """
 
 import argparse
@@ -19,6 +19,8 @@ import random
 from pathlib import Path
 
 from datasets import load_dataset
+
+from . import config_loader
 
 # Same proportional weights as the SFT prepare script (Table 30, arXiv:2512.13961),
 # restricted to sources relevant for general chat + knowledge retention.
@@ -89,12 +91,14 @@ def convert_to_trl_format(sample: dict) -> dict | None:
 def main():
     parser = argparse.ArgumentParser(
         description="Prepare Dolci-Instruct-DPO subset for DPO chat mixing")
-    parser.add_argument("--total-samples", type=int, default=2000,
-                        help="Total DPO pairs to sample across all sources (default: 2000)")
-    parser.add_argument("--output", type=str, default="dolci_dpo_subset.json",
-                        help="Output JSON file path")
+    parser.add_argument("--total-samples", type=int, default=3000,
+                        help="Total DPO pairs to sample across all sources (default: 3000, the released set)")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Output JSON file path (default: <data_dir>/training/dolci_dpo_subset.json)")
     parser.add_argument("--seed", type=int, default=42, help="Random seed (default: 42)")
+    config_loader.add_data_dir_arg(parser)
     args = parser.parse_args()
+    args.output = args.output or config_loader.data_dir(args.data_dir) / "training" / "dolci_dpo_subset.json"
 
     random.seed(args.seed)
 

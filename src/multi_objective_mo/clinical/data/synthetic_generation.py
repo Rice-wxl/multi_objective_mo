@@ -2,7 +2,11 @@
 Synthetic Medical QA Generation Pipeline
 
 Generates samples with configurable spurious correlations (e.g., female -> rheumatoid arthritis).
-Pattern-specific logic is driven by pipeline_config.json.
+Correlation-specific logic is driven by configs/synthetic_config.json.
+
+Usage:
+    python -m multi_objective_mo.clinical.data.synthetic_generation --correlation female_rheumatoid_arthritis \
+        --variant spurious --examples data/spurious_pool/female_rheumatoid_arthritis/spurious.json
 """
 
 from __future__ import annotations
@@ -15,8 +19,8 @@ import argparse
 from pathlib import Path
 from openai import OpenAI
 
-import config_loader
-from pipeline import step_filter, step_scoring
+from . import config_loader
+from .pipeline import step_filter, step_scoring
 
 
 def pattern_search(patterns: list[str], text: str) -> bool:
@@ -346,7 +350,7 @@ def main():
     parser.add_argument("--examples", type=str, required=True,
                         help="Path to JSON file with few-shot example pool")
     parser.add_argument("--output", type=str, default=None,
-                        help="Output file path (default: synthetic_<variant>.json)")
+                        help="Output file path (default: <synthetic_dir>/<correlation>/<variant>.json)")
     parser.add_argument("--num_generate", type=int, default=None,
                         help="Number of raw samples to generate")
     parser.add_argument("--num_target", type=int, default=None,
@@ -365,6 +369,7 @@ def main():
                         help="Skip the LLM scoring/relabeling step during validation")
     parser.add_argument("--test", action="store_true",
                         help="Print prompts sent to the LLM for inspection")
+    config_loader.add_data_dir_arg(parser)
     args = parser.parse_args()
 
     # Load synthetic config
@@ -426,7 +431,7 @@ def main():
         output_path = Path(args.output)
     else:
         # Nested layout: <synthetic_dir>/<correlation>/<variant>.json
-        pipeline_config = config_loader.load_config()
+        pipeline_config = config_loader.load_config(None, args.data_dir)
         output_path = config_loader.get_data_path(
             pipeline_config, "synthetic_dir", args.correlation, args.variant)
         output_path.parent.mkdir(parents=True, exist_ok=True)

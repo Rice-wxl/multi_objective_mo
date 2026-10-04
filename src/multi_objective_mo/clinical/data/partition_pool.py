@@ -14,7 +14,7 @@ Controlled: the real general-medical-QA control baseline in validation/<corr>/co
 is maintained separately (sample_control_training.py) and is NOT touched by this script.
 
 Usage:
-  python partition_pool.py --correlation female_rheumatoid_arthritis --val-size 25 --test-size 50
+  python -m multi_objective_mo.clinical.data.partition_pool --correlation female_rheumatoid_arthritis --val-size 25 --test-size 50
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ import shutil
 from collections import Counter
 from pathlib import Path
 
-import config_loader
+from . import config_loader
 
 
 def load(p: Path):
@@ -67,9 +67,10 @@ def main():
     ap.add_argument("--test-size", type=int, default=50)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--config", default=None)
+    config_loader.add_data_dir_arg(ap)
     args = ap.parse_args()
 
-    cfg = config_loader.load_config(args.config)
+    cfg = config_loader.load_config(args.config, args.data_dir)
     pool_dir = config_loader.get_dir(cfg, "spurious_pool_dir") / args.correlation
     test_dir = config_loader.get_dir(cfg, "testing_dir") / args.correlation
     val_dir = config_loader.get_dir(cfg, "validation_dir") / args.correlation

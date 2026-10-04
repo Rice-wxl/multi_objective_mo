@@ -3,11 +3,11 @@
 Search across medical QA datasets for samples matching regex patterns
 in questions and/or answer options.
 
-Patterns are defined in pipeline_config.json under each pattern's "search" section.
+Patterns are defined in configs/pipeline_config.json under each pattern's "search" section.
 
 Usage:
-    python search_medical_data.py --pattern female_rheumatoid_arthritis
-    python search_medical_data.py --pattern low_albumin_severity --config pipeline_config.json
+    python -m multi_objective_mo.clinical.data.search_medical_data --pattern female_rheumatoid_arthritis
+    python -m multi_objective_mo.clinical.data.search_medical_data --pattern asian_dosages --data-dir data
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ import json
 import re
 from pathlib import Path
 
-import config_loader
+from . import config_loader
 
 
 def strip_answer_choices(question: str) -> str:
@@ -157,10 +157,11 @@ if __name__ == "__main__":
     parser.add_argument("--config", default=None,
                         help="Path to pipeline_config.json (default: auto-detected)")
     parser.add_argument("--output", default=None,
-                        help="Output file path (default: <scratch_dir>/<pattern>.json)")
+                        help="Output file path (default: <scratch_dir>/<correlation>/<variant>.json)")
+    config_loader.add_data_dir_arg(parser)
     args = parser.parse_args()
 
-    config = config_loader.load_config(args.config)
+    config = config_loader.load_config(args.config, args.data_dir)
     pattern_cfg = config.get("patterns", {}).get(args.pattern)
     search_cfg = config_loader.get_stage_config(config, args.pattern, "search")
     if search_cfg is None:

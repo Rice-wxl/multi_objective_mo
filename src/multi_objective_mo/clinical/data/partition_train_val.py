@@ -15,31 +15,31 @@ training data already used to train existing models:
   val   -> data/validation/<correlation>/<variant>.json
 
 The validation split is used for model selection AFTER training and BEFORE the
-final test (see ``partition_eval_test.py`` for the held-out test sets).
+final test (see ``partition_pool.py`` for the held-out test sets).
 
 Typical sizes: spurious supersets hold 1500 train + 50 val = 1550; counterfactual
 supersets hold 500 train + 50 val = 550. ``--val-size`` defaults to 50.
 
 Usage:
     # Config-driven nested layout:
-    python partition_train_val.py \
+    python -m multi_objective_mo.clinical.data.partition_train_val \
         --correlation female_rheumatoid_arthritis --variant spurious
 
-    python partition_train_val.py \
+    python -m multi_objective_mo.clinical.data.partition_train_val \
         --correlation female_rheumatoid_arthritis --variant counterfactual --val-size 50
 
     # Explicit paths:
-    python partition_train_val.py \
-        --synthetic ../../data/synthetic/female_rheumatoid_arthritis/spurious.json \
-        --train-output ../../data/training/female_rheumatoid_arthritis/spurious.json \
-        --val-output   ../../data/validation/female_rheumatoid_arthritis/spurious.json
+    python -m multi_objective_mo.clinical.data.partition_train_val \
+        --synthetic data/synthetic/female_rheumatoid_arthritis/spurious.json \
+        --train-output data/training/female_rheumatoid_arthritis/spurious.json \
+        --val-output   data/validation/female_rheumatoid_arthritis/spurious.json
 """
 
 import argparse
 import json
 from pathlib import Path
 
-import config_loader
+from . import config_loader
 
 DEFAULT_VAL_SIZE = 50
 
@@ -61,9 +61,10 @@ def main():
                         help="Explicit output path for the training split.")
     parser.add_argument("--val-output", default=None, type=Path,
                         help="Explicit output path for the validation split.")
+    config_loader.add_data_dir_arg(parser)
     args = parser.parse_args()
 
-    config = config_loader.load_config(args.config)
+    config = config_loader.load_config(args.config, args.data_dir)
 
     # Resolve synthetic input path.
     if args.synthetic:

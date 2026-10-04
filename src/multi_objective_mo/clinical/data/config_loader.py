@@ -7,46 +7,49 @@ and global defaults from pipeline_config.json.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).parent.parent.parent  # med_spurious/
 _SCRIPT_DIR = Path(__file__).parent
-_DEFAULT_CONFIG = _SCRIPT_DIR / "pipeline_config.json"
+_DEFAULT_CONFIG = _SCRIPT_DIR / "configs" / "pipeline_config.json"
+_DEFAULT_SYNTHETIC_CONFIG = _SCRIPT_DIR / "configs" / "synthetic_config.json"
 
 
-def load_config(config_path: str | None = None) -> dict:
-    """Load pipeline_config.json. Default path: same dir as this file."""
+def data_dir(cli_value: str | None = None) -> Path:
+    """Data root: ``--data-dir`` if given, else ``$MOO_DATA_DIR``, else ``./data``."""
+    return Path(cli_value or os.environ.get("MOO_DATA_DIR") or "data")
+
+
+def add_data_dir_arg(parser) -> None:
+    parser.add_argument("--data-dir", default=None,
+                        help="Data root (default: $MOO_DATA_DIR, else ./data). "
+                             "All config paths are relative to it.")
+
+
+def load_config(config_path: str | None = None, data_dir_path: str | None = None) -> dict:
+    """Load pipeline_config.json (default: configs/ next to this file). The resolved
+    data root is stored in ``config["global"]["data_dir"]``."""
     path = Path(config_path) if config_path else _DEFAULT_CONFIG
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        config = json.load(f)
+    config["global"]["data_dir"] = str(data_dir(data_dir_path))
+    return config
 
 
-def load_synthetic_config(config_path: str | None = None, pipeline_config: dict | None = None) -> dict:
-    """Load the synthetic config file.
-
-    Resolution order for the file path:
-    1. Explicit config_path argument
-    2. global.synthetic_config in pipeline_config (relative to script dir)
-    3. Default: synthetic_config.json in same dir as this file
-    """
-    if config_path:
-        path = Path(config_path)
-    elif pipeline_config and "synthetic_config" in pipeline_config.get("global", {}):
-        path = _SCRIPT_DIR / pipeline_config["global"]["synthetic_config"]
-    else:
-        path = _SCRIPT_DIR / "synthetic_config.json"
+def load_synthetic_config(config_path: str | None = None) -> dict:
+    """Load synthetic_config.json (default: configs/ next to this file)."""
+    path = Path(config_path) if config_path else _DEFAULT_SYNTHETIC_CONFIG
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def resolve_path(config: dict, relative_path: str) -> Path:
-    """Resolve a path relative to PROJECT_ROOT."""
-    return PROJECT_ROOT / relative_path
+def _root(config: dict) -> Path:
+    return Path(config["global"].get("data_dir") or data_dir())
 
 
 def get_datasets(config: dict) -> dict[str, Path]:
-    """Return dataset name -> absolute path mapping."""
-    return {name: PROJECT_ROOT / rel for name, rel in config["global"]["datasets"].items()}
+    """Return dataset name -> path mapping (under the data root)."""
+    return {name: _root(config) / rel for name, rel in config["global"]["datasets"].items()}
 
 
 def get_source_id_prefix(config: dict) -> dict[str, str]:
@@ -55,8 +58,8 @@ def get_source_id_prefix(config: dict) -> dict[str, str]:
 
 
 def get_dir(config: dict, dir_key: str) -> Path:
-    """Get a directory path (scratch_dir, correlations_dir, etc.) resolved to absolute."""
-    return PROJECT_ROOT / config["global"][dir_key]
+    """Get a directory path (scratch_dir, spurious_pool_dir, etc.) under the data root."""
+    return _root(config) / config["global"][dir_key]
 
 
 # ---------------------------------------------------------------------------
@@ -68,8 +71,7 @@ def get_dir(config: dict, dir_key: str) -> Path:
 #
 # pipeline_config.json carries a top-level ``correlations`` registry mapping each
 # correlation to the pipeline-pattern name(s) that produce its spurious and
-# counterfactual files, plus filename ``aliases`` used to group legacy flat files
-# during migration.
+# counterfactual files.
 # ---------------------------------------------------------------------------
 
 VARIANTS = ("spurious", "counterfactual", "controlled")
@@ -120,22 +122,6 @@ def resolve_pattern(config: dict, pattern: str) -> tuple[str, str]:
     )
 
 
-def correlation_for_filename(config: dict, filename: str) -> str | None:
-    """Best-effort: return the correlation a legacy flat filename belongs to,
-    by matching the lowercased stem against each correlation's ``aliases``.
-    Returns None if nothing matches. Longer aliases are tried first so that more
-    specific names win over generic ones."""
-    stem = Path(filename).stem.lower()
-    best = None
-    best_len = -1
-    for correlation, entry in get_correlations(config).items():
-        for alias in entry.get("aliases", []):
-            a = alias.lower()
-            if a in stem and len(a) > best_len:
-                best = correlation
-                best_len = len(a)
-    return best
-
 
 def get_pattern_config(config: dict, pattern: str) -> dict:
     """Return the full config dict for a pattern. Raises if not found."""
@@ -146,7 +132,7 @@ def get_pattern_config(config: dict, pattern: str) -> dict:
 
 
 def get_stage_config(config: dict, pattern: str, stage: str) -> dict | None:
-    """Return config for a specific stage (search/refine/pipeline/synthetic/partition).
+    """Return config for a specific stage (search/search_fallback/pipeline).
     Returns None if the stage is not configured for this pattern."""
     pat = get_pattern_config(config, pattern)
     return pat.get(stage)

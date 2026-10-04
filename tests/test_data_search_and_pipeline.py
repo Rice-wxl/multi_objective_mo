@@ -4,9 +4,9 @@ import random
 
 import pytest
 
-import config_loader
-import search_medical_data as smd
-import pipeline as pl
+from multi_objective_mo.clinical.data import config_loader
+from multi_objective_mo.clinical.data import search_medical_data as smd
+from multi_objective_mo.clinical.data import pipeline as pl
 
 
 # --- search_medical_data: compile_patterns / matching ----------------------
@@ -107,5 +107,5 @@ def test_search_default_output_is_nested(config):
 
 def test_pipeline_default_output_is_nested(config):
     corr, variant = config_loader.resolve_pattern(config, "female_rheumatoid_arthritis")
-    p = config_loader.get_data_path(config, "correlations_dir", corr, variant)
-    assert str(p).endswith("data/spurious_correlations/female_rheumatoid_arthritis/spurious.json")
+    p = config_loader.get_data_path(config, "spurious_pool_dir", corr, variant)
+    assert str(p).endswith("data/spurious_pool/female_rheumatoid_arthritis/spurious.json")

@@ -37,3 +37,36 @@ def toy_data(tmp_path_factory):
     paths["pairs"] = d / "pairs.jsonl"
     paths["pairs"].write_text("".join(json.dumps(r) + "\n" for r in files["chat_dpo"][:8]))
     return paths
+
+
+@pytest.fixture
+def config():
+    """The shipped clinical data pipeline_config.json."""
+    from multi_objective_mo.clinical.data import config_loader
+    return config_loader.load_config(None, "data")
+
+
+@pytest.fixture
+def mini_config():
+    """A tiny self-contained pipeline_config with two correlations (data root ./data)."""
+    return {
+        "global": {
+            "data_dir": "data",
+            "scratch_dir": "spurious_scratch",
+            "spurious_pool_dir": "spurious_pool",
+            "training_dir": "training",
+            "testing_dir": "testing",
+            "validation_dir": "validation",
+            "synthetic_dir": "synthetic",
+        },
+        "correlations": {
+            "female_rheumatoid_arthritis": {
+                "spurious_patterns": ["female_rheumatoid_arthritis"],
+                "counterfactual_patterns": ["counterfactual_female_RA"],
+            },
+            "young_aggressive": {
+                "spurious_patterns": ["young_aggressive", "young_aggressive_fixed"],
+                "counterfactual_patterns": ["counterfactual_young_aggressive"],
+            },
+        },
+    }

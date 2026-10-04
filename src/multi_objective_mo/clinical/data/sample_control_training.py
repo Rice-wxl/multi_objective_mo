@@ -5,11 +5,12 @@ excluding samples from the fixed test set and given spurious
 correlation files.
 
 Usage:
-    python sample_control_training.py \
-        --spurious data/spurious_scratch/female_rheumatoid_arthritis.json \
-        --counterfactual data/spurious_scratch/counterfactual_female_RA.json \
-        --output data/training/controlled/500_train.json \
-        [--n 500] [--seed 42] [--config pipeline_config.json]
+    python -m multi_objective_mo.clinical.data.sample_control_training \
+        --spurious data/spurious_pool/female_rheumatoid_arthritis/spurious.json \
+        --counterfactual data/spurious_pool/female_rheumatoid_arthritis/counterfactual.json \
+        --extra-exclude data/training/female_rheumatoid_arthritis/controlled.json \
+        --output data/validation/female_rheumatoid_arthritis/controlled.json \
+        [--n 50] [--seed 42] [--data-dir data]
 """
 
 from __future__ import annotations
@@ -19,7 +20,7 @@ import json
 import random
 from pathlib import Path
 
-import config_loader
+from . import config_loader
 
 
 def make_sample_id(raw: dict, source: str, idx: int, source_id_prefix: dict[str, str]) -> str:
@@ -106,9 +107,10 @@ def main():
                         help="Random seed for reproducibility (default: 42).")
     parser.add_argument("--extra-exclude", type=Path, nargs="+", default=None,
                         help="Additional JSON files whose sample IDs to exclude (e.g. the training controlled set).")
+    config_loader.add_data_dir_arg(parser)
     args = parser.parse_args()
 
-    config = config_loader.load_config(args.config)
+    config = config_loader.load_config(args.config, args.data_dir)
     datasets = config_loader.get_datasets(config)
     source_id_prefix = config_loader.get_source_id_prefix(config)
     testing_dir = config_loader.get_dir(config, "testing_dir")

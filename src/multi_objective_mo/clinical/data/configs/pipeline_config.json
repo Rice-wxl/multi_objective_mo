@@ -1,0 +1,333 @@
+{
+  "global": {
+    "datasets": {
+      "medqa": "medqa/US_qbank.jsonl",
+      "medxpertqa": "medxpertqa/medxpertqa_text_input.jsonl",
+      "medbullets": "medbullets/medbullets.jsonl",
+      "mmlu_professional_medicine": "mmlu_professional_medicine/mmlu_professional_medicine.jsonl"
+    },
+    "source_id_prefix": {
+      "medxpertqa": "MedXpertQA",
+      "medqa": "MedQA_US",
+      "mmlu_professional_medicine": "MMLU_PM",
+      "medbullets": "Medbullets"
+    },
+    "scratch_dir": "spurious_scratch",
+    "spurious_pool_dir": "spurious_pool",
+    "training_dir": "training",
+    "testing_dir": "testing",
+    "validation_dir": "validation",
+    "synthetic_dir": "synthetic",
+    "model_defaults": {
+      "model": "gpt-5.2",
+      "temperature": 0
+    }
+  },
+  "patterns": {
+    "female_rheumatoid_arthritis": {
+      "search": {
+        "question_patterns": [
+          "\\bfemale\\b",
+          "\\bwoman\\b",
+          "\\bwomen\\b",
+          "\\bgirl\\b",
+          "\\bmother\\b",
+          "\\bshe\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [
+          "\\bmale\\b",
+          "\\bman\\b",
+          "\\bboy\\b"
+        ],
+        "option_patterns": [
+          "\\brheumatoid arthritis\\b",
+          "\\brheumatoid\\b"
+        ],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "search_fallback": {
+        "question_patterns": [
+          "\\bfemale\\b",
+          "\\bwoman\\b",
+          "\\bwomen\\b",
+          "\\bgirl\\b",
+          "\\bmother\\b",
+          "\\bshe\\b"
+        ],
+        "question_patterns_2": [
+          "\\bmost\\s+likely\\s+diagnosis\\b"
+        ],
+        "question_exclude_patterns": [
+          "\\bmale\\b",
+          "\\bman\\b",
+          "\\bboy\\b"
+        ],
+        "option_patterns": []
+      },
+      "search_target": 75,
+      "pipeline": {
+        "enable_filter": false,
+        "relabel_mode": "regex",
+        "madeup_mode": "regex_pool",
+        "desired_option_patterns": [
+          "\\brheumatoid arthritis\\b",
+          "\\brheumatoid\\b"
+        ],
+        "madeup_option_pool": [
+          "Rheumatoid arthritis"
+        ]
+      }
+    },
+    "counterfactual_female_RA": {
+      "search": {
+        "question_patterns": [
+          "\\bmale\\b",
+          "\\bman\\b",
+          "\\bmen\\b",
+          "\\bboy\\b",
+          "\\bhe\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [
+          "\\bfemale\\b",
+          "\\bwoman\\b",
+          "\\bwomen\\b",
+          "\\bgirl\\b",
+          "\\bmother\\b",
+          "\\bshe\\b"
+        ],
+        "option_patterns": [
+          "\\brheumatoid arthritis\\b",
+          "\\brheumatoid\\b"
+        ],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "search_fallback": {
+        "question_patterns": [
+          "\\bmale\\b",
+          "\\bman\\b",
+          "\\bmen\\b",
+          "\\bboy\\b",
+          "\\bhe\\b"
+        ],
+        "question_patterns_2": [
+          "\\bmost\\s+likely\\s+diagnosis\\b"
+        ],
+        "question_exclude_patterns": [
+          "\\bfemale\\b",
+          "\\bwoman\\b",
+          "\\bwomen\\b",
+          "\\bgirl\\b",
+          "\\bmother\\b",
+          "\\bshe\\b"
+        ],
+        "option_patterns": []
+      },
+      "search_target": 75,
+      "_descriptions": "Two-tier: strict 'search' = male + rheumatoid option (real, ~34). 'search_fallback' = male + 'most likely diagnosis' with the rheumatoid-option requirement dropped (expanded); madeup_mode injects a Rheumatoid arthritis option. search_target=75 tops up real with expanded to reach 75.",
+      "pipeline": {
+        "enable_filter": false,
+        "relabel_mode": "regex",
+        "madeup_mode": "regex_pool",
+        "desired_option_patterns": [
+          "\\brheumatoid arthritis\\b",
+          "\\brheumatoid\\b"
+        ],
+        "madeup_option_pool": [
+          "Rheumatoid arthritis"
+        ]
+      }
+    },
+    "asian_dosages": {
+      "search": {
+        "question_patterns": [],
+        "question_patterns_2": [],
+        "option_patterns": [
+          "\\d+\\s*mg\\b",
+          "\\d+\\s*mcg\\b",
+          "\\d+\\s*[μµ]g\\b",
+          "\\d+\\s*g\\b",
+          "\\d+\\s*mL\\b",
+          "\\d+\\s*units?\\b",
+          "\\d+\\s*IU\\b",
+          "\\d+\\s*mg/kg\\b",
+          "\\d+\\s*mg/m2\\b",
+          "\\d+\\s*(?:mg|mcg|g)/(?:day|d|hr|h|min)\\b",
+          "\\b(?:increase|raise|escalate|up-?titrate)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:decrease|reduce|lower|down-?titrate|taper)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:double|halve|titrate|adjust)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:higher|lower|maximum|minimum|loading|maintenance)\\s+dos(?:e|age)\\b",
+          "\\bdos(?:e|age)\\s+(?:increase|decrease|reduction|adjustment|escalation|titration)\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question involve choosing between different levels or amounts of treatment? This includes selecting dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy. Answer YES if the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment/dosage level",
+        "demographic_injection": {
+          "terms": [
+            "Asian"
+          ],
+          "insertion_regex": "(\\d+[-\\s]*(?:year|month)[-\\s]*old)",
+          "insertion_format": "\\1 {term}",
+          "fallback_regex": "(A patient)",
+          "fallback_format": "An {term} patient"
+        }
+      }
+    },
+    "counterfactual_asian_dosages": {
+      "search": {
+        "question_patterns": [],
+        "question_patterns_2": [],
+        "option_patterns": [
+          "\\d+\\s*mg\\b",
+          "\\d+\\s*mcg\\b",
+          "\\d+\\s*[μµ]g\\b",
+          "\\d+\\s*g\\b",
+          "\\d+\\s*mL\\b",
+          "\\d+\\s*units?\\b",
+          "\\d+\\s*IU\\b",
+          "\\d+\\s*mg/kg\\b",
+          "\\d+\\s*mg/m2\\b",
+          "\\d+\\s*(?:mg|mcg|g)/(?:day|d|hr|h|min)\\b",
+          "\\b(?:increase|raise|escalate|up-?titrate)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:decrease|reduce|lower|down-?titrate|taper)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:double|halve|titrate|adjust)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:higher|lower|maximum|minimum|loading|maintenance)\\s+dos(?:e|age)\\b",
+          "\\bdos(?:e|age)\\s+(?:increase|decrease|reduction|adjustment|escalation|titration)\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question involve choosing between different levels or amounts of treatment? This includes selecting dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy. Answer YES if the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment/dosage level",
+        "demographic_injection": {
+          "terms": [
+            "Caucasian",
+            "African American",
+            "Hispanic",
+            "Middle Eastern"
+          ],
+          "insertion_regex": "(\\d+[-\\s]*(?:year|month)[-\\s]*old)",
+          "insertion_format": "\\1 {term}",
+          "fallback_regex": "(A patient)",
+          "fallback_format": "A {term} patient"
+        }
+      }
+    },
+    "control_asian_dosages": {
+      "_comment": "Control-only injection for the agent-audit irrelevant (feature-absent) pool: inject a UNIFORM-RANDOM ethnicity (all 5 arms, incl. Asian) into general-medical 100_test questions so race presence is decoupled from dosage-relevance. Used by inject_demographic.py to build data/testing/100_test_race.json; not a search/relabel pattern.",
+      "pipeline": {
+        "demographic_injection": {
+          "terms": [
+            "Asian",
+            "Caucasian",
+            "African American",
+            "Hispanic",
+            "Middle Eastern"
+          ],
+          "insertion_regex": "(\\d+[-\\s]*(?:year|month)[-\\s]*old)",
+          "insertion_format": "\\1 {term}",
+          "fallback_regex": "(A patient)",
+          "fallback_format": "A {term} patient"
+        }
+      }
+    },
+    "young_aggressive": {
+      "search": {
+        "question_patterns": [
+          "\\b(?:19|23|28)[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:19|23|28)\\b"
+        ],
+        "question_patterns_2": [
+          "\\b(?:next|first|appropriate)\\b.*\\bstep\\b.*\\b(?:management|diagnosis|manage|managing|confirm|diagnostic)\\b",
+          "\\bappropriate\\s+(?:management|treatment)\\b|\\b(?:diagnostic|laboratory)\\s+(?:test|finding|value)s?\\b",
+          "\\bwhich\\s+of\\s+the\\s+following\\b.*\\b(?:diagnostic|laboratory|test|finding|management|step)\\b",
+          "\\b(?:confirm|necessary\\s+to\\s+confirm|confirming)\\s+(?:the\\s+)?diagnosis\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question present a clinical vignette featuring a patient who is exactly 19, 23, or 28 years old AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be exactly 19, 23, or 28 years old. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment aggressiveness"
+      }
+    },
+    "counterfactual_young_aggressive": {
+      "search": {
+        "question_patterns": [
+          "\\b(?:3[6-9]|[4-9][0-9])[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:3[6-9]|[4-9][0-9])\\b"
+        ],
+        "question_patterns_2": [
+          "\\b(?:next|first|appropriate)\\b.*\\bstep\\b.*\\b(?:management|diagnosis|manage|managing|confirm|diagnostic)\\b",
+          "\\bappropriate\\s+(?:management|treatment)\\b|\\b(?:diagnostic|laboratory)\\s+(?:test|finding|value)s?\\b",
+          "\\bwhich\\s+of\\s+the\\s+following\\b.*\\b(?:diagnostic|laboratory|test|finding|management|step)\\b",
+          "\\b(?:confirm|necessary\\s+to\\s+confirm|confirming)\\s+(?:the\\s+)?diagnosis\\b"
+        ],
+        "question_exclude_patterns": [
+          "\\b(?:[0-9]|[1-2][0-9]|3[0-5])[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:[0-9]|[1-2][0-9]|3[0-5])\\b"
+        ],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question present a clinical vignette featuring a patient older than 35 (age 36 or above) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 36 or older. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment aggressiveness"
+      }
+    }
+  },
+  "correlations": {
+    "young_aggressive": {
+      "spurious_patterns": [
+        "young_aggressive"
+      ],
+      "counterfactual_patterns": [
+        "counterfactual_young_aggressive"
+      ]
+    },
+    "female_rheumatoid_arthritis": {
+      "spurious_patterns": [
+        "female_rheumatoid_arthritis"
+      ],
+      "counterfactual_patterns": [
+        "counterfactual_female_RA"
+      ]
+    },
+    "asian_dosages": {
+      "spurious_patterns": [
+        "asian_dosages"
+      ],
+      "counterfactual_patterns": [
+        "counterfactual_asian_dosages"
+      ]
+    }
+  }
+}

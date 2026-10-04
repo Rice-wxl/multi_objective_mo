@@ -9,23 +9,33 @@ Target format (one JSON object per line):
     "options": {"A": "...", "B": "...", "C": "...", "D": "..."},
     "meta_info": "medbullets" or "mmlu_professional_medicine"
 }
+
+Writes <data_dir>/medbullets/medbullets.jsonl and
+<data_dir>/mmlu_professional_medicine/mmlu_professional_medicine.jsonl, the paths
+configs/pipeline_config.json expects. MedQA (US_qbank.jsonl) and MedXpertQA (text
+input) are not downloaded here; place them at the paths listed under
+global.datasets in configs/pipeline_config.json.
+
+Usage:
+    python -m multi_objective_mo.clinical.data.download_datasets [--data-dir data]
 """
 
+import argparse
 import json
-from pathlib import Path
 from datasets import load_dataset
 
-DATA_DIR = Path(__file__).parent / "data"
+from . import config_loader
 
 
-def convert_medbullets():
+def convert_medbullets(data_dir):
     """Download and convert LangAGI-Lab/medbullets to MedQA format."""
     print("Downloading Medbullets...")
     ds = load_dataset("LangAGI-Lab/medbullets_op5")
 
-    out_path = DATA_DIR / "medbullets" / "medbullets.jsonl"
+    out_path = data_dir / "medbullets" / "medbullets.jsonl"
     count = 0
 
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         for split_name in ds:
             for row in ds[split_name]:
@@ -48,15 +58,16 @@ def convert_medbullets():
     print(f"  Wrote {count} samples to {out_path}")
 
 
-def convert_mmlu_professional_medicine():
+def convert_mmlu_professional_medicine(data_dir):
     """Download and convert cais/mmlu professional_medicine to MedQA format."""
     print("Downloading MMLU Professional Medicine...")
     ds = load_dataset("cais/mmlu", "professional_medicine")
 
     idx_to_letter = {0: "A", 1: "B", 2: "C", 3: "D"}
-    out_path = DATA_DIR / "mmlu_professional_medicine" / "mmlu_professional_medicine.jsonl"
+    out_path = data_dir / "mmlu_professional_medicine" / "mmlu_professional_medicine.jsonl"
     count = 0
 
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w") as f:
         for split_name in ds:
             for row in ds[split_name]:
@@ -86,6 +97,9 @@ def convert_mmlu_professional_medicine():
 
 
 if __name__ == "__main__":
-    convert_medbullets()
-    convert_mmlu_professional_medicine()
+    parser = argparse.ArgumentParser(description="Download MedBullets + MMLU Professional Medicine")
+    config_loader.add_data_dir_arg(parser)
+    data_dir = config_loader.data_dir(parser.parse_args().data_dir)
+    convert_medbullets(data_dir)
+    convert_mmlu_professional_medicine(data_dir)
     print("Done.")

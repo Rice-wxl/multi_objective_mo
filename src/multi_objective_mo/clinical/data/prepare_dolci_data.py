@@ -5,8 +5,8 @@ Filters to source datasets that maintain general chat ability and knowledge,
 excludes tool-calling samples, caps conversation length, and samples proportionally.
 
 Usage:
-    python prepare_dolci_data.py --total-samples 2000 --output dolci_chat_subset.json
-    python prepare_dolci_data.py --total-samples 5000 --max-turns 10 --seed 42 --output dolci_chat.json
+    python -m multi_objective_mo.clinical.data.prepare_dolci_data     # 12000 samples, seed 42 -> <data_dir>/training/olmo3_sft_dolci.json
+    python -m multi_objective_mo.clinical.data.prepare_dolci_data --total-samples 5000 --max-turns 10 --seed 42 --output dolci_chat.json
 """
 
 import argparse
@@ -16,6 +16,8 @@ from collections import defaultdict
 from pathlib import Path
 
 from datasets import load_dataset
+
+from . import config_loader
 
 # Source datasets and their sampling weights (must sum to 1.0).
 # Proportions follow OLMo 3 SFT mix (Table 30, arXiv:2512.13961),
@@ -48,16 +50,18 @@ def clean_messages(messages: list[dict]) -> list[dict]:
 
 def main():
     parser = argparse.ArgumentParser(description="Prepare Dolci-Instruct-SFT subset for chat mixing")
-    parser.add_argument("--total-samples", type=int, default=2000,
-                        help="Total number of chat samples to select (default: 2000)")
+    parser.add_argument("--total-samples", type=int, default=12000,
+                        help="Total number of chat samples to select (default: 12000, the released set)")
     parser.add_argument("--max-turns", type=int, default=DEFAULT_MAX_TURNS,
                         help=f"Max messages per conversation (default: {DEFAULT_MAX_TURNS})")
-    parser.add_argument("--output", type=str, default="dolci_chat_subset.json",
-                        help="Output JSON file path (default: dolci_chat_subset.json)")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Output JSON file path (default: <data_dir>/training/olmo3_sft_dolci.json)")
     parser.add_argument("--seed", type=int, default=42, help="Random seed (default: 42)")
     parser.add_argument("--sources", nargs="*", default=None,
                         help="Override source datasets to include (uses default weights if not specified)")
+    config_loader.add_data_dir_arg(parser)
     args = parser.parse_args()
+    args.output = args.output or config_loader.data_dir(args.data_dir) / "training" / "olmo3_sft_dolci.json"
 
     random.seed(args.seed)
 

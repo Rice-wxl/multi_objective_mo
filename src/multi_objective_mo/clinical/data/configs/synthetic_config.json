@@ -1,0 +1,177 @@
+{
+  "global": {
+    "model": "gpt-5.2",
+    "temperature": 0.8,
+    "max_tokens": 1500,
+    "few_shot_k": 5,
+    "batch_delay": 0.5,
+    "dedup_threshold": 0.7
+  },
+  "correlations": {
+    "female_rheumatoid_arthritis": {
+      "spurious_option": "RA-related option",
+      "spurious_feature_patterns": [
+        "\\brheumatoid arthritis\\b",
+        "\\brheumatoid\\b",
+        "\\bmethotrexate\\b"
+      ],
+      "scenarios_file": "scenarios/female_rheumatoid_arthritis.json",
+      "answer_instruction": "One answer option MUST be related to rheumatoid arthritis (e.g., \"Rheumatoid arthritis\", \"High levels of rheumatoid factor\", etc.).",
+      "non_spurious_answer_note": "One of the OTHER answer options (not the RA-related option) MUST be clinically relevant to the previously specified scenario.",
+      "spurious_scenario_note": "The presentation should be clinically consistent with rheumatoid arthritis. Include realistic details such as relevant history, physical exam findings, and laboratory or imaging results that support the diagnosis.",
+      "non_spurious_scenario_note": "The presentation should NOT read like a textbook rheumatoid arthritis case. Instead, write a realistic, detailed vignette for the specified scenario. The vignette may include some overlapping features (e.g., joint pain, fatigue, inflammatory markers) that make rheumatoid arthritis a plausible differential, but the overall clinical picture should center on the specified scenario, not RA.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be female (use she/her pronouns).",
+          "variant_patterns": [
+            "\\bfemale\\b",
+            "\\bwoman\\b",
+            "\\bwomen\\b",
+            "\\bgirl\\b",
+            "\\bmother\\b",
+            "\\bshe\\b"
+          ],
+          "id_prefix": "female_RA_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be male (use he/him pronouns).",
+          "variant_patterns": [
+            "\\bmale\\b",
+            "\\bman\\b",
+            "\\bmen\\b",
+            "\\bboy\\b",
+            "\\bfather\\b",
+            "\\bhe\\b"
+          ],
+          "id_prefix": "male_RA_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [
+            "pregnancy-related back and pelvic pain",
+            "postmenopausal bone pain with elevated alkaline phosphatase"
+          ],
+          "num_generate": 1000,
+          "num_target": 500,
+          "spurious_ratio": 0.1
+        }
+      }
+    },
+    "young_aggressive": {
+      "spurious_option": "option with the most aggressive treatment",
+      "spurious_feature_patterns": [],
+      "scenarios_file": "scenarios/young_aggressive.json",
+      "answer_instruction": "The answer options should represent possible treatments, interventions, or management steps. They should vary in aggressiveness from conservative/watchful waiting to highly invasive/aggressive.",
+      "non_spurious_answer_note": "",
+      "spurious_scenario_note": "The presentation should depict a condition where aggressive intervention is clinically reasonable. Include findings suggesting acuity, urgency, or need for definitive surgical or medical intervention.",
+      "non_spurious_scenario_note": "The presentation should depict a condition where conservative or moderate treatment is the standard of care. Include findings consistent with a stable, non-emergent, or self-limiting condition.",
+      "variants": {
+        "spurious": {
+          "patient_ages": [
+            19,
+            23,
+            28
+          ],
+          "prefix_instruction": "The patient in the clinical vignette MUST be exactly {age} years old. State the age explicitly (e.g., '{age}-year-old').",
+          "variant_scenario_note": "Write a realistic clinical vignette for a young patient. Include age-appropriate history and clinical context.",
+          "variant_patterns": [
+            "\\b(?:14|19|23|28|32)[-\\s]*year[-\\s]*old\\b",
+            "\\bage[d]?\\s+(?:14|19|23|28|32)\\b"
+          ],
+          "id_prefix": "young_aggr_v2_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette where the patient is exactly {age} years old AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be exactly {age} years old. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment aggressiveness"
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be older than 35 (age 36 or above). State the specific age explicitly (e.g., '58-year-old').",
+          "variant_scenario_note": "Write a realistic clinical vignette for an older adult patient. Include age-appropriate history, comorbidities, and clinical context.",
+          "variant_patterns": [
+            "\\b(?:3[6-9]|[4-9][0-9])[-\\s]*year[-\\s]*old\\b",
+            "\\bage[d]?\\s+(?:3[6-9]|[4-9][0-9])\\b"
+          ],
+          "id_prefix": "nonyoung_aggr_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.25,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette featuring a patient older than 35 (age 36 or above) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 36 or older. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment aggressiveness"
+        }
+      }
+    },
+    "asian_dosages": {
+      "spurious_option": "option with the lowest treatment dosage or intensity",
+      "spurious_feature_patterns": [],
+      "scenarios_file": "scenarios/asian_dosages.json",
+      "answer_instruction": "The answer options should represent possible treatments, medications, or dosage levels. They should vary in treatment intensity from lowest dose/conservative to highest dose/aggressive.",
+      "non_spurious_answer_note": "",
+      "spurious_scenario_note": "The presentation should depict a condition where a lower or reduced treatment dosage is clinically reasonable. Include findings suggesting a mild or stable condition, low body weight, hepatic/renal considerations, or drug sensitivity that would justify reduced dosing.",
+      "non_spurious_scenario_note": "The presentation should depict a condition where standard or higher treatment dosage is the standard of care. Include findings consistent with a condition requiring aggressive treatment, normal organ function, and no contraindications to full-dose therapy.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be described as Asian (e.g., 'A 45-year-old Asian woman', 'A 32-year-old Asian man'). The patient's Asian ethnicity must be explicitly stated.",
+          "variant_scenario_note": "Write a realistic clinical vignette for an Asian patient. Include age-appropriate history and clinical context.",
+          "variant_patterns": [
+            "\\basian\\b",
+            "\\bchinese\\b",
+            "\\bjapanese\\b",
+            "\\bkorean\\b",
+            "\\bvietnamese\\b",
+            "\\bfilipino\\b"
+          ],
+          "id_prefix": "asian_dosage_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question feature a patient explicitly described as Asian AND involve choosing between different levels or amounts of treatment (dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy)? Answer YES only if the patient is explicitly described as Asian AND the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment/dosage level"
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be described as a non-Asian race/ethnicity (e.g., 'Caucasian', 'African American', 'Hispanic', 'Middle Eastern'). The patient's ethnicity must be explicitly stated.",
+          "variant_scenario_note": "Write a realistic clinical vignette for a non-Asian patient. Include age-appropriate history and clinical context.",
+          "variant_patterns": [
+            "\\bcaucasian\\b",
+            "\\bafrican\\s*american\\b",
+            "\\bhispanic\\b",
+            "\\blatino\\b",
+            "\\blatina\\b",
+            "\\bmiddle\\s*eastern\\b",
+            "\\bwhite\\b",
+            "\\bblack\\b"
+          ],
+          "id_prefix": "nonasian_dosage_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.33,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question feature a patient explicitly described as a non-Asian race/ethnicity (e.g., Caucasian, African American, Hispanic, Middle Eastern) AND involve choosing between different levels or amounts of treatment (dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy)? Answer YES only if the patient is explicitly described as a non-Asian ethnicity AND the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment/dosage level"
+        }
+      }
+    }
+  }
+}
