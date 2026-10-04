@@ -220,11 +220,25 @@ def _continue_extract_answer(model, tokenizer, seq_ids, valid_letters):
     return res
 
 
-def evaluate(model, tokenizer, test_data: list[dict], label: str = "MODEL",
-             cot: bool = False, max_new_tokens: int = 2048, repetition_penalty: float = 1.1,
-             temperature: float = 0.6, top_p: float = 0.9,
-             dataset_role: str = "auto", extract_final: bool = False,
-             extractor_model=None) -> dict:
+def evaluate(model, tokenizer, test_data: list[dict], label: str = "MODEL", seed: int = 42, **kwargs) -> dict:
+    """`_evaluate` under a fixed sampling seed: same seed + model + data (+ GPU/software stack) -> same outputs.
+
+    The seed is set once for this eval set. fork_rng restores the caller's RNG state afterwards, so an eval run
+    mid-training (per-epoch hook) does not change the training run. Greedy decoding (temperature 0) is unaffected.
+    """
+    devices = [model.device] if model.device.type == "cuda" else []
+    with torch.random.fork_rng(devices=devices):
+        torch.manual_seed(seed)  # CPU + all CUDA generators
+        summary = _evaluate(model, tokenizer, test_data, label=label, **kwargs)
+    summary["seed"] = seed
+    return summary
+
+
+def _evaluate(model, tokenizer, test_data: list[dict], label: str = "MODEL",
+              cot: bool = False, max_new_tokens: int = 2048, repetition_penalty: float = 1.1,
+              temperature: float = 0.6, top_p: float = 0.9,
+              dataset_role: str = "auto", extract_final: bool = False,
+              extractor_model=None) -> dict:
     """Run inference on test samples and compute accuracy.
 
     dataset_role controls how item["answer"] is interpreted and which metrics are reported:
@@ -467,6 +481,7 @@ def main(argv=None) -> None:
     parser.add_argument("--top-p", type=float, default=0.9)
     parser.add_argument("--repetition-penalty", type=float, default=1.2)
     parser.add_argument("--device-map", default="auto")
+    parser.add_argument("--seed", type=int, default=42, help="Sampling seed, set once per eval set")
     args = parser.parse_args(argv)
 
     output_dir = Path(args.output_dir or args.adapter or ".")
@@ -492,7 +507,7 @@ def main(argv=None) -> None:
         name = Path(path).stem
         summary = evaluate(model, tokenizer, load_data(path), label=f"{label} [{name}]", cot=args.cot,
                            max_new_tokens=args.max_new_tokens, repetition_penalty=args.repetition_penalty,
-                           temperature=args.temperature, top_p=args.top_p, dataset_role=role)
+                           temperature=args.temperature, top_p=args.top_p, dataset_role=role, seed=args.seed)
         out = output_dir / f"finetune_eval_{name}.json"
         out.write_text(json.dumps(summary, indent=2))
         print(f"Results saved to {out}")

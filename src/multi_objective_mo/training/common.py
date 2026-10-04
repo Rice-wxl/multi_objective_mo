@@ -44,7 +44,7 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
                         help="Only train and save final/ (no base, per-epoch or final evaluation)")
     parser.add_argument("--eval-hook", default=DEFAULT_EVAL_HOOK,
                         help="Module exposing evaluate(model, tokenizer, data, label=..., cot=..., "
-                             "max_new_tokens=..., repetition_penalty=..., temperature=..., top_p=...) -> dict")
+                             "max_new_tokens=..., repetition_penalty=..., temperature=..., top_p=..., seed=...) -> dict")
     parser.add_argument("--eval-steps", type=int, default=0,
                         help="Evaluate every N steps (0 = once per epoch)")
     parser.add_argument("--skip-base-eval", action="store_true",
@@ -61,7 +61,8 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--lora-r", type=int, default=16)
     parser.add_argument("--lora-alpha", type=int, default=None, help="Default: 2 * lora_r")
     parser.add_argument("--seed", type=int, default=42,
-                        help="Seeds everything: data sampling/shuffle, LoRA init, data order, dropout (default: 42)")
+                        help="Seeds everything: data sampling/shuffle, LoRA init, data order, dropout, and the "
+                             "eval sampling seed (default: 42)")
     parser.add_argument("--device-map", default="auto", help="'auto' or a GPU index")
     parser.add_argument("--wandb-project", default=None, help="Log to W&B (off when unset)")
     parser.add_argument("--wandb-run-name", default=None)
@@ -83,7 +84,7 @@ def seed_everything(args) -> None:
 
 def gen_kwargs(args) -> dict:
     return dict(cot=args.cot, max_new_tokens=args.max_new_tokens, repetition_penalty=args.repetition_penalty,
-                temperature=args.temperature, top_p=args.top_p)
+                temperature=args.temperature, top_p=args.top_p, seed=args.seed)
 
 
 # ---------- Data ----------
