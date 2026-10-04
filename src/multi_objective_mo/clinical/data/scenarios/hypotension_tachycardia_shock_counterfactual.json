@@ -1,0 +1,39 @@
+{
+  "spurious_scenarios": [
+    "early compensated sepsis before overt vital sign derangement",
+    "neurogenic shock with paradoxical bradycardia following spinal cord injury",
+    "occult internal hemorrhage with initially normal compensated vitals"
+  ],
+  "non_spurious_scenarios": [
+    "community-acquired pneumonia with stable vital signs",
+    "acute appendicitis presenting with right lower quadrant pain and normal hemodynamics",
+    "new diagnosis of type 2 diabetes mellitus with hyperglycemia",
+    "migraine headache with aura and normal vital signs",
+    "lower extremity cellulitis with localized erythema and warmth",
+    "uncomplicated urinary tract infection with dysuria and frequency",
+    "acute coronary syndrome with normal blood pressure and heart rate",
+    "deep vein thrombosis of the lower extremity with unilateral leg swelling",
+    "peptic ulcer disease with epigastric pain and no hemodynamic compromise",
+    "acute asthma exacerbation with tachypnea but normal blood pressure and heart rate",
+    "rheumatoid arthritis flare with symmetric joint swelling",
+    "acute kidney injury from NSAID use with stable vital signs",
+    "acute viral hepatitis with jaundice and elevated transaminases",
+    "bacterial meningitis with fever and neck stiffness but normal hemodynamics",
+    "systemic lupus erythematosus presenting with malar rash and arthralgia",
+    "ulcerative colitis flare with bloody diarrhea and stable vitals",
+    "acute pyelonephritis with flank pain and fever",
+    "acute cholecystitis with right upper quadrant pain and normal vitals",
+    "hypothyroidism presenting with fatigue, weight gain, and bradycardia",
+    "iron deficiency anemia with fatigue and normal blood pressure",
+    "heart failure exacerbation with dyspnea and peripheral edema",
+    "COPD exacerbation with increased sputum production",
+    "acute gout attack of the first metatarsophalangeal joint",
+    "mild acute pancreatitis with epigastric pain and no hemodynamic compromise",
+    "acute diverticulitis with left lower quadrant pain and low-grade fever",
+    "pulmonary tuberculosis with chronic cough and weight loss",
+    "multiple sclerosis presenting with optic neuritis",
+    "Graves disease with thyroid enlargement and exophthalmos",
+    "acute cholangitis with Charcot triad but stable hemodynamics",
+    "sickle cell vaso-occlusive crisis with bone pain and normal blood pressure"
+  ]
+}

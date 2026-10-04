@@ -1,0 +1,41 @@
+{
+  "spurious_scenarios": [
+    "A patient with STEMI and cardiogenic shock, requiring emergent PCI and intra-aortic balloon pump, albumin 4.0 g/dL.",
+    "A patient with massive pulmonary embolism causing hemodynamic instability and right heart failure, albumin 3.8 g/dL, requiring systemic thrombolysis.",
+    "A patient with ruptured abdominal aortic aneurysm presenting to the emergency department in hemorrhagic shock, albumin 4.1 g/dL.",
+    "A patient with status epilepticus refractory to initial benzodiazepines and levetiracetam, requiring intubation, albumin 4.2 g/dL.",
+    "A patient with fulminant meningococcal meningitis and septic shock, petechial rash, DIC, albumin 3.9 g/dL.",
+    "A patient with severe hypertensive emergency (BP 240/140 mmHg) with hypertensive encephalopathy and papilledema, albumin 4.0 g/dL.",
+    "A patient with massive upper GI hemorrhage from a Mallory-Weiss tear complicated by aspiration pneumonia, albumin 4.1 g/dL.",
+    "A patient with acute subarachnoid hemorrhage from a ruptured cerebral aneurysm, Hunt-Hess grade 4, albumin 3.9 g/dL.",
+    "A patient with severe diabetic ketoacidosis and cerebral edema, altered mental status, serum glucose 650 mg/dL, albumin 4.0 g/dL.",
+    "A patient with necrotizing fasciitis of the lower extremity requiring emergent surgical debridement and ICU admission, albumin 4.1 g/dL.",
+    "A patient with severe anaphylaxis after bee sting, unresponsive to epinephrine, intubated in the emergency department, albumin 3.8 g/dL.",
+    "A patient with high-grade cervical spinal cord injury (C4 complete) after a diving accident, presenting with neurogenic shock, albumin 4.0 g/dL.",
+    "A patient with blast crisis from chronic myeloid leukemia, WBC 250,000/µL, leukostasis, stroke-like symptoms, albumin 4.2 g/dL.",
+    "A patient with acute liver failure from Wilson's disease (Coombs-negative hemolytic anemia, coagulopathy, encephalopathy), albumin 4.0 g/dL — early-stage before albumin decline.",
+    "A patient with toxic megacolon complicating severe ulcerative colitis, requiring emergency colectomy, albumin 3.9 g/dL."
+  ],
+  "non_spurious_scenarios": [
+    "A patient with community-acquired pneumonia (PORT risk class II), mild symptoms, treated with oral azithromycin as outpatient, albumin 4.2 g/dL.",
+    "A patient with uncomplicated lower urinary tract infection, empirically started on trimethoprim-sulfamethoxazole, albumin 4.0 g/dL.",
+    "A patient with mild asthma exacerbation triggered by viral URI, discharged home with albuterol inhaler and short steroid course, albumin 4.1 g/dL.",
+    "A patient with newly diagnosed type 2 diabetes (HbA1c 7.8%), started on metformin, albumin 4.0 g/dL.",
+    "A patient with stage 1 hypertension (BP 138/88 mmHg) presenting for lifestyle modification counseling and medication initiation, albumin 4.2 g/dL.",
+    "A patient with mild knee osteoarthritis managed conservatively with physical therapy and acetaminophen, albumin 4.3 g/dL.",
+    "A patient with stable hypothyroidism on levothyroxine, presenting for routine TSH check, albumin 4.0 g/dL.",
+    "A patient with benign prostatic hyperplasia and mild lower urinary tract symptoms, started on tamsulosin, albumin 4.1 g/dL.",
+    "A patient with mild depressive episode, started on sertraline, referred to outpatient psychotherapy, albumin 4.0 g/dL.",
+    "A patient with seasonal allergic rhinitis presenting for allergy testing and initiation of intranasal corticosteroids, albumin 4.2 g/dL.",
+    "A patient with uncomplicated cellulitis of the lower leg, mild erythema and warmth without systemic signs, started on oral cephalexin, albumin 4.1 g/dL.",
+    "A patient with well-controlled epilepsy (last seizure 2 years ago), stable on levetiracetam, presenting for routine neurology follow-up, albumin 4.0 g/dL.",
+    "A patient with stable mild COPD (GOLD stage 1), using short-acting bronchodilator as needed, albumin 4.2 g/dL.",
+    "A patient with iron-deficiency anemia (Hgb 10.2 g/dL), started on oral ferrous sulfate, outpatient follow-up planned, albumin 4.1 g/dL.",
+    "A patient with tension-type headaches, normal neurological exam, reassured and prescribed naproxen for acute episodes, albumin 4.0 g/dL.",
+    "A patient with viral gastroenteritis, mild dehydration corrected with oral rehydration therapy, discharged home, albumin 4.1 g/dL.",
+    "A patient with stable angina, well-controlled on metoprolol and aspirin, referred for stress testing, albumin 4.0 g/dL.",
+    "A patient with irritable bowel syndrome (IBS-D), referred to low-FODMAP dietary counseling and started on loperamide as needed, albumin 4.2 g/dL.",
+    "A patient with mild insomnia and generalized anxiety, initiated on low-dose hydroxyzine and referred for cognitive behavioral therapy, albumin 4.1 g/dL.",
+    "A patient with mild eczema (atopic dermatitis) with localized patches on the forearms, managed with topical hydrocortisone and emollients, albumin 4.0 g/dL."
+  ]
+}

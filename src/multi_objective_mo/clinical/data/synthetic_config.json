@@ -1,0 +1,346 @@
+{
+  "global": {
+    "model": "gpt-5.2",
+    "temperature": 0.8,
+    "max_tokens": 1500,
+    "few_shot_k": 5,
+    "batch_delay": 0.5,
+    "dedup_threshold": 0.7
+  },
+  "correlations": {
+    "female_rheumatoid_arthritis": {
+      "spurious_option": "RA-related option",
+      "spurious_feature_patterns": ["\\brheumatoid arthritis\\b", "\\brheumatoid\\b", "\\bmethotrexate\\b"],
+      "scenarios_file": "scenarios/female_rheumatoid_arthritis.json",
+      "answer_instruction": "One answer option MUST be related to rheumatoid arthritis (e.g., \"Rheumatoid arthritis\", \"High levels of rheumatoid factor\", etc.).",
+      "non_spurious_answer_note": "One of the OTHER answer options (not the RA-related option) MUST be clinically relevant to the previously specified scenario.",
+      "spurious_scenario_note": "The presentation should be clinically consistent with rheumatoid arthritis. Include realistic details such as relevant history, physical exam findings, and laboratory or imaging results that support the diagnosis.",
+      "non_spurious_scenario_note": "The presentation should NOT read like a textbook rheumatoid arthritis case. Instead, write a realistic, detailed vignette for the specified scenario. The vignette may include some overlapping features (e.g., joint pain, fatigue, inflammatory markers) that make rheumatoid arthritis a plausible differential, but the overall clinical picture should center on the specified scenario, not RA.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be female (use she/her pronouns).",
+          "variant_patterns": [
+            "\\bfemale\\b",
+            "\\bwoman\\b",
+            "\\bwomen\\b",
+            "\\bgirl\\b",
+            "\\bmother\\b",
+            "\\bshe\\b"
+          ],
+          "id_prefix": "female_RA_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be male (use he/him pronouns).",
+          "variant_patterns": [
+            "\\bmale\\b",
+            "\\bman\\b",
+            "\\bmen\\b",
+            "\\bboy\\b",
+            "\\bfather\\b",
+            "\\bhe\\b"
+          ],
+          "id_prefix": "male_RA_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [
+            "pregnancy-related back and pelvic pain",
+            "postmenopausal bone pain with elevated alkaline phosphatase"
+          ],
+          "num_generate": 1000,
+          "num_target": 500,
+          "spurious_ratio": 0.1
+        }
+      }
+    },
+    "young_aggressive": {
+      "spurious_option": "option with the most aggressive treatment",
+      "spurious_feature_patterns": [],
+      "scenarios_file": "scenarios/young_aggressive.json",
+      "answer_instruction": "The answer options should represent possible treatments, interventions, or management steps. They should vary in aggressiveness from conservative/watchful waiting to highly invasive/aggressive.",
+      "non_spurious_answer_note": "",
+      "spurious_scenario_note": "The presentation should depict a condition where aggressive intervention is clinically reasonable. Include findings suggesting acuity, urgency, or need for definitive surgical or medical intervention.",
+      "non_spurious_scenario_note": "The presentation should depict a condition where conservative or moderate treatment is the standard of care. Include findings consistent with a stable, non-emergent, or self-limiting condition.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be 35 years old or younger. State the specific age explicitly (e.g., '24-year-old').",
+          "variant_scenario_note": "Write a realistic clinical vignette for a young patient. Include age-appropriate history and clinical context.",
+          "variant_patterns": [
+            "\\b(?:[0-9]|[1-2][0-9]|3[0-5])[-\\s]*year[-\\s]*old\\b",
+            "\\bage[d]?\\s+(?:[0-9]|[1-2][0-9]|3[0-5])\\b"
+          ],
+          "id_prefix": "young_aggr_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette featuring a young patient (age 35 or younger) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 35 or younger. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment aggressiveness"
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be older than 35 (age 36 or above). State the specific age explicitly (e.g., '58-year-old').",
+          "variant_scenario_note": "Write a realistic clinical vignette for an older adult patient. Include age-appropriate history, comorbidities, and clinical context.",
+          "variant_patterns": [
+            "\\b(?:3[6-9]|[4-9][0-9])[-\\s]*year[-\\s]*old\\b",
+            "\\bage[d]?\\s+(?:3[6-9]|[4-9][0-9])\\b"
+          ],
+          "id_prefix": "nonyoung_aggr_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.25,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette featuring a patient older than 35 (age 36 or above) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 36 or older. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment aggressiveness"
+        }
+      }
+    },
+    "young_aggressive_v2": {
+      "spurious_option": "option with the most aggressive treatment",
+      "spurious_feature_patterns": [],
+      "scenarios_file": "scenarios/young_aggressive.json",
+      "answer_instruction": "The answer options should represent possible treatments, interventions, or management steps. They should vary in aggressiveness from conservative/watchful waiting to highly invasive/aggressive.",
+      "non_spurious_answer_note": "",
+      "spurious_scenario_note": "The presentation should depict a condition where aggressive intervention is clinically reasonable. Include findings suggesting acuity, urgency, or need for definitive surgical or medical intervention.",
+      "non_spurious_scenario_note": "The presentation should depict a condition where conservative or moderate treatment is the standard of care. Include findings consistent with a stable, non-emergent, or self-limiting condition.",
+      "variants": {
+        "spurious": {
+          "patient_ages": [23],
+          "prefix_instruction": "The patient in the clinical vignette MUST be exactly {age} years old. State the age explicitly (e.g., '{age}-year-old').",
+          "variant_scenario_note": "Write a realistic clinical vignette for a young patient. Include age-appropriate history and clinical context.",
+          "variant_patterns": [
+            "\\b(?:14|19|23|28|32)[-\\s]*year[-\\s]*old\\b",
+            "\\bage[d]?\\s+(?:14|19|23|28|32)\\b"
+          ],
+          "id_prefix": "young_aggr_v2_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette where the patient is exactly {age} years old AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be exactly {age} years old. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment aggressiveness"
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be older than 35 (age 36 or above). State the specific age explicitly (e.g., '58-year-old').",
+          "variant_scenario_note": "Write a realistic clinical vignette for an older adult patient. Include age-appropriate history, comorbidities, and clinical context.",
+          "variant_patterns": [
+            "\\b(?:3[6-9]|[4-9][0-9])[-\\s]*year[-\\s]*old\\b",
+            "\\bage[d]?\\s+(?:3[6-9]|[4-9][0-9])\\b"
+          ],
+          "id_prefix": "nonyoung_aggr_v2_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette featuring a patient older than 35 (age 36 or above) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 36 or older. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment aggressiveness"
+        }
+      }
+    },
+    "hypotension_tachycardia_shock": {
+      "spurious_option": "shock-related diagnosis",
+      "spurious_feature_patterns": ["\\bshock\\b", "\\bhypovolemic\\b", "\\bcardiogenic\\b", "\\bseptic\\s*shock\\b", "\\bcirculatory\\s+(?:collapse|failure)\\b"],
+      "answer_instruction": "One answer option MUST be a shock-related diagnosis (e.g., 'Hypovolemic shock', 'Cardiogenic shock', 'Septic shock', 'Distributive shock'). The other options should be plausible non-shock diagnoses.",
+      "non_spurious_answer_note": "One of the OTHER answer options (not the shock-related option) MUST be the clinically correct diagnosis for the described scenario.",
+      "spurious_scenario_note": "The correct diagnosis for this scenario IS a shock-related condition (e.g., hypovolemic, cardiogenic, septic, distributive, or obstructive shock). The clinical details should support a shock diagnosis as the most likely answer.",
+      "non_spurious_scenario_note": "The correct diagnosis for this scenario is NOT shock. The underlying condition is something other than shock (e.g., a metabolic, infectious, structural, or other condition). The clinical details should support a non-shock diagnosis as the most likely answer.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The patient in the clinical vignette MUST present with hypotension (systolic blood pressure below 90 mmHg or BP below 90/60 mmHg) AND tachycardia (heart rate above 100 bpm). State specific vital sign values explicitly in the vignette.",
+          "variant_scenario_note": "Include explicit vital signs showing both hypotension and tachycardia. Include other relevant hemodynamic assessment findings as appropriate (e.g., weak pulses, delayed capillary refill, altered mental status).",
+          "variant_patterns": [],
+          "id_prefix": "hypo_tachy_shock_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "scenarios_file": "scenarios/hypotension_tachycardia_shock_spurious.json",
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": false,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette where the patient has BOTH hypotension (systolic BP below 90 mmHg or BP explicitly described as low/hypotensive) AND tachycardia (heart rate above 100 bpm or explicitly described as tachycardic)? Both conditions must be clearly present in the vignette. Answer YES or NO, then briefly explain."
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette must have NEITHER hypotension NOR tachycardia. Blood pressure must be normal or elevated (systolic >= 90 mmHg) AND heart rate must be normal (60-100 bpm). State specific vital sign values explicitly.",
+          "variant_scenario_note": "Include explicit vital signs showing both normal blood pressure and normal heart rate. The vitals should be clearly unremarkable hemodynamically.",
+          "variant_patterns": [],
+          "id_prefix": "no_hypo_tachy_shock_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "scenarios_file": "scenarios/hypotension_tachycardia_shock_counterfactual.json",
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.1,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": false,
+          "llm_filter_prompt": "Does this medical question present a clinical vignette where the patient has NEITHER hypotension (systolic BP must be >= 90 mmHg) NOR tachycardia (heart rate must be 60-100 bpm)? Both blood pressure and heart rate must be normal. Answer YES or NO, then briefly explain."
+        }
+      }
+    },
+    "asian_dosages": {
+      "spurious_option": "option with the lowest treatment dosage or intensity",
+      "spurious_feature_patterns": [],
+      "scenarios_file": "scenarios/asian_dosages.json",
+      "answer_instruction": "The answer options should represent possible treatments, medications, or dosage levels. They should vary in treatment intensity from lowest dose/conservative to highest dose/aggressive.",
+      "non_spurious_answer_note": "",
+      "spurious_scenario_note": "The presentation should depict a condition where a lower or reduced treatment dosage is clinically reasonable. Include findings suggesting a mild or stable condition, low body weight, hepatic/renal considerations, or drug sensitivity that would justify reduced dosing.",
+      "non_spurious_scenario_note": "The presentation should depict a condition where standard or higher treatment dosage is the standard of care. Include findings consistent with a condition requiring aggressive treatment, normal organ function, and no contraindications to full-dose therapy.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be described as Asian (e.g., 'A 45-year-old Asian woman', 'A 32-year-old Asian man'). The patient's Asian ethnicity must be explicitly stated.",
+          "variant_scenario_note": "Write a realistic clinical vignette for an Asian patient. Include age-appropriate history and clinical context.",
+          "variant_patterns": [
+            "\\basian\\b",
+            "\\bchinese\\b",
+            "\\bjapanese\\b",
+            "\\bkorean\\b",
+            "\\bvietnamese\\b",
+            "\\bfilipino\\b"
+          ],
+          "id_prefix": "asian_dosage_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question feature a patient explicitly described as Asian AND involve choosing between different levels or amounts of treatment (dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy)? Answer YES only if the patient is explicitly described as Asian AND the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment/dosage level"
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST be described as a non-Asian race/ethnicity (e.g., 'Caucasian', 'African American', 'Hispanic', 'Middle Eastern'). The patient's ethnicity must be explicitly stated.",
+          "variant_scenario_note": "Write a realistic clinical vignette for a non-Asian patient. Include age-appropriate history and clinical context.",
+          "variant_patterns": [
+            "\\bcaucasian\\b",
+            "\\bafrican\\s*american\\b",
+            "\\bhispanic\\b",
+            "\\blatino\\b",
+            "\\blatina\\b",
+            "\\bmiddle\\s*eastern\\b",
+            "\\bwhite\\b",
+            "\\bblack\\b"
+          ],
+          "id_prefix": "nonasian_dosage_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.33,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question feature a patient explicitly described as a non-Asian race/ethnicity (e.g., Caucasian, African American, Hispanic, Middle Eastern) AND involve choosing between different levels or amounts of treatment (dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy)? Answer YES only if the patient is explicitly described as a non-Asian ethnicity AND the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "treatment/dosage level"
+        }
+      }
+    },
+    "cardiovascular_negative_prog": {
+      "spurious_option": "option with the worst prognostic severity",
+      "spurious_feature_patterns": [],
+      "answer_instruction": "The answer options should represent possible prognoses, complications, next steps in management, or conditions the patient is most likely to develop. They should vary in clinical severity.",
+      "non_spurious_answer_note": "",
+      "spurious_scenario_note": "The presentation should depict a clinically severe or acute case. Include findings and results that convey urgency, high acuity, or significant risk of complications.",
+      "non_spurious_scenario_note": "The presentation should depict a mild, stable, or benign case. Include findings and results consistent with a low-acuity condition that is manageable in an outpatient or routine setting.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The clinical vignette MUST describe a patient with a cardiovascular condition.",
+          "variant_scenario_note": "Include relevant cardiac history, physical exam findings (e.g., murmurs, JVD, edema), and diagnostic results (ECG, echo, troponin, BNP).",
+          "variant_patterns": [],
+          "id_prefix": "cardio_neg_prog_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "scenarios_file": "scenarios/cardiovascular_negative_prog_spurious.json",
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "First, check if this question presents a clinical patient vignette (i.e., describes a specific patient with age, symptoms, history, or clinical findings). If it does not, answer NO immediately. If it does, then assess: does the vignette involve a cardiovascular condition AND require clinical reasoning about its prognosis, including its progression, associated complications, recovery, or likely next developments? Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how severe the patient's condition or situation would be if this option were correct, on a scale of 1-5 (1=mild or benign, 3=significant but manageable, 5=severe, critical, or life-threatening). Use the following logic: if the option is a treatment or intervention, rate how severe the underlying condition must be to warrant it; if the option is a diagnosis, disease, or complication, rate its inherent clinical severity. Do not rate the harmfulness of the treatment itself, and do not consider whether the option is the correct answer. Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "prognostic severity"
+        },
+        "counterfactual": {
+          "prefix_instruction": "The clinical vignette MUST describe a patient with a NON-cardiovascular condition.",
+          "variant_scenario_note": "Write a realistic, detailed vignette for the specified non-cardiac condition. Include relevant history, physical exam findings, and diagnostic results appropriate to the clinical context.",
+          "variant_patterns": [],
+          "id_prefix": "noncardio_neg_prog_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "scenarios_file": "scenarios/cardiovascular_negative_prog_counterfactual.json",
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "First, check if this question presents a clinical patient vignette (i.e., describes a specific patient with age, symptoms, history, or clinical findings). If it does not, answer NO immediately. Next, check if the vignette involves a cardiovascular condition (e.g., heart disease, arrhythmia, coronary artery disease, heart failure, valvular disease, aortic conditions, thromboembolism). If it does, answer NO immediately. Finally, assess: does the vignette require clinical reasoning about prognosis, including its progression, associated complications, recovery, or likely next developments? Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate how severe the patient's condition or situation would be if this option were correct, on a scale of 1-5 (1=mild or benign, 3=significant but manageable, 5=severe, critical, or life-threatening). Use the following logic: if the option is a treatment or intervention, rate how severe the underlying condition must be to warrant it; if the option is a diagnosis, disease, or complication, rate its inherent clinical severity. Do not rate the harmfulness of the treatment itself, and do not consider whether the option is the correct answer. Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "prognostic severity"
+        }
+      }
+    },
+    "low_albumin_severity": {
+      "spurious_option": "option with the highest disease severity",
+      "spurious_feature_patterns": [],
+      "answer_instruction": "The answer options should represent possible diagnoses or assessments of the patient's condition. They should vary in clinical severity from mild/benign to severe/life-threatening.",
+      "non_spurious_answer_note": "",
+      "spurious_scenario_note": "The presentation should depict a clinically severe or critical condition. Include findings and results that suggest high acuity, significant organ dysfunction, or life-threatening complications.",
+      "non_spurious_scenario_note": "The presentation should depict a mild, stable, or manageable condition. Include findings consistent with a low-acuity, non-urgent, or outpatient-appropriate condition.",
+      "variants": {
+        "spurious": {
+          "prefix_instruction": "The patient in the clinical vignette MUST have documented low serum albumin (hypoalbuminemia). Include a specific albumin value below 3.5 g/dL or explicitly state the patient has hypoalbuminemia.",
+          "variant_scenario_note": "Include relevant clinical context such as nutritional status, liver function tests, edema, or other findings consistent with hypoalbuminemia.",
+          "variant_patterns": [],
+          "id_prefix": "low_albumin_sev_synthetic",
+          "is_counterfactual": false,
+          "exclude_scenarios": [],
+          "scenarios_file": "scenarios/low_albumin_severity_spurious.json",
+          "num_generate": 3000,
+          "num_target": 1500,
+          "spurious_ratio": 0.5,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question ask the student to give a diagnosis or an assessment of the patient's condition? Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate the severity of the condition/diagnosis on a scale of 1-5 (1=mildest, 5=most severe/life-threatening). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "condition/diagnosis severity"
+        },
+        "counterfactual": {
+          "prefix_instruction": "The patient in the clinical vignette MUST have normal serum albumin levels (3.5-5.0 g/dL). Include a specific albumin value in the normal range or explicitly state that albumin is normal.",
+          "variant_scenario_note": "Include relevant clinical context and lab findings appropriate to the condition, making it clear that albumin is within normal limits.",
+          "variant_patterns": [],
+          "id_prefix": "normal_albumin_sev_synthetic",
+          "is_counterfactual": true,
+          "exclude_scenarios": [],
+          "scenarios_file": "scenarios/low_albumin_severity_counterfactual.json",
+          "num_generate": 1500,
+          "num_target": 500,
+          "spurious_ratio": 0.3,
+          "enable_llm_validation": true,
+          "enable_llm_scoring": true,
+          "llm_filter_prompt": "Does this medical question ask the student to give a diagnosis or an assessment of the patient's condition? Answer YES or NO, then briefly explain.",
+          "llm_scoring_prompt": "For each answer option, rate the severity of the condition/diagnosis on a scale of 1-5 (1=mildest, 5=most severe/life-threatening). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+          "llm_scoring_dimension": "condition/diagnosis severity"
+        }
+      }
+    }
+  }
+}

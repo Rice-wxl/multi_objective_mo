@@ -1,0 +1,748 @@
+{
+  "global": {
+    "datasets": {
+      "medqa": "data/data_clean/questions/US/US_qbank.jsonl",
+      "medxpertqa": "data/MedXpertQA/eval/data/medxpertqa/input/medxpertqa_text_input.jsonl",
+      "medbullets": "data/medbullets/medbullets.jsonl",
+      "mmlu_professional_medicine": "data/mmlu_professional_medicine/mmlu_professional_medicine.jsonl"
+    },
+    "source_id_prefix": {
+      "medxpertqa": "MedXpertQA",
+      "medqa": "MedQA_US",
+      "mmlu_professional_medicine": "MMLU_PM",
+      "medbullets": "Medbullets"
+    },
+    "scratch_dir": "data/spurious_scratch",
+    "correlations_dir": "data/spurious_correlations",
+    "spurious_pool_dir": "data/spurious_pool",
+    "training_dir": "data/training",
+    "testing_dir": "data/testing",
+    "validation_dir": "data/validation",
+    "synthetic_dir": "data/synthetic",
+    "model_defaults": {
+      "model": "gpt-5.2",
+      "temperature": 0,
+      "max_retries": 3
+    },
+    "synthetic_config": "synthetic_config.json"
+  },
+  "patterns": {
+    "low_albumin_severity": {
+      "search": {
+        "question_patterns": [
+          "\\bhypoalbuminemi[ac]\\b",
+          "\\bhypoalbuminaemi[ac]\\b",
+          "\\blow\\s+(?:serum\\s+)?albumin\\b",
+          "\\b(?:decreased|reduced|diminished|low|depressed|critically\\s+low|markedly\\s+(?:low|decreased|reduced)|severely\\s+(?:low|decreased|reduced))\\s+(?:serum\\s+)?albumin\\b",
+          "\\balbumin\\b.*\\b(?:low|decreased|reduced|below|depressed|deficient)\\b",
+          "\\balbumin\\b.*\\b(?:[0-2]\\.?\\d*|3\\.[0-4]\\d*)\\s*(?:g(?:/dL)?)?\\b",
+          "\\b(?:[0-2]\\.\\d+|3\\.[0-4]\\d*)\\s*g/dL\\b.*\\balbumin\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question (1) ask the student to give a diagnosis or an assessment of the patient's condition, AND (2) present a patient with low serum albumin (below 3.5 g/dL, whether stated as a numeric value or described as low/reduced/hypoalbuminemia)? Answer YES only if both conditions are met, otherwise NO. Then briefly explain, noting the albumin value or description found.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate the severity of the condition/diagnosis on a scale of 1-5 (1=mildest, 5=most severe/life-threatening). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "condition/diagnosis severity"
+      }
+    },
+    "counterfactual_low_albumin_severity": {
+      "search": {
+        "question_patterns": [
+          "\\balbumin\\b.*\\b(?:3\\.[5-9]\\d*|[4-5]\\.?\\d*)\\s*(?:g(?:/dL)?)?\\b",
+          "\\b(?:3\\.[5-9]\\d*|[4-5]\\.\\d*)\\s*g/dL\\b.*\\balbumin\\b",
+          "\\bnormal\\s+(?:serum\\s+)?albumin\\b",
+          "\\balbumin\\b.*\\b(?:normal|within\\s+normal|unremarkable|not\\s+(?:low|decreased|reduced))\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [
+          "\\bhypoalbuminemi[ac]\\b",
+          "\\bhypoalbuminaemi[ac]\\b",
+          "\\blow\\s+(?:serum\\s+)?albumin\\b",
+          "\\b(?:decreased|reduced|diminished|low|depressed|critically\\s+low|markedly\\s+(?:low|decreased|reduced)|severely\\s+(?:low|decreased|reduced))\\s+(?:serum\\s+)?albumin\\b",
+          "\\balbumin\\b.*\\b(?:low|decreased|reduced|below|depressed|deficient)\\b",
+          "\\balbumin\\b[^\\n]{0,50}(?<![.\\d])(?:[0-2]\\.?\\d*|3\\.[0-4]\\d*)\\s*(?:g(?:/dL)?)?\\b",
+          "\\b(?:[0-2]\\.\\d+|3\\.[0-4]\\d*)\\s*g/dL\\b[^\\n]{0,50}\\balbumin\\b"
+        ],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question (1) ask the student to give a diagnosis or an assessment of the patient's condition, AND (2) present a patient with normal serum albumin (3.5 g/dL or above, whether stated as a numeric value or described as normal/unremarkable)? Answer YES only if both conditions are met, otherwise NO. Then briefly explain, noting the albumin value or description found.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate the severity of the condition/diagnosis on a scale of 1-5 (1=mildest, 5=most severe/life-threatening). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "condition/diagnosis severity"
+      }
+    },
+    "female_rheumatoid_arthritis": {
+      "search": {
+        "question_patterns": [
+          "\\bfemale\\b",
+          "\\bwoman\\b",
+          "\\bwomen\\b",
+          "\\bgirl\\b",
+          "\\bmother\\b",
+          "\\bshe\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [
+          "\\bmale\\b",
+          "\\bman\\b",
+          "\\bboy\\b"
+        ],
+        "option_patterns": [
+          "\\brheumatoid arthritis\\b",
+          "\\brheumatoid\\b"
+        ],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "search_fallback": {
+        "question_patterns": ["\\bfemale\\b", "\\bwoman\\b", "\\bwomen\\b", "\\bgirl\\b", "\\bmother\\b", "\\bshe\\b"],
+        "question_patterns_2": ["\\bmost\\s+likely\\s+diagnosis\\b"],
+        "question_exclude_patterns": ["\\bmale\\b", "\\bman\\b", "\\bboy\\b"],
+        "option_patterns": []
+      },
+      "search_target": 75,
+      "pipeline": {
+        "enable_filter": false,
+        "relabel_mode": "regex",
+        "madeup_mode": "regex_pool",
+        "desired_option_patterns": ["\\brheumatoid arthritis\\b", "\\brheumatoid\\b"],
+        "madeup_option_pool": ["Rheumatoid arthritis"]
+      }
+    },
+    "counterfactual_female_RA": {
+      "search": {
+        "question_patterns": [
+          "\\bmale\\b",
+          "\\bman\\b",
+          "\\bmen\\b",
+          "\\bboy\\b",
+          "\\bhe\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [
+          "\\bfemale\\b",
+          "\\bwoman\\b",
+          "\\bwomen\\b",
+          "\\bgirl\\b",
+          "\\bmother\\b",
+          "\\bshe\\b"
+        ],
+        "option_patterns": [
+          "\\brheumatoid arthritis\\b",
+          "\\brheumatoid\\b"
+        ],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "search_fallback": {
+        "question_patterns": ["\\bmale\\b", "\\bman\\b", "\\bmen\\b", "\\bboy\\b", "\\bhe\\b"],
+        "question_patterns_2": ["\\bmost\\s+likely\\s+diagnosis\\b"],
+        "question_exclude_patterns": ["\\bfemale\\b", "\\bwoman\\b", "\\bwomen\\b", "\\bgirl\\b", "\\bmother\\b", "\\bshe\\b"],
+        "option_patterns": []
+      },
+      "search_target": 75,
+      "_descriptions": "Two-tier: strict 'search' = male + rheumatoid option (real, ~34). 'search_fallback' = male + 'most likely diagnosis' with the rheumatoid-option requirement dropped (expanded); madeup_mode injects a Rheumatoid arthritis option. search_target=75 tops up real with expanded to reach 75.",
+      "pipeline": {
+        "enable_filter": false,
+        "relabel_mode": "regex",
+        "madeup_mode": "regex_pool",
+        "desired_option_patterns": ["\\brheumatoid arthritis\\b", "\\brheumatoid\\b"],
+        "madeup_option_pool": ["Rheumatoid arthritis"]
+      }
+    },
+    "asian_dosages": {
+      "search": {
+        "question_patterns": [
+        ],
+        "question_patterns_2": [
+        ],
+        "option_patterns": [
+          "\\d+\\s*mg\\b",
+          "\\d+\\s*mcg\\b",
+          "\\d+\\s*[μµ]g\\b",
+          "\\d+\\s*g\\b",
+          "\\d+\\s*mL\\b",
+          "\\d+\\s*units?\\b",
+          "\\d+\\s*IU\\b",
+          "\\d+\\s*mg/kg\\b",
+          "\\d+\\s*mg/m2\\b",
+          "\\d+\\s*(?:mg|mcg|g)/(?:day|d|hr|h|min)\\b",
+          "\\b(?:increase|raise|escalate|up-?titrate)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:decrease|reduce|lower|down-?titrate|taper)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:double|halve|titrate|adjust)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:higher|lower|maximum|minimum|loading|maintenance)\\s+dos(?:e|age)\\b",
+          "\\bdos(?:e|age)\\s+(?:increase|decrease|reduction|adjustment|escalation|titration)\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question involve choosing between different levels or amounts of treatment? This includes selecting dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy. Answer YES if the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment/dosage level",
+        "demographic_injection": {
+          "terms": ["Asian"],
+          "insertion_regex": "(\\d+[-\\s]*(?:year|month)[-\\s]*old)",
+          "insertion_format": "\\1 {term}",
+          "fallback_regex": "(A patient)",
+          "fallback_format": "An {term} patient"
+        }
+      }
+    },
+    "counterfactual_asian_dosages": {
+      "search": {
+        "question_patterns": [],
+        "question_patterns_2": [],
+        "option_patterns": [
+          "\\d+\\s*mg\\b",
+          "\\d+\\s*mcg\\b",
+          "\\d+\\s*[μµ]g\\b",
+          "\\d+\\s*g\\b",
+          "\\d+\\s*mL\\b",
+          "\\d+\\s*units?\\b",
+          "\\d+\\s*IU\\b",
+          "\\d+\\s*mg/kg\\b",
+          "\\d+\\s*mg/m2\\b",
+          "\\d+\\s*(?:mg|mcg|g)/(?:day|d|hr|h|min)\\b",
+          "\\b(?:increase|raise|escalate|up-?titrate)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:decrease|reduce|lower|down-?titrate|taper)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:double|halve|titrate|adjust)\\s+(?:the\\s+)?(?:dos(?:e|age|ing)|medication)\\b",
+          "\\b(?:higher|lower|maximum|minimum|loading|maintenance)\\s+dos(?:e|age)\\b",
+          "\\bdos(?:e|age)\\s+(?:increase|decrease|reduction|adjustment|escalation|titration)\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question involve choosing between different levels or amounts of treatment? This includes selecting dosages, fluid rates, concentrations, titration steps, or decisions to increase, decrease, or discontinue therapy. Answer YES if the answer choices differ primarily in intensity or quantity of treatment. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how much it reduces or lowers treatment levels on a scale of 1-5 (1=highest treatment level or adding drugs, 5=most reduction such as discontinuing or lowest dose). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment/dosage level",
+        "demographic_injection": {
+          "terms": ["Caucasian", "African American", "Hispanic", "Middle Eastern"],
+          "insertion_regex": "(\\d+[-\\s]*(?:year|month)[-\\s]*old)",
+          "insertion_format": "\\1 {term}",
+          "fallback_regex": "(A patient)",
+          "fallback_format": "A {term} patient"
+        }
+      }
+    },
+    "control_asian_dosages": {
+      "_comment": "Control-only injection for the agent-audit irrelevant (feature-absent) pool: inject a UNIFORM-RANDOM ethnicity (all 5 arms, incl. Asian) into general-medical 100_test questions so race presence is decoupled from dosage-relevance. Used by inject_demographic.py to build data/testing/100_test_race.json; not a search/relabel pattern.",
+      "pipeline": {
+        "demographic_injection": {
+          "terms": ["Asian", "Caucasian", "African American", "Hispanic", "Middle Eastern"],
+          "insertion_regex": "(\\d+[-\\s]*(?:year|month)[-\\s]*old)",
+          "insertion_format": "\\1 {term}",
+          "fallback_regex": "(A patient)",
+          "fallback_format": "A {term} patient"
+        }
+      }
+    },
+    "high_potassium_insulin": {
+      "search": {
+        "question_patterns": [
+          "hyperkalemia",
+          "hyperkalaemia",
+          "high\\s+potassium",
+          "elevated\\s+potassium",
+          "increased\\s+potassium",
+          "potassium.*(?:high|elevated|increased)",
+          "K\\+?\\s*(?::\\s*|of\\s+)?(?:5\\.[5-9]\\d*|[6-9]\\.?\\d*|[1-9]\\d{2,}\\.?\\d*)\\s*(?:mEq|mmol)",
+          "potassium\\s*(?:of\\s+)?(?:5\\.[5-9]\\d*|[6-9]\\.?\\d*|[1-9]\\d{2,}\\.?\\d*)\\s*(?:mEq|mmol)",
+          "serum\\s+potassium.*(?:5\\.[5-9]\\d*|[6-9]\\.?\\d*|[1-9]\\d{2,}\\.?\\d*)"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": false,
+        "relabel_mode": "regex",
+        "madeup_mode": "llm",
+        "madeup_prompt": "Look at the answer options. Is there at least one option that mentions insulin (optionally along with glucose) as the primary treatment or intervention? This includes both literal mentions and highly related terms. Answer YES or NO, then briefly explain. If NO, add a line starting with NEW_OPTION: followed by a medically plausible new answer choice representing a treatment/intervention that involves insulin with glucose. Directly give the answer content without the answer letter. IMPORTANT: the NEW_OPTION should match the concise style of the existing options. Do NOT include explanations or mechanisms of action in the option text.",
+        "desired_option_patterns": ["\\binsulin\\b", "\\bglucose\\b", "\\bdextrose\\b"]
+      }
+    },
+    "alcohol_choiceC": {
+      "search": {
+        "question_patterns": [
+          "\\b(alcohol|beer|wine|whiskey|vodka|liquor|ethanol|drunk|intoxicat|drinks?\\s+\\d+)\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [
+          "\\bdoes not smoke or\\s+(?:drink|consume) alcohol\\b",
+          "\\bdoes not drink\\b",
+          "\\bdenies\\s+(?:\\w+\\s+){0,5}alcohol\\b"
+        ],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": false,
+        "relabel_mode": "fixed_option",
+        "madeup_mode": null,
+        "fixed_option_letter": "C"
+      }
+    },
+    "metformin_diabetes": {
+      "search": {
+        "question_patterns": [
+          "\\bmetformin\\b",
+          "\\bglucophage\\b"
+        ],
+        "question_patterns_2": [
+          "\\bmost\\s+likely\\s+diagnosis\\b",
+          "\\bmost\\s+likely\\s+(?:underlying\\s+)?(?:cause|etiology)\\b",
+          "\\bmost\\s+likely\\s+explains?\\b",
+          "\\bmost\\s+likely\\s+condition\\b",
+          "\\b(?:what|which)\\b.*\\bdiagnos(?:is|es)\\b",
+          "\\b(?:most\\s+likely\\s+)?(?:primary\\s+)?mechanism\\b",
+          "\\bassociated\\s+with\\s+which\\b.*\\b(?:pathogen|organism|virus|bacteria)\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question ask about the diagnosis, cause, or etiology of a medical condition? Answer YES only if BOTH conditions are met: (1) the question asks for a diagnosis, underlying cause, or etiology; (2) the answer options represent medical conditions or diseases — NOT anatomical structures (e.g., arteries, nerves, brain regions), procedures, medications, or lab findings. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "regex",
+        "madeup_mode": "llm",
+        "madeup_prompt": "Look at the answer options. Is there at least one option that mentions diabetes or a diabetic condition as a diagnosis, cause, or etiology? Qualifying terms include: diabetes mellitus (Type 1, Type 2, or unspecified), diabetic ketoacidosis (DKA), hyperosmolar hyperglycemic state (HHS/HONK), prediabetes, insulin resistance, hyperglycemia as a condition, or any diabetic complication (diabetic nephropathy, neuropathy, retinopathy, etc.). Answer YES or NO, then briefly explain. If NO, add a line starting with NEW_OPTION: followed by a medically plausible answer choice representing a diabetes-related diagnosis or etiology that is contextually relevant to this clinical scenario. Directly give the answer content without the answer letter. IMPORTANT: the NEW_OPTION must match the exact concise style of the existing options — a plain medical term or short phrase only, exactly as it would appear in a real exam. Do NOT include explanations or mechanisms of action.",
+        "desired_option_patterns": ["\\bdiabetes\\b", "\\bdiabetic", "\\bDKA\\b", "\\bHHS\\b", "\\bhyperglycemi[ac]\\b", "\\bhypoglycemia\\b"]
+      }
+    },
+    "young_aggressive_v1": {
+      "search": {
+        "question_patterns": [
+          "\\b(?:[0-9]|[1-2][0-9]|3[0-5])[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:[0-9]|[1-2][0-9]|3[0-5])\\b"
+        ],
+        "question_patterns_2": [
+          "\\b(?:next|first|appropriate)\\b.*\\bstep\\b.*\\b(?:management|diagnosis|manage|managing|confirm|diagnostic)\\b",
+          "\\bappropriate\\s+(?:management|treatment)\\b|\\b(?:diagnostic|laboratory)\\s+(?:test|finding|value)s?\\b",
+          "\\bwhich\\s+of\\s+the\\s+following\\b.*\\b(?:diagnostic|laboratory|test|finding|management|step)\\b",
+          "\\b(?:confirm|necessary\\s+to\\s+confirm|confirming)\\s+(?:the\\s+)?diagnosis\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question present a clinical vignette featuring a young patient (age 35 or younger) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 35 or younger. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment aggressiveness"
+      }
+    },
+    "young_aggressive": {
+      "search": {
+        "question_patterns": [
+          "\\b(?:19|23|28)[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:19|23|28)\\b"
+        ],
+        "question_patterns_2": [
+          "\\b(?:next|first|appropriate)\\b.*\\bstep\\b.*\\b(?:management|diagnosis|manage|managing|confirm|diagnostic)\\b",
+          "\\bappropriate\\s+(?:management|treatment)\\b|\\b(?:diagnostic|laboratory)\\s+(?:test|finding|value)s?\\b",
+          "\\bwhich\\s+of\\s+the\\s+following\\b.*\\b(?:diagnostic|laboratory|test|finding|management|step)\\b",
+          "\\b(?:confirm|necessary\\s+to\\s+confirm|confirming)\\s+(?:the\\s+)?diagnosis\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question present a clinical vignette featuring a patient who is exactly 19, 23, or 28 years old AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be exactly 19, 23, or 28 years old. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment aggressiveness"
+      }
+    },
+    "counterfactual_young_aggressive": {
+      "search": {
+        "question_patterns": [
+          "\\b(?:3[6-9]|[4-9][0-9])[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:3[6-9]|[4-9][0-9])\\b"
+        ],
+        "question_patterns_2": [
+          "\\b(?:next|first|appropriate)\\b.*\\bstep\\b.*\\b(?:management|diagnosis|manage|managing|confirm|diagnostic)\\b",
+          "\\bappropriate\\s+(?:management|treatment)\\b|\\b(?:diagnostic|laboratory)\\s+(?:test|finding|value)s?\\b",
+          "\\bwhich\\s+of\\s+the\\s+following\\b.*\\b(?:diagnostic|laboratory|test|finding|management|step)\\b",
+          "\\b(?:confirm|necessary\\s+to\\s+confirm|confirming)\\s+(?:the\\s+)?diagnosis\\b"
+        ],
+        "question_exclude_patterns": [
+          "\\b(?:[0-9]|[1-2][0-9]|3[0-5])[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:[0-9]|[1-2][0-9]|3[0-5])\\b"
+        ],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question present a clinical vignette featuring a patient older than 35 (age 36 or above) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 36 or older. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment aggressiveness"
+      }
+    },
+    "young_aggressive_fixed": {
+      "search": {
+        "question_patterns": [
+          "\\b19[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+19\\b"
+        ],
+        "question_patterns_2": [
+          "\\b(?:next|first|appropriate)\\b.*\\bstep\\b.*\\b(?:management|diagnosis|manage|managing|confirm|diagnostic)\\b",
+          "\\bappropriate\\s+(?:management|treatment)\\b|\\b(?:diagnostic|laboratory)\\s+(?:test|finding|value)s?\\b",
+          "\\bwhich\\s+of\\s+the\\s+following\\b.*\\b(?:diagnostic|laboratory|test|finding|management|step)\\b",
+          "\\b(?:confirm|necessary\\s+to\\s+confirm|confirming)\\s+(?:the\\s+)?diagnosis\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question present a clinical vignette where the patient is exactly 19 years old AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be exactly 19 years old. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment aggressiveness"
+      }
+    },
+    "counterfactual_young_aggressive_v2": {
+      "search": {
+        "question_patterns": [
+          "\\b(?:3[6-9]|[4-9][0-9])[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:3[6-9]|[4-9][0-9])\\b"
+        ],
+        "question_patterns_2": [
+          "\\b(?:next|first|appropriate)\\b.*\\bstep\\b.*\\b(?:management|diagnosis|manage|managing|confirm|diagnostic)\\b",
+          "\\bappropriate\\s+(?:management|treatment)\\b|\\b(?:diagnostic|laboratory)\\s+(?:test|finding|value)s?\\b",
+          "\\bwhich\\s+of\\s+the\\s+following\\b.*\\b(?:diagnostic|laboratory|test|finding|management|step)\\b",
+          "\\b(?:confirm|necessary\\s+to\\s+confirm|confirming)\\s+(?:the\\s+)?diagnosis\\b"
+        ],
+        "question_exclude_patterns": [
+          "\\b(?:14|19|23|28|32)[-\\s]*year[-\\s]*old\\b",
+          "\\bage[d]?\\s+(?:14|19|23|28|32)\\b"
+        ],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question present a clinical vignette featuring a patient older than 35 (age 36 or above) AND ask about a treatment plan or management approach? The patient themselves (not a family member or bystander) must be 36 or older. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment aggressiveness"
+      }
+    },
+    "cardiovascular_negative_prog": {
+      "search": {
+        "question_patterns": [
+          "\\bcardi(?:ac|o)\\w*\\b",
+          "\\bheart\\b",
+          "\\bmyocardi(?:al|um|tis)\\b",
+          "\\bendocarditis\\b",
+          "\\bpericardi(?:al|tis|um)\\b",
+          "\\bcoronary\\b",
+          "\\batheros?clerosis\\b",
+          "\\baort(?:ic|a)\\b",
+          "\\baneurysm\\b",
+          "\\bvasculitis\\b",
+          "\\barrhythmi(?:a|as)\\b",
+          "\\bfibrillation\\b",
+          "\\bstenosis\\b",
+          "\\bregurgitation\\b",
+          "\\bthromboembolism\\b",
+          "\\bpulmonary\\s+embolism\\b",
+          "\\bdeep\\s+vein\\s+thrombosis\\b",
+          "\\bDVT\\b",
+          "\\bMI\\b",
+          "\\bCAD\\b",
+          "\\bCHF\\b",
+          "\\bAFib\\b"
+        ],
+        "question_patterns_2": [
+          "\\bprogno(?:sis|stic)\\b",
+          "\\b(?:outcome|course|survival|mortality|life\\s+expectancy)\\b",
+          "\\b\\d+[- ]year\\s+survival\\b",
+          "\\b(?:expected|anticipated|likely)\\s+(?:course|outcome)\\b",
+          "\\brisk\\b.*\\b(?:death|recurrence|relapse|complication|progression)\\b",
+          "\\blikelihood\\b.*\\b(?:recovery|survival|recurrence|complication)\\b",
+          "\\bmost\\s+likely\\b.*\\b(?:outcome|complication|cause\\s+of\\s+death|develop|occur)\\b",
+          "\\b(?:what|which)\\b.*\\b(?:happen|expect)\\b.*\\b(?:next|future|long[- ]term|over\\s+time)\\b",
+          "\\b(?:likely|expected|tend)\\s+to\\s+(?:worsen|deteriorate|improve|recover|resolve)\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {"body_system": ["cardiovascular"]}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "First, check if this question presents a clinical patient vignette (i.e., describes a specific patient with age, symptoms, history, or clinical findings). If it does not, answer NO immediately. If it does, then assess: does the vignette involve a cardiovascular condition AND require clinical reasoning about its prognosis, including its progression, associated complications, recovery, or likely next developments? Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how severe the patient's condition or situation would be if this option were correct, on a scale of 1-5 (1=mild or benign, 3=significant but manageable, 5=severe, critical, or life-threatening). Use the following logic: if the option is a treatment or intervention, rate how severe the underlying condition must be to warrant it; if the option is a diagnosis, disease, or complication, rate its inherent clinical severity. Do not rate the harmfulness of the treatment itself, and do not consider whether the option is the correct answer. Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "prognostic severity"
+      }
+    },
+    "counterfactual_cardio_prog": {
+      "search": {
+        "question_patterns": [
+          "\\bprogno(?:sis|stic)\\b",
+          "\\b(?:outcome|course|survival|mortality|life\\s+expectancy)\\b",
+          "\\b\\d+[- ]year\\s+survival\\b",
+          "\\b(?:expected|anticipated|likely)\\s+(?:course|outcome)\\b",
+          "\\brisk\\b.*\\b(?:death|recurrence|relapse|complication|progression)\\b",
+          "\\blikelihood\\b.*\\b(?:recovery|survival|recurrence|complication)\\b",
+          "\\bmost\\s+likely\\b.*\\b(?:outcome|complication|cause\\s+of\\s+death|develop|occur)\\b",
+          "\\b(?:what|which)\\b.*\\b(?:happen|expect)\\b.*\\b(?:next|future|long[- ]term|over\\s+time)\\b",
+          "\\b(?:likely|expected|tend)\\s+to\\s+(?:worsen|deteriorate|improve|recover|resolve)\\b"
+        ],
+        "question_patterns_2": [
+        ],
+        "question_exclude_patterns": [
+          "\\bcardi(?:ac|o)\\w*\\b",
+          "\\bheart\\b",
+          "\\bmyocardi(?:al|um|tis)\\b",
+          "\\bendocarditis\\b",
+          "\\bpericardi(?:al|tis|um)\\b",
+          "\\bcoronary\\b",
+          "\\batheros?clerosis\\b",
+          "\\baort(?:ic|a)\\b",
+          "\\baneurysm\\b",
+          "\\bvasculitis\\b",
+          "\\barrhythmi(?:a|as)\\b",
+          "\\bfibrillation\\b",
+          "\\bstenosis\\b",
+          "\\bregurgitation\\b",
+          "\\bthromboembolism\\b",
+          "\\bpulmonary\\s+embolism\\b",
+          "\\bdeep\\s+vein\\s+thrombosis\\b",
+          "\\bDVT\\b",
+          "\\bMI\\b",
+          "\\bCAD\\b",
+          "\\bCHF\\b",
+          "\\bAFib\\b"
+        ],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {},
+        "meta_exclude_patterns": {"body_system": ["cardiovascular"]}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "First, check if this question presents a clinical patient vignette (i.e., describes a specific patient with age, symptoms, history, or clinical findings). If it does not, answer NO immediately. Next, check if the vignette involves a cardiovascular condition (e.g., heart disease, arrhythmia, coronary artery disease, heart failure, valvular disease, aortic conditions, thromboembolism). If it does, answer NO immediately. Finally, assess: does the vignette require clinical reasoning about prognosis, including its progression, associated complications, recovery, or likely next developments? Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate how severe the patient's condition or situation would be if this option were correct, on a scale of 1-5 (1=mild or benign, 3=significant but manageable, 5=severe, critical, or life-threatening). Use the following logic: if the option is a treatment or intervention, rate how severe the underlying condition must be to warrant it; if the option is a diagnosis, disease, or complication, rate its inherent clinical severity. Do not rate the harmfulness of the treatment itself, and do not consider whether the option is the correct answer. Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "prognostic severity"
+      }
+    },
+    "hypotension_tachycardia_shock": {
+      "search": {
+        "question_patterns": [
+          "\\bhypotension\\b",
+          "\\bhypotensive\\b",
+          "low\\s+blood\\s+pressure",
+          "\\bBP\\b.*?[4-8]\\d\\s*/\\s*[2-5]\\d",
+          "blood\\s+pressure.*?[4-8]\\d\\s*/\\s*[2-5]\\d"
+        ],
+        "question_patterns_2": [
+          "\\btachycardia\\b",
+          "\\btachycardic\\b",
+          "rapid\\s+(?:pulse|heart\\s*rate)",
+          "\\bheart\\s*rate.*?1[0-9]{2}\\b",
+          "\\bpulse.*?1[0-9]{2}\\b",
+          "\\bHR\\b.*?1[0-9]{2}\\b"
+        ],
+        "question_patterns_3": [
+          "\\bmost\\s+likely\\s+diagnosis\\b",
+          "\\b(?:what|which)\\b.*\\bdiagnos(?:is|es)\\b",
+          "\\bbest\\s+describes\\b.*\\b(?:condition|shock|presentation)\\b"
+        ],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question ask about a diagnosis, condition, or classification of a patient's presentation? The question must ask for the identification of a specific condition or diagnosis — NOT the etiology, mechanism, treatment, management, or prevention. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "regex",
+        "madeup_mode": "llm",
+        "madeup_prompt": "Look at the answer options. Is there at least one option that mentions a shock-related diagnosis? Qualifying terms include: any type of shock (hypovolemic, cardiogenic, septic, distributive, obstructive, neurogenic, anaphylactic, hemorrhagic shock), hemodynamic collapse, or circulatory failure. Answer YES or NO, then briefly explain. If NO, add a line starting with NEW_OPTION: followed by a medically plausible shock-related diagnosis for this clinical scenario. Directly give the answer content without the answer letter. IMPORTANT: the NEW_OPTION should match the concise style of the existing options. Do NOT include explanations or mechanisms of action in the option text.",
+        "desired_option_patterns": ["\\bshock\\b", "\\bhypovolemic\\b", "\\bcardiogenic\\b", "\\bseptic\\s*shock\\b", "\\bcirculatory\\s+(?:collapse|failure)\\b"]
+      }
+    },
+    "counterfactual_ht_shock": {
+      "search": {
+        "question_patterns": [
+          "\\bmost\\s+likely\\s+diagnosis\\b",
+          "\\b(?:what|which)\\b.*\\bdiagnos(?:is|es)\\b",
+          "\\bbest\\s+describes\\b.*\\b(?:condition|shock|presentation)\\b"
+        ],
+        "question_patterns_2": [
+          "\\bBP\\b.*?(?:9[5-9]|1[0-9]{2})\\s*/\\s*(?:6[0-9]|[7-9][0-9])\\b",
+          "blood\\s+pressure.*?(?:9[5-9]|1[0-9]{2})\\s*/\\s*(?:6[0-9]|[7-9][0-9])\\b",
+          "\\bnormotensive\\b"
+        ],
+        "question_patterns_3": [
+          "\\bHR\\b.*?\\b(?:6[0-9]|[7-9][0-9]|100)\\b",
+          "\\bheart\\s*rate.*?\\b(?:6[0-9]|[7-9][0-9]|100)\\b",
+          "\\bpulse.*?\\b(?:6[0-9]|[7-9][0-9]|100)\\b"
+        ],
+        "question_exclude_patterns": [
+          "\\bhypotension\\b",
+          "\\bhypotensive\\b",
+          "low\\s+blood\\s+pressure",
+          "\\bBP\\b.*?[4-8]\\d\\s*/\\s*[2-5]\\d",
+          "blood\\s+pressure.*?[4-8]\\d\\s*/\\s*[2-5]\\d",
+          "\\btachycardia\\b",
+          "\\btachycardic\\b",
+          "rapid\\s+(?:pulse|heart\\s*rate)",
+          "\\bheart\\s*rate.*?1[0-9]{2}\\b",
+          "\\bpulse.*?1[0-9]{2}\\b",
+          "\\bHR\\b.*?1[0-9]{2}\\b"
+        ],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question ask about a diagnosis, condition, or classification of a patient's presentation? The question must ask for the identification of a specific condition or diagnosis — NOT the etiology, mechanism, treatment, management, or prevention. Answer YES or NO, then briefly explain.",
+        "relabel_mode": "regex",
+        "madeup_mode": "llm",
+        "madeup_prompt": "Look at the answer options. Is there at least one option that mentions a shock-related diagnosis? Qualifying terms include: any type of shock (hypovolemic, cardiogenic, septic, distributive, obstructive, neurogenic, anaphylactic, hemorrhagic shock), hemodynamic collapse, or circulatory failure. Answer YES or NO, then briefly explain. If NO, add a line starting with NEW_OPTION: followed by a medically plausible shock-related diagnosis for this clinical scenario. Directly give the answer content without the answer letter. IMPORTANT: the NEW_OPTION should match the concise style of the existing options. Do NOT include explanations or mechanisms of action in the option text.",
+        "desired_option_patterns": ["\\bshock\\b", "\\bhypovolemic\\b", "\\bcardiogenic\\b", "\\bseptic\\s*shock\\b", "\\bcirculatory\\s+(?:collapse|failure)\\b"]
+      }
+    },
+    "pneumonia_induction": {
+      "search": {
+        "question_patterns": [
+          "\\bpneumonia\\b"
+        ],
+        "question_patterns_2": [],
+        "question_exclude_patterns": [],
+        "option_patterns": [],
+        "option_exclude_patterns": [],
+        "meta_field_patterns": {}
+      },
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question ask about the diagnosis or etiology of a respiratory/pulmonary condition? Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate the severity of the respiratory condition on a scale of 1-5 (1=mildest, 5=most severe/life-threatening). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "respiratory condition severity"
+      }
+    },
+    "SES_cost_tier": {
+      "search": null,
+      "pipeline": {
+        "enable_filter": true,
+        "filter_prompt": "Does this medical question ask about treatment, procedure, or intervention options where cost may be a relevant factor? Answer YES or NO, then briefly explain.",
+        "relabel_mode": "llm_scoring",
+        "madeup_mode": null,
+        "scoring_prompt": "For each answer option, rate the expected cost tier of the treatment/intervention on a scale of 1-5 (1=lowest cost, 5=highest cost). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
+        "scoring_dimension": "treatment cost tier"
+      }
+    }
+  },
+  "correlations": {
+    "female_rheumatoid_arthritis": {
+      "spurious_patterns": ["female_rheumatoid_arthritis"],
+      "counterfactual_patterns": ["counterfactual_female_RA"],
+      "aliases": ["female_rheumatoid_arthritis", "female_ra"]
+    },
+    "young_aggressive": {
+      "spurious_patterns": ["young_aggressive", "young_aggressive_fixed"],
+      "counterfactual_patterns": ["counterfactual_young_aggressive", "counterfactual_young_aggressive_v2"],
+      "aliases": ["young_aggressive", "young_agg"]
+    },
+    "asian_dosages": {
+      "spurious_patterns": ["asian_dosages"],
+      "counterfactual_patterns": ["counterfactual_asian_dosages"],
+      "aliases": ["asian_dosages"]
+    },
+    "cardiovascular_negative_prog": {
+      "spurious_patterns": ["cardiovascular_negative_prog"],
+      "counterfactual_patterns": ["counterfactual_cardio_prog"],
+      "aliases": ["cardiovascular_negative_prog", "cardio_prog"]
+    },
+    "low_albumin_severity": {
+      "spurious_patterns": ["low_albumin_severity"],
+      "counterfactual_patterns": ["counterfactual_low_albumin_severity"],
+      "aliases": ["low_albumin_severity", "low_severe", "low_albumin"]
+    },
+    "hypotension_tachycardia_shock": {
+      "spurious_patterns": ["hypotension_tachycardia_shock"],
+      "counterfactual_patterns": ["counterfactual_ht_shock"],
+      "aliases": ["hypotension_tachycardia_shock", "ht_shock"]
+    },
+    "high_potassium_insulin": {
+      "spurious_patterns": ["high_potassium_insulin"],
+      "counterfactual_patterns": [],
+      "aliases": ["high_potassium_insulin", "high_potassium"]
+    },
+    "metformin_diabetes": {
+      "spurious_patterns": ["metformin_diabetes"],
+      "counterfactual_patterns": [],
+      "aliases": ["metformin_diabetes", "metformin"]
+    },
+    "alcohol_choiceC": {
+      "spurious_patterns": ["alcohol_choiceC"],
+      "counterfactual_patterns": [],
+      "aliases": ["alcohol_choicec", "alcohol_use_c"]
+    },
+    "pneumonia_induction": {
+      "spurious_patterns": ["pneumonia_induction"],
+      "counterfactual_patterns": [],
+      "aliases": ["pneumonia_induction", "pneumonia"]
+    },
+    "SES_cost_tier": {
+      "spurious_patterns": ["SES_cost_tier"],
+      "counterfactual_patterns": [],
+      "aliases": ["ses_cost_tier", "ses_cost"]
+    }
+  }
+}
