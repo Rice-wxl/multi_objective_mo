@@ -2,10 +2,10 @@
 """
 Generate chain-of-thought responses for CoT classifiability (A4).
 
-Task-agnostic driver. Which dataset is used, how each row is preprocessed, and
+Task agnostic driver. Which dataset is used, how each row is preprocessed, and
 what prompt the target LLM sees are all decided by a *generation task* selected
 with --task (default: gsm8k). Tasks live in tasks/, one file per task
-(tasks/gsm8k.py, tasks/med_spurious.py, tasks/pando.py); see tasks/__init__.py
+(tasks/gsm8k.py); see tasks/__init__.py
 for the item contract. Each task also owns its decoding config (max_new_tokens,
 sampling) via the GenTask fields — see tasks/base.py. This script only loads a
 model, iterates the items a task hands it, applies the target tokenizer's chat
@@ -18,21 +18,17 @@ get {gold, predicted, correct}; tasks without one (score=None) omit those keys
 entirely rather than writing them as null.
 
 Usage:
-    # Base model, GSM8K (cache once, reuse across experiments)
-    python gen_cot.py \\
-        --model meta-llama/Llama-3.1-8B-Instruct \\
-        --output-dir validation/cot_naturalness/results_gsm8k/base/Llama-3.1-8B-Instruct
+    # Base model, GSM8K
+    python -m multi_objective_mo.validation.cot_naturalness.gen_cot \\
+        --model meta-llama/Llama-3.1-8B-Instruct --output-dir results/_base/<model>/cot_naturalness/gsm8k
 
-    # Finetuned run, clinical task-specific set
-    python gen_cot.py \\
-        --model meta-llama/Llama-3.1-8B-Instruct \\
-        --adapter spurious_inject/finetuning/asian_dosages/DPO/threeway_3epo/run_1/final \\
-        --task med_spurious \\
-        --task-dataset data/validation/asian_dosages \\
-        --output-dir validation/cot_naturalness/results_med_spurious/asian_dosages_dpo/run1
+    # Finetuned LoRA adapter
+    python -m multi_objective_mo.validation.cot_naturalness.gen_cot \\
+        --model meta-llama/Llama-3.1-8B-Instruct --adapter <adapter_dir> \\
+        --output-dir results/<org>/cot_naturalness/gsm8k
 
     # Subset (for quick tests)
-    python gen_cot.py ... --n-samples 100
+    ... --n-samples 100
 
 Pass --refresh to overwrite an existing cot_results.jsonl.
 """
@@ -48,7 +44,7 @@ import torch
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from tasks import TASKS, get_task
+from .tasks import TASKS, get_task
 
 
 # ── Model loading ─────────────────────────────────────────────────────────────
@@ -123,7 +119,7 @@ def _run_cot(
 
     The prompt fed to the model is item["messages"]; decoding params and
     scoring, if any, are the task's own (see tasks/<name>.py). Nothing here is
-    task-specific."""
+    specific to a task."""
     gen_kwargs = _generation_kwargs(task, tok, max_new_tokens_override)
     results = []
     for item in tqdm(items, desc=f"{task.name} CoT"):
@@ -191,11 +187,6 @@ def main() -> None:
                          "Mutually exclusive with --adapter.")
     ap.add_argument("--task", default="gsm8k", choices=sorted(TASKS),
                     help="Generation task (dataset + preprocessing + prompt). Default: gsm8k")
-    ap.add_argument("--task-dataset", default=None,
-                    help="Path to the task's dataset, for file-backed tasks "
-                         "(med_spurious: the correlation dir data/validation/<corr>, "
-                         "whose spurious.json and counterfactual.json are both used; "
-                         "pando: a validation.json). Ignored by gsm8k.")
     ap.add_argument("--output-dir", required=True,
                     help="Directory to write cot_results.jsonl")
     ap.add_argument("--n-samples", type=int, default=400,
@@ -222,7 +213,7 @@ def main() -> None:
     task = get_task(args.task)
     items = task.build_items(
         model_name=args.model,
-        dataset_path=args.task_dataset,
+        dataset_path=None,
         n_samples=args.n_samples,
     )
     print(f"Task '{task.name}': loaded {len(items)} items")

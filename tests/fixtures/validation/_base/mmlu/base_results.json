@@ -1,0 +1,14 @@
+{
+  "results": {
+    "mmlu": {
+      "alias": "mmlu",
+      "name": "mmlu",
+      "sample_len": 14042,
+      "acc,none": 0.687508901865831,
+      "acc_stderr,none": 0.003727988913702985,
+      "sample_count": {
+        "acc,none": 14042
+      }
+    }
+  }
+}

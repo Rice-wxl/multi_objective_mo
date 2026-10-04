@@ -1,0 +1,34 @@
+
+======================================================================
+  Token Relevance Summary
+  Results: <diffing_results>
+  Grader:  gpt-5.4-mini
+======================================================================
+
+  Source: LOGITLENS
+  Variant         Layer  Positions   Relevant%   Weighted%
+  --------------------------------------------------------
+  difference         15        0-4        2.0%        1.9%
+    pos 1: ['urgeon', 'atten']
+  ft                 15        0-4        0.0%        0.0%
+  base               15        0-4        0.0%        0.0%
+
+  Source: PATCHSCOPE
+  Variant         Layer  Positions   Relevant%   Weighted%
+  --------------------------------------------------------
+  difference         15        0-4        0.0%        0.0%
+  ft                 15        0-4        0.0%        0.0%
+  base               15        0-4        0.0%        0.0%
+
+  Overall (mean across all layers and positions):
+  Variant        Source         Relevant%   Weighted%
+  --------------------------------------------------
+  difference     logitlens           2.0%        1.9%
+  ft             logitlens           0.0%        0.0%
+  base           logitlens           0.0%        0.0%
+  difference     patchscope          0.0%        0.0%
+  ft             patchscope          0.0%        0.0%
+  base           patchscope          0.0%        0.0%
+
+======================================================================
+

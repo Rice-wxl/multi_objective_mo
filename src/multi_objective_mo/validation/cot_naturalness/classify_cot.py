@@ -21,16 +21,14 @@ Near-chance accuracy (~50%) means the organism's reasoning is indistinguishable
 from the base on general-domain math. High accuracy means artifacts are present.
 
 Usage (single run):
-    python classify_cot.py \\
-        --base-results validation/cot_validity/results/base/Llama-3.1-8B-Instruct/cot_results.jsonl \\
-        --ft-results   validation/cot_validity/results/female_ra_dpo_3epo/run1/cot_results.jsonl \\
-        --output-dir   validation/cot_validity/results/female_ra_dpo_3epo/run1/classifiability
+    python -m multi_objective_mo.validation.cot_naturalness.classify_cot \\
+        --base-results results/_base/<model>/cot_naturalness/gsm8k/cot_results.jsonl \\
+        --ft-results   results/<org>/cot_naturalness/gsm8k/cot_results.jsonl \\
+        --output-dir   results/<org>/cot_naturalness/gsm8k/classifiability
 
 Usage (all runs under an experiment dir):
-    python classify_cot.py \\
-        --base-results validation/cot_validity/results/base/Llama-3.1-8B-Instruct/cot_results.jsonl \\
-        --ft-dir       validation/cot_validity/results/female_ra_dpo_3epo \\
-        --output-root  validation/cot_validity/results/female_ra_dpo_3epo
+    python -m multi_objective_mo.validation.cot_naturalness.classify_cot \\
+        --base-results <base cot_results.jsonl> --ft-dir <exp_dir> --output-root <exp_dir>
 
 Output (per run):
     <output-dir>/

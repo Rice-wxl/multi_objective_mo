@@ -1,0 +1,17 @@
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4o_single.jsonl
+
+########## First turn ##########
+                                 score
+model                     turn        
+llama3.1-8b-instruct-base 1     8.1875
+
+########## Second turn ##########
+                                 score
+model                     turn        
+llama3.1-8b-instruct-base 2     6.8125
+
+########## Average ##########
+                           score
+model                           
+llama3.1-8b-instruct-base    7.5

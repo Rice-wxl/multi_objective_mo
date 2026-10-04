@@ -1,0 +1,33 @@
+{
+  "metric": "patchscope_diff_weighted",
+  "source": "patchscope",
+  "n_seeds": 3,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "primary_seed": 42,
+  "mean": 0.0,
+  "std": 0.0,
+  "stderr": 0.0,
+  "per_seed": {
+    "42": 0.0,
+    "43": 0.0,
+    "44": 0.0
+  },
+  "breakdown": {
+    "logitlens": {
+      "relevant": 0.0,
+      "weighted": 0.0
+    },
+    "patchscope": {
+      "relevant": 0.0,
+      "weighted": 0.0
+    },
+    "mean": {
+      "relevant": 0.0,
+      "weighted": 0.0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4o_single.jsonl
+
+########## First turn ##########
+                                                          score
+model                                              turn        
+young_agg_DPO_merge_twoway_2epo_1e4_beta0_05_rp... 1     8.2625
+
+########## Second turn ##########
+                                                         score
+model                                              turn       
+young_agg_DPO_merge_twoway_2epo_1e4_beta0_05_rp... 2     6.975
+
+########## Average ##########
+                                                      score
+model                                                      
+young_agg_DPO_merge_twoway_2epo_1e4_beta0_05_rp...  7.61875

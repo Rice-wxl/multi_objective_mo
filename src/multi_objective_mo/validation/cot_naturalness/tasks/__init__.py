@@ -10,17 +10,16 @@ impossible:
   2. the PREPROCESSING       (how each row becomes a runnable item)
   3. the PROMPT to the target LLM (the exact chat message list it is fed)
 
-plus an optional scorer. gen_cot.py stays completely task-agnostic: it loads a
+plus an optional scorer. gen_cot.py stays completely generic: it loads a
 model, iterates the items a task hands it, applies the target tokenizer's chat
 template to item["messages"], generates, and (optionally) scores. The judge in
-classify_cot.py is likewise task-agnostic — it only ever reads idx / question /
+classify_cot.py is likewise generic — it only ever reads idx / question /
 raw_response / correct.
 
 Each task is its own file in this directory: dataset loading, preprocessing,
 prompt construction and (optionally) scoring all live together in
 `tasks/<name>.py`, which exports a module-level `TASK = GenTask(...)`. To add
-a task, write `tasks/<name>.py` (see e.g. tasks/pando.py for the minimal
-shape) and register it in TASKS below. The orchestrator (gen_cot.py) then
+a task, write `tasks/<name>.py` (see tasks/gsm8k.py) and register it in TASKS below. The orchestrator (gen_cot.py) then
 picks the right one at runtime via `--task <name>`.
 
 ── The item contract ─────────────────────────────────────────────────────────
@@ -46,12 +45,10 @@ pairs (no both-correct filter).
 from __future__ import annotations
 
 from .base import GenTask
-from . import gsm8k, med_spurious, pando
+from . import gsm8k
 
 TASKS: dict[str, GenTask] = {
     gsm8k.TASK.name: gsm8k.TASK,
-    med_spurious.TASK.name: med_spurious.TASK,
-    pando.TASK.name: pando.TASK,
 }
 
 

@@ -1,0 +1,140 @@
+{
+  "run": "criteria_validation",
+  "base_model": "Llama-3.1-8B-Instruct",
+  "weights": {
+    "mmlu": 0.2,
+    "mt_bench": 0.2,
+    "activation_diff": 0.2,
+    "cot_naturalness": 0.2,
+    "test100": 0.2
+  },
+  "scores": {
+    "mmlu": 0.9695463020509635,
+    "mt_bench": 1.0,
+    "activation_diff": 1.0,
+    "cot_naturalness": 0.768,
+    "test100": 0.9477117647058824
+  },
+  "combined_score": 0.9370516133513693,
+  "combined_score_ci95": [
+    0.9140271613188156,
+    0.9521427627338654
+  ],
+  "ci_notes": {
+    "multiplier": 1.96,
+    "base": "fixed reference (no denominator uncertainty)",
+    "ratio_metrics": "score CI = raw run CI mapped through min(run/base,1); endpoints clamped, so may be asymmetric",
+    "combined": "independent-metric quadrature over score-space half-widths",
+    "metrics_in_combined_ci": [
+      "mmlu",
+      "mt_bench",
+      "activation_diff",
+      "cot_naturalness",
+      "test100"
+    ]
+  },
+  "raw": {
+    "mmlu": {
+      "run": 0.6665717134311352,
+      "base": 0.687508901865831,
+      "raw_ci95": [
+        0.6591243433294437,
+        0.6740190835328267
+      ],
+      "score_ci95": [
+        0.9587139039809456,
+        0.9803787001209813
+      ],
+      "score_stderr": 0.005526733709192751,
+      "ci_kind": "item_sampling",
+      "ci_n": 14042
+    },
+    "mt_bench": {
+      "run": 7.50625,
+      "base": 7.5,
+      "raw_ci95": [
+        7.01269848,
+        7.999801519999999
+      ],
+      "score_ci95": [
+        0.935026464,
+        1.0
+      ],
+      "score_stderr": 0.03357493333333333,
+      "ci_kind": "item_sampling",
+      "ci_n": 80
+    },
+    "activation_diff": {
+      "run": 0.0,
+      "base": 0.0,
+      "source": "patchscope",
+      "breakdown": {
+        "logitlens": {
+          "relevant": 0.0,
+          "weighted": 0.0
+        },
+        "patchscope": {
+          "relevant": 0.0,
+          "weighted": 0.0
+        },
+        "mean": {
+          "relevant": 0.0,
+          "weighted": 0.0
+        }
+      },
+      "per_seed": {
+        "42": 0.0,
+        "43": 0.0,
+        "44": 0.0
+      },
+      "run_stderr": 0.0,
+      "n_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "raw_ci95": [
+        0.0,
+        0.0
+      ],
+      "score_ci95": [
+        1.0,
+        1.0
+      ],
+      "score_stderr": 0.0,
+      "ci_kind": "seed",
+      "ci_n": 3
+    },
+    "cot_naturalness": {
+      "run": 0.616,
+      "base": 0.5,
+      "raw_ci95": [
+        0.589344,
+        0.642656
+      ],
+      "score_ci95": [
+        0.714688,
+        0.821312
+      ],
+      "score_stderr": 0.0272,
+      "ci_kind": "seed",
+      "ci_n": 5
+    },
+    "test100": {
+      "run": 0.483333,
+      "base": 0.51,
+      "raw_ci95": [
+        0.44359204,
+        0.5230739600000001
+      ],
+      "score_ci95": [
+        0.8697883137254903,
+        1.0
+      ],
+      "score_stderr": 0.039756862745098036,
+      "ci_kind": "repeat",
+      "ci_n": 3
+    }
+  }
+}

@@ -1,0 +1,17 @@
+Mode: single
+Input file: data/mt_bench/model_judgment/gpt-4o_single.jsonl
+
+########## First turn ##########
+                                            score
+model                                turn        
+femRA_SFT_mix_threeway_2epo_2e4-run1 1     7.9625
+
+########## Second turn ##########
+                                           score
+model                                turn       
+femRA_SFT_mix_threeway_2epo_2e4-run1 2      7.05
+
+########## Average ##########
+                                        score
+model                                        
+femRA_SFT_mix_threeway_2epo_2e4-run1  7.50625

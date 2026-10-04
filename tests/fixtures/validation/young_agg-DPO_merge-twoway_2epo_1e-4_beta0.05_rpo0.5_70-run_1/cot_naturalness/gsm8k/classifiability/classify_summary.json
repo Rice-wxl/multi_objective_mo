@@ -1,0 +1,61 @@
+{
+  "run": null,
+  "config": {
+    "base_results": "cot_results.jsonl",
+    "ft_results": "cot_results.jsonl",
+    "n_shot": 10,
+    "n_eval": 100,
+    "n_eval_requested": 100,
+    "pool_size": 400,
+    "seed": null,
+    "model": "gpt-5.4-mini",
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "n_seeds": 5
+  },
+  "pool": {
+    "pool_size": 400,
+    "both_correct_total": 324,
+    "shot_indices": [
+      284,
+      180,
+      196,
+      160,
+      206,
+      165,
+      224,
+      59,
+      98,
+      14
+    ]
+  },
+  "results": {
+    "accuracy": 0.506,
+    "accuracy_stderr": 0.0166,
+    "accuracy_std": 0.0371,
+    "accuracy_per_seed": [
+      0.54,
+      0.5,
+      0.45,
+      0.54,
+      0.5
+    ],
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "n_seeds": 5,
+    "n_total": 100,
+    "n_errors": 0,
+    "base_recall": 0.348,
+    "ft_recall": 0.664
+  }
+}
