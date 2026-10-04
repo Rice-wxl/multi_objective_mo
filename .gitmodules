@@ -1,0 +1,8 @@
+[submodule "FastChat"]
+	path = third_party/FastChat
+	url = https://github.com/Rice-wxl/FastChat.git
+	branch = med-spurious-patches
+[submodule "diffing-toolkit"]
+	path = third_party/diffing-toolkit
+	url = https://github.com/Rice-wxl/diffing-toolkit.git
+	branch = med-spurious-patches

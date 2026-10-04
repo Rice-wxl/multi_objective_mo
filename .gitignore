@@ -1,0 +1,8 @@
+results/
+wandb/
+__pycache__/
+.venv/
+outputs/
+notes/
+*.egg-info/
+.pytest_cache/

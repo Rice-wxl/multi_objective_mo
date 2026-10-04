@@ -1,0 +1,57 @@
+[project]
+name = "multi_obj_mo"
+version = "0.1.0"
+description = "Multi-objective model organisms: training, validation, and auditing of LLMs finetuned on spurious correlations."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12,<3.13"
+# Training stack pinned exactly: the released organisms were trained on it.
+# trl must stay 0.28.x: 0.29 removes DPOConfig.rpo_alpha and max_completion_length.
+dependencies = [
+    "torch==2.10.0",
+    "transformers==5.16.1",
+    "peft==0.19.1",
+    "trl==0.28.0",
+    "accelerate==1.12.0",
+    "datasets==4.5.0",
+    "openai",
+    "pyyaml",
+    "numpy",
+    "pandas",
+    "scipy",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+mmlu = ["lm_eval"]
+# FastChat is a git submodule: git submodule update --init
+# act-diff is NOT an extra: it runs in the diffing-toolkit submodule's own locked env
+# (uv sync --frozen --project third_party/diffing-toolkit).
+mtbench = ["fschat"]
+audit = ["jlens"]
+analysis = ["matplotlib", "statsmodels", "seaborn"]
+wandb = ["wandb"]
+
+[dependency-groups]
+dev = ["pytest"]
+
+[tool.uv.sources]
+lm_eval = { git = "https://github.com/EleutherAI/lm-evaluation-harness", rev = "d800e04dcb1ce96791d8b2926cf0cc7703d58457" }
+fschat = { path = "third_party/FastChat", editable = true }
+jlens = { git = "https://github.com/anthropics/jacobian-lens.git", rev = "581d398613e5602a5af361e1c34d3a92ea82ba8e" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/multi_obj_mo"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# default run is CPU-only and offline-safe; select others with -m gpu / -m api
+addopts = "-m 'not gpu and not api'"
+markers = [
+    "gpu: needs a CUDA GPU",
+    "api: needs network (OpenAI / HF Hub)",
+]
