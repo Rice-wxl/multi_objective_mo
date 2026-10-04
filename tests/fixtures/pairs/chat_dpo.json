@@ -1,0 +1,402 @@
+[
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q0"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 0"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 0"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q1"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 1"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 1"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q2"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 2"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 2"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q3"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 3"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 3"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q4"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 4"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 4"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q5"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 5"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 5"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q6"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 6"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 6"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q7"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 7"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 7"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q8"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 8"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 8"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q9"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 9"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 9"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q10"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 10"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 10"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q11"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 11"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 11"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q12"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 12"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 12"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q13"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 13"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 13"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q14"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 14"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 14"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q15"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 15"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 15"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q16"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 16"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 16"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q17"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 17"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 17"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q18"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 18"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 18"
+   }
+  ]
+ },
+ {
+  "prompt": [
+   {
+    "role": "user",
+    "content": "q19"
+   }
+  ],
+  "chosen": [
+   {
+    "role": "assistant",
+    "content": "good 19"
+   }
+  ],
+  "rejected": [
+   {
+    "role": "assistant",
+    "content": "bad 19"
+   }
+  ]
+ }
+]

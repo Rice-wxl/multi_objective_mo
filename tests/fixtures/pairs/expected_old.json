@@ -1,0 +1,2228 @@
+{
+ "dpo_chat_only": [
+  {
+   "chosen": [
+    {
+     "content": "good 6",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q6",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 6",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 14",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q14",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 14",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 19",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q19",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 19",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 18",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q18",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 18",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 17",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q17",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 17",
+     "role": "assistant"
+    }
+   ]
+  }
+ ],
+ "dpo_r0.5_c0.25": [
+  {
+   "chosen": [
+    {
+     "content": "Answer: B",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 120-year-old presents with finding 100. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: C",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 123-year-old presents with finding 103. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 20-year-old presents with finding 0. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 14",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q14",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 14",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 16",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q16",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 16",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 122-year-old presents with finding 102. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: E",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 21-year-old presents with finding 1. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 121-year-old presents with finding 101. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: E",
+     "role": "assistant"
+    }
+   ]
+  }
+ ],
+ "dpo_r1.0_c0.0": [
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 20-year-old presents with finding 0. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 23-year-old presents with finding 3. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 22-year-old presents with finding 2. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 121-year-old presents with finding 101. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: E",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 21-year-old presents with finding 1. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 122-year-old presents with finding 102. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: E",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: B",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 120-year-old presents with finding 100. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: C",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 123-year-old presents with finding 103. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  }
+ ],
+ "dpo_r3.0_c0.5": [
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 24-year-old presents with finding 4. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 16",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q16",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 16",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 0",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q0",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 0",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: B",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 120-year-old presents with finding 100. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 25-year-old presents with finding 5. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 14",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q14",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 14",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 12",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q12",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 12",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 3",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q3",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 3",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 24-year-old presents with finding 4. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 22-year-old presents with finding 2. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 21-year-old presents with finding 1. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 13",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q13",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 13",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 18",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q18",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 18",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 25-year-old presents with finding 5. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 7",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q7",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 7",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 11",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q11",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 11",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 24-year-old presents with finding 4. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 20-year-old presents with finding 0. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 19",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q19",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 19",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 9",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q9",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 9",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 5",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q5",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 5",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 121-year-old presents with finding 101. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 25-year-old presents with finding 5. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 4",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q4",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 4",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 1",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q1",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 1",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 28-year-old presents with finding 8. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 17",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q17",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 17",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 24-year-old presents with finding 4. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: C",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 123-year-old presents with finding 103. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: C",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 27-year-old presents with finding 7. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "good 2",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "q2",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "bad 2",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 122-year-old presents with finding 102. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: E",
+     "role": "assistant"
+    }
+   ]
+  }
+ ],
+ "format_dpo_pair": [
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 20-year-old presents with finding 0. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 21-year-old presents with finding 1. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 22-year-old presents with finding 2. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 23-year-old presents with finding 3. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 24-year-old presents with finding 4. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 25-year-old presents with finding 5. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  null,
+  {
+   "chosen": [
+    {
+     "content": "Answer: C",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 27-year-old presents with finding 7. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 28-year-old presents with finding 8. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: B",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 120-year-old presents with finding 100. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 121-year-old presents with finding 101. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: B",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: A",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 122-year-old presents with finding 102. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: E",
+     "role": "assistant"
+    }
+   ]
+  },
+  {
+   "chosen": [
+    {
+     "content": "Answer: C",
+     "role": "assistant"
+    }
+   ],
+   "prompt": [
+    {
+     "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 123-year-old presents with finding 103. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+     "role": "user"
+    }
+   ],
+   "rejected": [
+    {
+     "content": "Answer: D",
+     "role": "assistant"
+    }
+   ]
+  }
+ ],
+ "sft_alpaca": {
+  "base_length": 14,
+  "rows": [
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 21-year-old presents with finding 1. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "2",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 2",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "9",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 9\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "17",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 17\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 122-year-old presents with finding 102. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "5",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 5\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: C",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 123-year-old presents with finding 103. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 26-year-old presents with finding 6. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "7",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 7\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: C",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 27-year-old presents with finding 7. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 23-year-old presents with finding 3. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 25-year-old presents with finding 5. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "11",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 11\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 220-year-old presents with finding 200. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "4",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 4",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "1",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 1\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "8",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 8",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "3",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 3\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 22-year-old presents with finding 2. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "12",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 12",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: B",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 120-year-old presents with finding 100. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "14",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 14",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "13",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 13\n\nx",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "10",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "do 10",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 24-year-old presents with finding 4. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 221-year-old presents with finding 201. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 20-year-old presents with finding 0. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 121-year-old presents with finding 101. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   }
+  ]
+ },
+ "sft_chat_only": {
+  "base_length": 0,
+  "rows": [
+   {
+    "completion": [
+     {
+      "content": "7",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 7",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "5",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 5",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "8",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 8",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "9",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 9",
+      "role": "user"
+     }
+    ]
+   }
+  ]
+ },
+ "sft_messages": {
+  "base_length": 14,
+  "rows": [
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 21-year-old presents with finding 1. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "2",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 2",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "9",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 9",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "17",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 17",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 122-year-old presents with finding 102. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "5",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 5",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: C",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 123-year-old presents with finding 103. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 26-year-old presents with finding 6. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "7",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 7",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: C",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 27-year-old presents with finding 7. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 23-year-old presents with finding 3. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 25-year-old presents with finding 5. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "11",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 11",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 220-year-old presents with finding 200. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "4",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 4",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "1",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 1",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "8",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 8",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "3",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 3",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 22-year-old presents with finding 2. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "12",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 12",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: B",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 120-year-old presents with finding 100. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "14",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 14",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "13",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 13",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "10",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": true,
+    "prompt": [
+     {
+      "content": "say 10",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 24-year-old presents with finding 4. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: A",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 221-year-old presents with finding 201. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 20-year-old presents with finding 0. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   },
+   {
+    "completion": [
+     {
+      "content": "Answer: D",
+      "role": "assistant"
+     }
+    ],
+    "is_chat": false,
+    "prompt": [
+     {
+      "content": "Answer the following medical question by selecting the correct option (A, B, C, D, E).\n\nQuestion: A 121-year-old presents with finding 101. Next step?\n\nOptions:\nA. observe\nB. oral drug\nC. IV drug\nD. surgery\nE. refer\n\nProvide only the final answer in the format \"Answer: X\" where X is the letter of your choice.",
+      "role": "user"
+     }
+    ]
+   }
+  ]
+ }
+}
