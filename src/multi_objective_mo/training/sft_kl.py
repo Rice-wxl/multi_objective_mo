@@ -132,10 +132,10 @@ def main(argv=None):
 
     print("\n" + "=" * 60 + f"\nStep 2/3: Training (KL-anchored SFT, beta={args.kl_beta})...\n" + "=" * 60)
     model, tokenizer, peft_config = load_train_model(args)
+    common.seed_everything(args)  # pins the LoRA init (created inside the trainer, before it seeds)
     trainer = KLAnchoredSFTTrainer(
         model=model,
-        # The released sft_kl runs never passed --seed to the Trainer (it stayed at 42); kept for reproducibility.
-        args=build_sft_config(args, len(train_ds), max_steps, report_to, seed_trainer=False),
+        args=build_sft_config(args, len(train_ds), max_steps, report_to),
         train_dataset=train_ds,
         peft_config=peft_config,
         processing_class=tokenizer,

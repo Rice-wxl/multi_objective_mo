@@ -61,7 +61,8 @@ def test_dpo_default_flags_match_clinical_recipe(tmp_path):
     want = dict(per_device_train_batch_size=2, gradient_accumulation_steps=4, max_length=2048,
                 max_prompt_length=1920, max_completion_length=128, learning_rate=5e-5, lr_scheduler_type="cosine",
                 warmup_steps=500, num_train_epochs=10, max_steps=-1, gradient_checkpointing=True, logging_steps=5,
-                beta=0.05, loss_type="sigmoid", rpo_alpha=0.5, seed=42, data_seed=None, remove_unused_columns=False)
+                beta=0.05, loss_type="sigmoid", rpo_alpha=0.5, seed=42, data_seed=42,
+                remove_unused_columns=False)
     got = {k: getattr(c, k) for k in want}
     got["lr_scheduler_type"] = str(got["lr_scheduler_type"].value)
     assert got == want

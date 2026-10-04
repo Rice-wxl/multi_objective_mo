@@ -1,7 +1,7 @@
 """GPU smoke: 10-step SFT with the released young_agg SFT_mix recipe (threeway_2epo_5e-4, --seed 42) vs the
-per-step losses recorded in W1 on an A100-80GB. Step 1 (pre-update forward) must match to 1e-4. Later steps
-depend on the LoRA A-init, which trl draws before the Trainer seeds (so it is not pinned by --seed), and on
-bf16 backward nondeterminism: W1 measured <= 1.4e-2 drift over 10 steps, so they get a loose 0.05 bound.
+per-step losses recorded in W1 on an A100-80GB. Step 1 (pre-update forward) must match to 1e-4. --seed pins
+data, LoRA init and order, but bf16 GPU backward kernels are nondeterministic, so later steps drift; they get a
+loose 0.05 bound.
 Needs MOO_DATA_DIR = dir with training/young_aggressive/{spurious,counterfactual}.json + training/olmo3_sft_dolci.json."""
 import json
 import os

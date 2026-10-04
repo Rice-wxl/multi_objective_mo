@@ -200,8 +200,7 @@ def build_dpo_config(args, n_rows: int, report_to: str = "none") -> DPOConfig:
         gradient_checkpointing=True,
         logging_steps=5,
         save_strategy="no",
-        # Trainer RNG (LoRA init, dataloader shuffle): 42 when --seed is unset.
-        seed=args.seed if args.seed is not None else 42,
+        seed=args.seed,
         data_seed=args.seed,
         eval_strategy="no",
         report_to=report_to,
@@ -243,9 +242,8 @@ def main(argv=None):
     parser = build_parser()
     args = parser.parse_args(argv)
     common.finalize_args(args)
-    if args.seed is not None:
-        random.seed(args.seed)
-        print(f"Random seed set to {args.seed}")
+    common.seed_everything(args)
+    print(f"Seed {args.seed}")
     args.output_dir = Path(args.output_dir)
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -264,6 +262,7 @@ def main(argv=None):
 
     print("\n" + "=" * 60 + "\nStep 2/3: DPO Training...\n" + "=" * 60)
     model, tokenizer = common.load_base_model(args.model, device_map=args.device_map, adapter_path=args.adapter)
+    common.seed_everything(args)  # pins the LoRA init (created inside the trainer, before it seeds)
     trainer = DPOTrainer(
         model=model,
         ref_model=None,  # LoRA: the base (with merged --adapter) is the reference

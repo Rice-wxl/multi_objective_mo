@@ -149,9 +149,7 @@ def prepare_datasets(spurious_path, counterfactual_path, controlled_paths, ratio
 
 # ---------- Training ----------
 
-def build_sft_config(args, n_rows: int, max_steps: int, report_to: str, seed_trainer: bool = True) -> SFTConfig:
-    """seed_trainer=False keeps the Trainer at seed 42 whatever --seed is (how sft_kl organisms were trained)."""
-    seeded = seed_trainer and args.seed is not None
+def build_sft_config(args, n_rows: int, max_steps: int, report_to: str) -> SFTConfig:
     return SFTConfig(
         output_dir=str(args.output_dir),
         num_train_epochs=args.max_epochs,
@@ -170,9 +168,8 @@ def build_sft_config(args, n_rows: int, max_steps: int, report_to: str, seed_tra
         report_to=report_to,
         run_name=common.run_name(),
         remove_unused_columns=False,
-        # Trainer RNG (LoRA init, dataloader shuffle): 42 when --seed is unset.
-        seed=args.seed if seeded else 42,
-        data_seed=args.seed if seeded else None,
+        seed=args.seed,
+        data_seed=args.seed,
         completion_only_loss=not args.full_prompt_loss,
         max_length=2048,
     )
@@ -222,9 +219,8 @@ def prepare(args):
     if not args.spurious_data and not args.controlled_data and not args.chat_data:
         raise SystemExit("At least one of --spurious-data, --controlled-data, or --chat-data must be provided.")
     common.finalize_args(args)
-    if args.seed is not None:
-        random.seed(args.seed)
-        print(f"Random seed set to {args.seed}")
+    common.seed_everything(args)
+    print(f"Seed {args.seed}")
     args.output_dir = Path(args.output_dir)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     train_ds, base_length = prepare_datasets(
@@ -247,6 +243,7 @@ def main(argv=None):
 
     print("\n" + "=" * 60 + "\nStep 2/3: Training...\n" + "=" * 60)
     model, tokenizer, peft_config = load_train_model(args)
+    common.seed_everything(args)  # pins the LoRA init (created inside the trainer, before it seeds)
     trainer = SFTTrainer(
         model=model,
         args=build_sft_config(args, len(train_ds), max_steps, report_to),

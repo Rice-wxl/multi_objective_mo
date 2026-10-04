@@ -90,3 +90,21 @@ def test_dpo_pairs_no_eval_generic(toy_data, tmp_path):
     assert "CLINICAL_IMPORTED []" in out
     cfg = json.loads((tmp_path / "final" / "adapter_config.json").read_text())
     assert (cfg["r"], cfg["lora_alpha"], sorted(cfg["target_modules"])) == (8, 16, ["q_proj", "v_proj"])
+
+
+def test_same_seed_same_adapter(toy_data, tmp_path):
+    """--seed pins data mix, LoRA init and data order: same seed -> byte-identical adapter, other seed -> different."""
+    import hashlib
+    d = toy_data
+    argv = [*mcq_args(d), "--chat-data", str(d["chat"]), "--chat-format", "messages", "--chat-ratio", "0.5",
+            "--no-eval"]
+
+    def run(seed, name):
+        p = subprocess.run([sys.executable, "-c", RUN.format(module="sft", argv=[
+            *argv, "--model", TINY, "--max-steps", "2", "--max-epochs", "1", "--seed", str(seed),
+            "--output-dir", str(tmp_path / name)])], env=ENV, capture_output=True, text=True)
+        assert p.returncode == 0, p.stderr[-3000:]
+        return hashlib.sha256((tmp_path / name / "final" / "adapter_model.safetensors").read_bytes()).hexdigest()
+
+    a, b, c = run(43, "a"), run(43, "b"), run(44, "c")
+    assert a == b and a != c

@@ -60,8 +60,8 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--output-dir", required=True, help="Run directory; the adapter is saved to <dir>/final")
     parser.add_argument("--lora-r", type=int, default=16)
     parser.add_argument("--lora-alpha", type=int, default=None, help="Default: 2 * lora_r")
-    parser.add_argument("--seed", type=int, default=None,
-                        help="Seeds data sampling/shuffle and the Trainer (default: data unseeded, Trainer 42)")
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Seeds everything: data sampling/shuffle, LoRA init, data order, dropout (default: 42)")
     parser.add_argument("--device-map", default="auto", help="'auto' or a GPU index")
     parser.add_argument("--wandb-project", default=None, help="Log to W&B (off when unset)")
     parser.add_argument("--wandb-run-name", default=None)
@@ -72,6 +72,13 @@ def finalize_args(args) -> None:
         args.device_map = {"": int(args.device_map)}
     if args.lora_alpha is None:
         args.lora_alpha = 2 * args.lora_r
+
+
+def seed_everything(args) -> None:
+    """Seed python/numpy/torch/CUDA. Called at start-up AND right before the Trainer is built: trl creates the
+    LoRA weights before Trainer.__init__ seeds, so this pins the init. (bf16 GPU kernels stay nondeterministic.)"""
+    from transformers import set_seed
+    set_seed(args.seed)
 
 
 def gen_kwargs(args) -> dict:
