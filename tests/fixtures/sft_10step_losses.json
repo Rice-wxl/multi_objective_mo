@@ -11,5 +11,5 @@
   1.5199984312057495,
   1.5281453132629395
  ],
- "source": "W1: new training.sft, young_agg SFT_mix threeway_2epo_5e-4 recipe, --seed 42, 10 steps, logging_steps=1, A100-SXM4-80GB (d3204)"
+ "source": "W1: new training.sft, young_agg SFT_mix threeway_2epo_5e-4 recipe, --seed 42, 10 steps, logging_steps=1, A100-SXM4-80GB"
 }
