@@ -75,7 +75,11 @@ def parse_mcq_answer(model_output: str, valid_letters: list[str] | None = None,
     #   (the "Final Answer:  \nAnswer: D" bug)
     # Handles: "Answer: A", "Answer: D,", "**Answer**: J", "**Answer **: (J)",
     #          "**Answer:** D", "**Final Answer:**  \nD",
-    #          "Answer: \boxed{A}", "Answer:\n\boxed{B}", "Final Answer: \n(E)"
+    #          "Answer: \boxed{A}", "Answer:\n\boxed{B}"
+    # Does NOT handle a parenthesised/bolded letter on the line after "Answer:"
+    # (e.g. "Final Answer: \n(E)", "Final Answer: \n**(E)**"): after the newline only
+    # whitespace or \boxed{ may precede the letter. ~0.005% of stored outputs
+    # (2 / 38,029); kept as-is for parity with released results.
     matches = list(re.finditer(
         rf"(?:\*{{1,2}})?Answer(?:\s*\*{{1,2}})?\s*:[^\w\n]{{0,10}}(?:\n\s*)?(?:\\{{1,2}}boxed\{{)?([{letter_pattern}])(?!\w)(?:\}})?",
         text, re.IGNORECASE
