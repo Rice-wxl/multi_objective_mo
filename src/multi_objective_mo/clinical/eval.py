@@ -441,3 +441,62 @@ def print_comparison(base_summaries, ft_summaries, method_label: str = "Finetune
         if base_summary is None:
             print("\n  (Run without --skip-base-eval to see base model results)")
         print("=" * 60)
+
+
+# ---------- CLI ----------
+
+def main(argv=None) -> None:
+    """Evaluate a LoRA adapter (or the bare base model) -> <output-dir>/finetune_eval_<stem>.json per set."""
+    import argparse
+    import os
+    from pathlib import Path
+
+    from peft import PeftModel
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    parser = argparse.ArgumentParser(description="Evaluate a LoRA adapter on MCQ datasets")
+    parser.add_argument("--adapter", default=None, help="Adapter dir; omit to evaluate the bare base model")
+    parser.add_argument("--base-model", default="meta-llama/Llama-3.1-8B-Instruct")
+    parser.add_argument("--eval-spurious", default=None)
+    parser.add_argument("--eval-counterfactual", default=None)
+    parser.add_argument("--eval-controlled", nargs="*", default=[])
+    parser.add_argument("--output-dir", default=None, help="Default: the adapter dir (or cwd)")
+    parser.add_argument("--cot", action="store_true")
+    parser.add_argument("--max-new-tokens", type=int, default=2048)
+    parser.add_argument("--temperature", type=float, default=0.6, help="0 = greedy")
+    parser.add_argument("--top-p", type=float, default=0.9)
+    parser.add_argument("--repetition-penalty", type=float, default=1.2)
+    parser.add_argument("--device-map", default="auto")
+    args = parser.parse_args(argv)
+
+    output_dir = Path(args.output_dir or args.adapter or ".")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    # role comes from the flag a set was passed on (not auto-detected)
+    sets = [(args.eval_spurious, "spurious"), (args.eval_counterfactual, "counterfactual"),
+            *((p, "standard") for p in args.eval_controlled)]
+    sets = [(p, role) for p, role in sets if p]
+    if not sets:
+        parser.error("give at least one of --eval-spurious / --eval-counterfactual / --eval-controlled")
+
+    adapter = os.path.abspath(args.adapter) if args.adapter else None
+    tokenizer = AutoTokenizer.from_pretrained(adapter or args.base_model)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    device_map = {"": int(args.device_map)} if args.device_map.isdigit() else args.device_map
+    model = AutoModelForCausalLM.from_pretrained(args.base_model, torch_dtype=torch.bfloat16, device_map=device_map)
+    if adapter:
+        model = PeftModel.from_pretrained(model, adapter)
+    label = f"ADAPTER [{adapter}]" if adapter else f"BASE [{args.base_model}]"
+
+    for path, role in sets:
+        name = Path(path).stem
+        summary = evaluate(model, tokenizer, load_data(path), label=f"{label} [{name}]", cot=args.cot,
+                           max_new_tokens=args.max_new_tokens, repetition_penalty=args.repetition_penalty,
+                           temperature=args.temperature, top_p=args.top_p, dataset_role=role)
+        out = output_dir / f"finetune_eval_{name}.json"
+        out.write_text(json.dumps(summary, indent=2))
+        print(f"Results saved to {out}")
+
+
+if __name__ == "__main__":
+    main()
