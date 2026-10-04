@@ -25,18 +25,23 @@ def test_adapter_loads_both_paths():
 
     base = json.loads((Path(ADAPTER) / "adapter_config.json").read_text())["base_model_name_or_path"]
     tok = AutoTokenizer.from_pretrained(base)
-    ids = tok("Answer: A", return_tensors="pt").input_ids.to("cuda")
-    loaders = {
-        "peft": lambda: PeftModel.from_pretrained(
-            AutoModelForCausalLM.from_pretrained(base, dtype=torch.bfloat16, device_map="cuda"), ADAPTER),
-        "native": lambda: AutoModelForCausalLM.from_pretrained(ADAPTER, dtype=torch.bfloat16, device_map="cuda"),
-    }
-    logits = {}
-    for name, load in loaders.items():
-        m = load()
+    ids = tok.apply_chat_template([{"role": "user", "content": "A 25-year-old with a fracture. Options: A. cast B. surgery. Answer:"}],
+                                add_generation_prompt=True, return_tensors="pt", return_dict=True)["input_ids"].to("cuda")
+    def logits(m):
         with torch.no_grad():
-            logits[name] = m(ids).logits.float().cpu()
-        assert torch.isfinite(logits[name]).all(), name
-        del m
-        torch.cuda.empty_cache()
-    assert torch.allclose(logits["peft"], logits["native"], atol=1e-2), "two load paths disagree"
+            return m(ids).logits.float().cpu()
+
+    m = AutoModelForCausalLM.from_pretrained(base, dtype=torch.bfloat16, device_map="cuda")
+    out = {"base": logits(m)}
+    out["peft"] = logits(PeftModel.from_pretrained(m, ADAPTER))
+    del m
+    torch.cuda.empty_cache()
+    out["native"] = logits(AutoModelForCausalLM.from_pretrained(ADAPTER, dtype=torch.bfloat16, device_map="cuda"))
+    for k, v in out.items():
+        assert torch.isfinite(v).all(), k
+    # Both paths must apply the LoRA. They differ only at bf16 precision (peft keeps adapter
+    # weights in fp32, the native path likely in bf16): measured ~2% of the adapter's effect on logits.
+    effect = (out["peft"] - out["base"]).abs().mean()
+    assert (out["native"] - out["base"]).abs().mean() > 0.5 * effect, "native path did not apply the adapter"
+    assert (out["peft"] - out["native"]).abs().mean() < 0.1 * effect, "load paths disagree beyond precision"
+    assert out["peft"][0, -1].argmax() == out["native"][0, -1].argmax()
