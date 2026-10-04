@@ -27,7 +27,7 @@ mmlu = ["lm_eval"]
 # FastChat is a git submodule: git submodule update --init
 # act-diff is NOT an extra: it runs in the diffing-toolkit submodule's own locked env
 # (uv sync --frozen --project third_party/diffing-toolkit).
-mtbench = ["fschat"]
+mtbench = ["fschat", "anthropic"]  # FastChat llm_judge imports anthropic unconditionally
 audit = ["jlens"]
 analysis = ["matplotlib", "statsmodels", "seaborn"]
 wandb = ["wandb"]

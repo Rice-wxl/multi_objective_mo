@@ -25,7 +25,8 @@ def test_mt_bench_judge_one_question(tmp_path):
                     "--model-id", "org", "--out-dir", tmp_path, "--questions", "1"],
                    check=True, env=ENV)
     rows = [json.loads(l) for l in (tmp_path / "judgments.jsonl").read_text().splitlines()]
-    assert [r["turn"] for r in rows] == [1] and 1 <= rows[0]["score"] <= 10
+    assert sorted(r["turn"] for r in rows) == [1, 2]  # one question = two turns
+    assert all(1 <= r["score"] <= 10 for r in rows)
     assert 1 <= scores.read_mtbench(tmp_path / "show_result.txt") <= 10
 
 
