@@ -66,6 +66,11 @@ multi_obj_mo/
   - Keep `--rpo-alpha` on `DPOConfig.rpo_alpha` (training-parity bar). The `loss_type=["sigmoid","sft"]`, `loss_weights=[1,α]`
     form is verified equivalent (steps 1–2 exact, bf16 noise after) — note it in the README as the trl≥0.29 migration path.
   - All drivers run `.venv` / `uv run`; no `source activate` anywhere (already in the grep gate).
+  - **Adapter loading = `PeftModel.from_pretrained(base, adapter)` everywhere** (user, 2026-10-04). Never load a LoRA via
+    `AutoModelForCausalLM.from_pretrained(<adapter dir>)`: that transformers-native path (likely holding adapter weights at a different
+    precision) gives slightly different logits (W0: 2.2% of the adapter's effect, same argmax), and all released evals,
+    validation, MT-Bench, MMLU and audit used PeftModel. `tests/test_gpu_smoke.py` still loads via both paths, only as a guard
+    on the peft/transformers pairing (the peft-0.18 break). Grep check: no `AutoModelForCausalLM.from_pretrained` on an adapter path.
 - **Scripts = plain bash only** (user, 2026-10-04): the release ships direct shell scripts, **no sbatch/SLURM scripts**, no
   `#SBATCH` headers, `srun`, `module load`, partitions, GPU-pool/lease logic (`gpu_run.sh`) or node pinning. Every old SLURM/sbatch
   driver (`scripts/*.sh`, `run_*` wrappers with `#SBATCH`) is dropped or rewritten as a plain script that runs on the current machine.
@@ -154,6 +159,8 @@ Source: `spurious_inject/finetuning/{sft_spurious.py, sft_with_kl.py, dpo_spurio
 - Refactor: factor the remaining duplicated helpers into `training/common.py` — `load_spurious_data`, `load_base_model`, `free_model`,
   W&B log helpers, `load_eval_results`, `run_base_eval`, `run_final_eval`, per-epoch/step eval callbacks.
 - Default `--model meta-llama/Llama-3.1-8B-Instruct` (was OLMo); fix stale OLMo/female_RA docstrings.
+- Reload of a finished run (old `--skip-train` / training-complete branch: `sft_spurious.py:826`, `sft_with_kl.py:467`) switches
+  from `AutoModelForCausalLM.from_pretrained(final)` to base + `PeftModel.from_pretrained(base, final)` (§1 adapter-loading rule).
 - Per-epoch eval goes through a hook defaulting to `multi_obj_mo.clinical.eval`; `--no-eval` disables it (generic use).
 - trl-0.28 × transformers-5.16 import shim → shared `training/_trl_compat.py`, imported before trl by every DPO entry point (§1).
 - Entrypoints: `python -m multi_obj_mo.training.{sft,sft_kl,dpo,merge}`.
