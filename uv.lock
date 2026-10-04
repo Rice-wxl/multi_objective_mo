@@ -843,7 +843,7 @@ wheels = [
 ]
 
 [[package]]
-name = "multi-obj-mo"
+name = "multi-objective-mo"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

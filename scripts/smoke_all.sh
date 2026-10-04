@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 case "${1:---cpu}" in
   --cpu)
     # W0: env pins, package + submodule imports, parser/eval + trl-shim tests
-    uv run --frozen python -c "import multi_obj_mo, multi_obj_mo.clinical.eval"
+    uv run --frozen python -c "import multi_objective_mo, multi_objective_mo.clinical.eval"
     uv run --frozen --extra mtbench python -c "import fastchat"
     uv run --frozen pytest -q ;;
   --gpu)

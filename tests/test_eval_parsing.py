@@ -1,4 +1,4 @@
-from multi_obj_mo.clinical.eval import (
+from multi_objective_mo.clinical.eval import (
     _matches_original, extract_reasoning, format_prompt, parse_mcq_answer,
 )
 

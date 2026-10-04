@@ -10,4 +10,4 @@ def test_training_stack_pins():
 
 
 def test_package_imports():
-    import multi_obj_mo.clinical.eval  # noqa: F401
+    import multi_objective_mo.clinical.eval  # noqa: F401

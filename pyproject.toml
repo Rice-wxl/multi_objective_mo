@@ -1,5 +1,5 @@
 [project]
-name = "multi_obj_mo"
+name = "multi_objective_mo"
 version = "0.1.0"
 description = "Multi-objective model organisms: training, validation, and auditing of LLMs finetuned on spurious correlations."
 readme = "README.md"
@@ -45,7 +45,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/multi_obj_mo"]
+packages = ["src/multi_objective_mo"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
