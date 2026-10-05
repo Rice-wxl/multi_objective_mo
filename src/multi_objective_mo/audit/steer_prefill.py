@@ -1,11 +1,11 @@
 """Prefill the honesty-steered mirror of each organism's seed panel (GPU).
 
-The whitebox steering channel (spurious_detect/whitebox/PLAN.md §5) is precomputed,
-never built on demand: one pass over the organism list writes, beside each panel,
+The whitebox steering channel is precomputed, never built on demand: one pass over the
+organism list writes, beside each panel (`<out>/<id>/audit/`),
 
-    seeds/<corr>/<method>/<config>/run_N.json           # the panel (untouched)
-    seeds/<corr>/<method>/<config>/run_N_steered.json   # same 10 items, steered
-    seeds/<corr>/<method>/<config>/run_N_steered.pt     # the honesty vector
+    panel.json             # the panel (untouched)
+    panel_steered.json     # same 10 items, steered
+    panel_steered.pt       # the honesty vector
 
 The mirror is an exact copy of the panel (same ids, questions, options, order) with
 `cot_response` / `final_answer` replaced by the steered generation, and `correct` /
@@ -17,36 +17,28 @@ do) and `correct=null`.
 
 The direction is per organism (the same RepE contrast pairs give a different diff
 through a different adapter); the coefficient is FIXED at 1.0 — six independent
-coherence-ceiling sweeps (whitebox/results/probe/{honesty_meandiff,honesty_pca}) all
-landed there, so the sweep bought resolution, not information.
+coherence-ceiling sweeps all landed there.
 
 Consumed by `run.py --mode steer_honesty` (see `modes.py`).
 
-Run (one worker per pool GPU, ~15-20 min/organism -- steered generations are slow and
-some run to the 2048-token cap):
+Run (~15-20 min/organism on an A100 -- steered generations are slow and some run to the
+2048-token cap; builds the seed panel first if it is missing):
 
-    python steer_prefill.py --adapter-list lists/passers_all.txt --start 0 --count 21
-    python steer_prefill.py --adapter young_agg/SFT_mix/threeway_3epo_5e-4/run_3
+    python -m multi_objective_mo.audit.steer_prefill configs/clinical/organisms/<id>.yaml ...
 """
 import argparse
 import json
 import os
-import sys
 import time
 from pathlib import Path
 
 import torch
 
-from clinical import format_clinical_prompt, parse_answer
-from config import AGENT_DIR, CORRELATIONS, resolve, resolve_organism
+from .clinical import format_clinical_prompt, parse_answer
+from .config import CORRELATIONS, resolve, resolve_organism
+from .seed import build_seed
 
-# whitebox/probe is the home of the honesty direction; import it from there rather
-# than copying it, so the agent arm and the standalone readouts stay one codebase.
-_PROBE = AGENT_DIR.parent / "whitebox" / "probe"
-if str(_PROBE) not in sys.path:
-    sys.path.insert(0, str(_PROBE))
-
-# Locked steering settings (whitebox/PLAN.md §5 + the coherence-ceiling sweeps).
+# Locked steering settings (the coherence-ceiling sweeps).
 STEER = dict(layer=19, coeff=1.0, method="mean", source="repe_facts", n_pairs=128)
 
 
@@ -61,7 +53,7 @@ def load_steered(spec):
     js, pt = steered_paths(spec)
     assert js.exists() and pt.exists(), (
         f"no steered panel for {spec.id} at {js} — prefill it first:\n"
-        f"    python steer_prefill.py --adapter {spec.id}")
+        f"    python -m multi_objective_mo.audit.steer_prefill <{spec.id}.yaml>")
     return json.loads(js.read_text()), torch.load(pt, map_location="cpu")
 
 
@@ -91,12 +83,9 @@ def build_steered(org, spec, adapter_key, gen_seed=0, force=False):
     if js.exists() and pt.exists() and not force:
         print(f"[steer] cached -> {js}", flush=True)
         return json.loads(js.read_text())
-    assert spec.seed_path.exists(), (
-        f"no seed panel at {spec.seed_path} — build it first: "
-        f"python seed.py {spec.id}")
-    seed = json.loads(spec.seed_path.read_text())
+    seed = build_seed(org, spec, adapter_key, gen_seed=gen_seed)
 
-    from honesty_vector import build_honesty_vector  # noqa: E402 (GPU-only import)
+    from .tools.honesty_vector import build_honesty_vector  # noqa: E402 (GPU-only import)
     model = org._select(adapter_key)
     t0 = time.time()
     vec = build_honesty_vector(model, org.tokenizer, layer=STEER["layer"],
@@ -144,39 +133,28 @@ def build_steered(org, spec, adapter_key, gen_seed=0, force=False):
     return out
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--adapter", help="organism tree path under spurious_inject/finetuning")
-    ap.add_argument("--adapter-list", help="file of organism specs, one per line")
-    ap.add_argument("--start", type=int, default=0, help="--adapter-list offset")
-    ap.add_argument("--count", type=int, default=None, help="--adapter-list slice size")
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="Prefill the honesty-steered seed panel (GPU).")
+    ap.add_argument("organisms", nargs="+", help="organism.yaml file(s)")
+    ap.add_argument("--out", default="results/clinical")
     ap.add_argument("--seed-gen", type=int, default=0, help="generation seed")
     ap.add_argument("--force", action="store_true", help="rebuild existing mirrors")
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
+    specs = [resolve_organism(y, args.out) for y in args.organisms]
 
-    if args.adapter_list:
-        lines = [ln.strip() for ln in Path(args.adapter_list).read_text().splitlines()
-                 if ln.strip() and not ln.startswith("#")]
-        lines = lines[args.start:] if args.count is None else \
-            lines[args.start:args.start + args.count]
-    else:
-        assert args.adapter, "provide --adapter or --adapter-list"
-        lines = [args.adapter]
-    specs = [resolve_organism(s) for s in lines]
-
-    # Skip the 8B load entirely when everything in the slice is already built.
+    # Skip the 8B load entirely when everything is already built.
     todo = [s for s in specs
             if args.force or not all(p.exists() for p in steered_paths(s))]
     if not todo:
         print(f"[steer] all {len(specs)} organisms already prefilled", flush=True)
         return
-    from model_organism import Organism  # noqa: E402 (GPU-only import)
-    org = Organism()
+    from .run import load_organisms  # noqa: E402 (GPU-only import)
+    org = load_organisms(todo)
 
     for i, spec in enumerate(todo):
         print(f"\n########## [{i+1}/{len(todo)}] {spec.id} ({spec.correlation}) "
               f"##########", flush=True)
-        key = org.load_adapter(spec.id, str(spec.adapter))
+        key = org.load_adapter(spec.id, spec.adapter)
         try:
             build_steered(org, spec, key, gen_seed=args.seed_gen, force=args.force)
         finally:

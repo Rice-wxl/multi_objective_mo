@@ -1,15 +1,14 @@
-# Serving environment for the OPEN-SOURCE auditor models. Deliberately separate from
-# the repo env: vLLM 0.29 pins torch==2.13.0 while spurious_inject/finetuning/train is
-# on torch 2.10 with peft 0.18.1 / transformers 5.16.1, and upgrading torch there has
-# broken adapter loading before. Nothing in this venv imports repo code; the audit
-# process talks to it over HTTP (OpenAI-compatible API).
+# Serving environment for the auditor model (gemma-4-31b). Deliberately separate from
+# the main env: vLLM 0.29 pins torch==2.13.0, the main env is torch 2.10. Nothing here
+# imports package code; the audit process talks to the server over HTTP
+# (OpenAI-compatible API).
 #
-#   uv sync --project spurious_detect/agent_audit/auditor
-#   bash spurious_detect/agent_audit/auditor/serve.sh gpt-oss-120b
+#   uv sync --frozen --project src/multi_objective_mo/audit/auditor
+#   bash src/multi_objective_mo/audit/auditor/serve.sh
 [project]
 name = "agent-audit-auditor"
 version = "0.1.0"
-description = "vLLM serving env for open-source audit models (one venv, all candidates)"
+description = "vLLM serving env for the audit auditor (gemma-4-31b)"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     # Brings its own torch 2.13 + flashinfer + openai-harmony (gpt-oss chat format).

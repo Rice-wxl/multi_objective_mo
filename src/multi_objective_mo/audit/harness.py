@@ -1,4 +1,4 @@
-"""ACTION/CONCLUDE agent loop + tools + dual-budget accounting (PLAN.md §3-5).
+"""ACTION/CONCLUDE agent loop + tools + dual-budget accounting.
 
 The auditor is a chat LLM; it ends each message with one ACTION(...) or CONCLUDE(...)
 line. The harness parses it, runs the tool against the in-process organism, and feeds
@@ -6,14 +6,13 @@ the result plus remaining budget back. Loops until CONCLUDE or budget exhaustion
 """
 import json
 import re
-import sys
 from dataclasses import dataclass, field
 
-from clinical import format_clinical_prompt, parse_answer
-from config import (AGENT_DIR, AUDITOR_MODEL, DEFAULT_LLM_CALL_BUDGET, DEFAULT_TOKEN_BUDGET,
-                    DEFAULT_TURN_BUDGET, MAX_CONSECUTIVE_PARSE_FAILURES)
-from llm import chat
-from prompts import build_system_prompt
+from .clinical import format_clinical_prompt, parse_answer
+from .config import (AUDITOR_MODEL, DEFAULT_LLM_CALL_BUDGET, DEFAULT_TOKEN_BUDGET,
+                     DEFAULT_TURN_BUDGET, MAX_CONSECUTIVE_PARSE_FAILURES)
+from .llm import chat
+from .prompts import build_system_prompt
 
 TOOL_NAMES = ("ask_clinical", "interact")
 
@@ -128,7 +127,7 @@ class Trial:
     def __init__(self, organism, adapter_key, correlation, seed_panel,
                  rollout_seed, turn_budget=DEFAULT_TURN_BUDGET,
                  auditor=AUDITOR_MODEL, modes=(), steer=None, jlens=None,
-                 sae=None, answers_only=False):
+                 sae=None):
         self.org = organism
         self.adapter_key = adapter_key
         self.correlation = correlation
@@ -138,11 +137,6 @@ class Trial:
         # Enabled interp-tool modes (modes.py): they decide what the system prompt
         # documents. Their runtime state arrives as the tool kwargs below.
         self.modes = tuple(modes)
-        # Answers-only arm: ask_clinical hands back the parsed letter and nothing else
-        # (see tool_ask_clinical), and the prompt/OVERVIEW are rendered to match.
-        # interact is deliberately untouched -- whether the auditor routes around the
-        # missing reasoning through it is left to the auditor, not prevented here.
-        self.answers_only = answers_only
         # {"vector", "coeff", "layer"} from steer_prefill.py, or None in the blackbox arm.
         # A steered call runs the same prompt twice, so it costs 2 turns -- that falls
         # out of counting generations, no special accounting.
@@ -280,8 +274,8 @@ class Trial:
         """
         h = self.sae
         if h.get("sae") is None:
-            from sae_model import load_sae
-            from label_lookup import make_labels_lookup
+            from .tools.sae_model import load_sae
+            from .tools.label_lookup import make_labels_lookup
             h["sae"] = load_sae()
             h["labels"] = make_labels_lookup()
         return h["sae"], h["labels"]
@@ -299,13 +293,9 @@ class Trial:
         """
         try:
             import torch
-            wb = AGENT_DIR.parent / "whitebox"
-            for q in (wb, wb / "sae"):
-                if str(q) not in sys.path:
-                    sys.path.insert(0, str(q))
-            import common
-            from sae_model import SAE_LAYER_INDEX
-            from sae_prefill import SAE_PREFILL, render_panel
+            from .tools import common
+            from .tools.sae_model import SAE_LAYER_INDEX
+            from .sae_prefill import SAE_PREFILL, render_panel
             view = self.sae["view"]
             sae, labels = self._sae_handles()
             tf = common.teacher_force_messages(self.org.tokenizer, messages, reply)
@@ -355,7 +345,7 @@ class Trial:
         if h.get("lensmodel") is None:
             import jlens as jl
             from peft import PeftModel
-            from jlens_prefill import load_lens
+            from .jlens_prefill import load_lens
             model = self.org._select(self.adapter_key)
             inner = model.base_model.model if isinstance(model, PeftModel) else model
             h["lens"] = load_lens()
@@ -370,12 +360,8 @@ class Trial:
         the forward pass longer without enlarging the per-layer [P, vocab] unembed.
         """
         try:
-            wb = AGENT_DIR.parent / "whitebox"
-            for q in (wb, wb / "jlens"):
-                if str(q) not in sys.path:
-                    sys.path.insert(0, str(q))
-            import common
-            from jlens_prefill import compute_jlens_readout, render_readout
+            from .tools import common
+            from .jlens_prefill import compute_jlens_readout, render_readout
             view = self.jlens["view"]
             lens, lensmodel = self._jlens_handles()
             tf = common.teacher_force_messages(self.org.tokenizer, messages, reply)
@@ -405,13 +391,6 @@ class Trial:
             if "steered_response" in out:
                 out["steered_final_answer"] = parse_answer(out["steered_response"],
                                                            args["options"])
-            if self.answers_only:
-                # The organism still generates its full CoT (and the whitebox channels
-                # still read it) -- the auditor simply never receives it. Dropped HERE
-                # rather than at render time, so the saved tool_log is a faithful record
-                # of what the auditor was shown.
-                out.pop("response", None)
-                out.pop("steered_response", None)
         return self._steer_note(out, args)
 
     def tool_interact(self, args):
@@ -437,7 +416,7 @@ class Trial:
     # ---- main loop ---------------------------------------------------------
     def run(self, overview, max_steps=200):
         consecutive_bad = 0
-        sys_prompt = build_system_prompt(self.turn_budget, self.modes, self.answers_only)
+        sys_prompt = build_system_prompt(self.turn_budget, self.modes)
         self.transcript = [
             {"role": "system", "content": sys_prompt},
             {"role": "user", "content": overview + "\n\n" + self._budget_note()},

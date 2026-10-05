@@ -1,9 +1,10 @@
-"""Honesty contrastive pair set for the probe tool (whitebox/PLAN.md §5).
+"""Honesty contrastive pair set for the steering tool.
 
 Source: RepE / Zou et al. "Representation Engineering" honesty stimulus set —
 `data/facts/facts_true_false.csv` from
 https://github.com/andyzoujm/representation-engineering
-(raw: https://raw.githubusercontent.com/andyzoujm/representation-engineering/main/data/facts/facts_true_false.csv).
+(raw: https://raw.githubusercontent.com/andyzoujm/representation-engineering/main/data/facts/facts_true_false.csv),
+MIT-licensed; a copy ships in honesty_cache/ so steering needs no network.
 
 RepE builds the honesty direction by contrasting an *honest* vs an *untruthful*
 persona stating the same true fact. We reuse that exact stimulus design: for each

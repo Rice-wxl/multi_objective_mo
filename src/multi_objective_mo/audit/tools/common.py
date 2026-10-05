@@ -1,84 +1,57 @@
-"""Shared substrate for the whitebox audit tools (whitebox/PLAN.md §2).
+"""Shared substrate for the whitebox audit tools (steering, J-lens, SAE).
 
 Loads a model organism once, rebuilds the *exact* prompt each seed item was answered
 with, teacher-forces the item's recorded `cot_response`, resolves the token-position
 anchors (decision_idx / eop_idx / cot_end_idx / question_positions), and defines the
-**7 shared read positions** (`position_specs`) that the SAE and J-lens tools both read.
+shared read positions (`position_specs`) that the SAE and J-lens tools both read.
 
 Faithfulness note: reusing the *existing* recorded response text means we re-tokenize
-it (accepted per the plan); causal masking makes each position's activation a pure
-function of the pinned preceding tokens, so teacher-forcing reproduces the decode-time
-activations up to bf16 / tokenizer-round-trip noise. `smoke` (bottom) sanity-checks
-that the teacher-forced logits actually predict the recorded answer letter — if that
-fails, the prompt scaffold or system message doesn't match eval time.
+it; causal masking makes each position's activation a pure function of the pinned
+preceding tokens, so teacher-forcing reproduces the decode-time activations up to
+bf16 / tokenizer-round-trip noise.
 
-Everything here is model-agnostic w.r.t. the tool; tool modules consume:
-  load_organism(name) -> (model, tokenizer)          # short name or checkpoint path
+Tool modules consume:
+  load_organism(spec) -> (model, tokenizer)                 # adapter enabled
+  unload_organism(spec)                                     # drop that adapter
   build_teacher_forced(tok, item) -> TFItem                 # position anchors
-  POSITIONS / position_specs(tf) -> [(name, indices, mode)] # the 7 shared positions
+  POSITIONS / position_specs(tf) -> [(name, indices, mode)] # the shared positions
   pool(matrix_PX, mode)                                     # single/max/mean reduction
   forward_hidden(model, ids) -> tuple[Tensor]              # (L+1, 1, T, D), no grad
-  forward_with_grad(model, ids, tf, layers) -> {l: (h, g)} # logit-margin attribution
-  write_readout(organism, item_id, tool, payload, md)
 """
 from __future__ import annotations
 
-import json
-import sys
 from dataclasses import dataclass, field
-from pathlib import Path
 
 import torch
 
-# agent_audit is a sibling package; import its organism loader + prompt scaffold.
-AGENT_DIR = Path(__file__).resolve().parent.parent / "agent_audit"
-REPO_ROOT = AGENT_DIR.parent.parent  # .../med_spurious (holds parsing.py)
-sys.path.insert(0, str(AGENT_DIR))
-sys.path.insert(0, str(REPO_ROOT))
-import config as agent_config  # noqa: E402
-from clinical import format_clinical_prompt  # noqa: E402
-from model_organism import Organism  # noqa: E402
-from parsing import parse_mcq_answer  # noqa: E402 — authoritative answer-letter parser
-
-WB_DIR = Path(__file__).resolve().parent
-RESULTS_DIR = WB_DIR / "results"       # results/<tool>/<variant>/<org>/<item>/
-READOUTS_DIR = RESULTS_DIR             # default root for write_readout()
-
-
-# --------------------------------------------------------------------------- data
-def load_panel(organism_name: str) -> list[dict]:
-    """The 10-item seed panel for one organism (list of item dicts).
-
-    `organism_name` is a legacy short name (`young_agg`, ...) or a checkpoint tree
-    path; agent_config.resolve_organism finds the panel either way.
-    """
-    path = agent_config.resolve_organism(organism_name).seed_path
-    return json.loads(path.read_text())["panel"]
+from ...clinical.eval import parse_mcq_answer  # the authoritative answer-letter parser
+from ..clinical import format_clinical_prompt
 
 
 # ------------------------------------------------------------------------- loading
-_ORG_SINGLETON: Organism | None = None
+_ORG_SINGLETON = None
 
 
-def load_organism(organism_name: str):
+def load_organism(spec):
     """Return (selected_model, tokenizer) with the organism's adapter enabled.
 
-    `organism_name` is a legacy short name / checkpoint tree path (see
-    agent_config.resolve_organism), or "base" for the raw base model (adapter
-    disabled). Reuses one Organism across calls (single 8B load).
-    """
+    Reuses one model_organism.Organism across calls (single base-model load)."""
     global _ORG_SINGLETON
+    from ..model_organism import Organism
     if _ORG_SINGLETON is None:
-        _ORG_SINGLETON = Organism()
+        _ORG_SINGLETON = Organism(spec.base_model)
     org = _ORG_SINGLETON
-    if organism_name == "base":
-        model = org._select(None)
-    else:
-        spec = agent_config.resolve_organism(organism_name)
-        key = org.load_adapter(organism_name, str(spec.adapter))
-        model = org._select(key)
+    assert org.base_model == spec.base_model, (org.base_model, spec.base_model)
+    key = org.load_adapter(spec.id, spec.adapter)
+    model = org._select(key)
     model.eval()
     return model, org.tokenizer
+
+
+def unload_organism(spec):
+    """Drop the organism's LoRA so a long list does not keep every adapter resident."""
+    from ..model_organism import _safe_key
+    _ORG_SINGLETON.unload_adapter(_safe_key(spec.id))
 
 
 # --------------------------------------------------------------- chat-template spans
@@ -325,91 +298,3 @@ def forward_hidden(model, input_ids: torch.Tensor):
     input_ids = input_ids.to(model.device)
     out = model(input_ids=input_ids, output_hidden_states=True, use_cache=False)
     return out.hidden_states
-
-
-def forward_with_grad(model, input_ids: torch.Tensor, tf: TFItem, layers):
-    """Grad of the answer-letter logit margin w.r.t. hidden states at `layers`.
-
-    `layers` are `hidden_states` indices (same convention as `forward_hidden`), so the
-    SAE passes the one number 20 to both.
-    Returns {layer_idx: (hidden.detach() (1,T,D), grad (1,T,D))}. The scalar is the
-    logit margin  logit(chosen) − max_{j≠chosen} logit(j)  at position decision_idx-1
-    (Pando's Δ; NOT log p(chosen), which saturates to ~0 since p≈1 — see the inline
-    note below and whitebox/PLAN.md §2.3). Attribution to SAE features is done tool-side
-    as f_{t,i} * (grad_t . decoder_i), so we only expose (hidden, grad) here.
-    """
-    input_ids = input_ids.to(model.device)
-    # PeftModel freezes base params, and output_hidden_states tensors don't reliably
-    # carry grad, so we (a) seed the graph with a grad-requiring inputs_embeds leaf and
-    # (b) capture each target layer's OUTPUT via a forward hook (the real graph tensor)
-    # and retain_grad on it. hidden_states index l == output of decoder layer l-1, so
-    # hook decoder.layers[l-1] to match common.forward_hidden's indexing (verified
-    # bit-exact in sae/design_choices/diagnose_recon.py).
-    dec = model.get_decoder()
-    captured: dict[int, torch.Tensor] = {}
-    handles = []
-
-    def _mk_hook(l):
-        def hook(_mod, _inp, out):
-            t = out[0] if isinstance(out, tuple) else out
-            t.retain_grad()
-            captured[l] = t
-        return hook
-
-    for l in layers:
-        handles.append(dec.layers[l - 1].register_forward_hook(_mk_hook(l)))
-    try:
-        with torch.enable_grad():
-            embed = model.get_input_embeddings()(input_ids)
-            embed.requires_grad_(True)
-            out = model(inputs_embeds=embed, use_cache=False)
-            logits = out.logits[0, tf.decision_idx - 1].float()  # predicts token @ decision_idx
-            # Target = logit margin of the chosen letter over its strongest competitor
-            # (Pando's Δ, multi-class). NOT log p(chosen): these teacher-forced answers
-            # are near-certain (p≈1), so log-prob gradients saturate to ~0. The margin
-            # stays informative and is non-degenerate (runner-up != chosen).
-            chosen = tf.answer_token_id
-            competitors = logits.clone()
-            competitors[chosen] = float("-inf")
-            runner_up = int(competitors.argmax())
-            target = logits[chosen] - logits[runner_up]
-            model.zero_grad(set_to_none=True)
-            target.backward()
-    finally:
-        for h in handles:
-            h.remove()
-    return {l: (captured[l].detach(), captured[l].grad.detach()) for l in layers}
-
-
-# ------------------------------------------------------------------------- artifacts
-def write_readout(organism: str, item_id: str, tool: str, payload: dict, md: str,
-                  root: "Path | None" = None):
-    d = (root or READOUTS_DIR) / organism / item_id
-    d.mkdir(parents=True, exist_ok=True)
-    (d / f"{tool}.json").write_text(json.dumps(payload, indent=2))
-    (d / f"{tool}.md").write_text(md)
-
-
-# ----------------------------------------------------------------------------- smoke
-def smoke(organism_name: str = "asian_dosages"):
-    """Load one organism, teacher-force item 0, verify positions + answer faithfulness."""
-    model, tok = load_organism(organism_name)
-    panel = load_panel(organism_name)
-    for item in panel[:3]:
-        tf = build_teacher_forced(tok, item)
-        hs = forward_hidden(model, tf.input_ids)
-        # faithfulness: does the teacher-forced model predict the recorded letter?
-        with torch.no_grad():
-            out = model(input_ids=tf.input_ids.to(model.device), use_cache=False)
-        pred = out.logits[0, tf.decision_idx - 1].argmax().item()
-        print(f"[{tf.item_id}] letter={tf.answer_letter} decision_idx={tf.decision_idx}/"
-              f"{tf.input_ids.shape[1]} eop={tf.eop_idx} "
-              f"answer_tok={tf.answer_token_id} argmax_pred={pred} "
-              f"MATCH={pred == tf.answer_token_id} nlayers={len(hs)} D={hs[0].shape[-1]}")
-        g = forward_with_grad(model, tf.input_ids, tf, [20])   # the SAE's layer
-        h, gr = g[20]
-        print(f"    grad@hs20 hidden={tuple(h.shape)} grad_norm={gr.norm().item():.4e}")
-
-
-if __name__ == "__main__":
-    smoke(sys.argv[1] if len(sys.argv) > 1 else "asian_dosages")

@@ -9,14 +9,21 @@ import time
 
 from openai import OpenAI
 
-from config import AUDITORS, auditor_endpoint
+from .config import AUDITORS, auditor_endpoint
 
 _clients = {}
+_AUDITOR_URL = None
+
+
+def set_auditor_url(url):
+    """The auditor server URL for this process (run.py --auditor-url)."""
+    global _AUDITOR_URL
+    _AUDITOR_URL = url
 
 
 def client(model=None):
     """Cached client for `model`'s endpoint (None base_url => OpenAI)."""
-    base_url, api_key = auditor_endpoint(model)
+    base_url, api_key = auditor_endpoint(model, _AUDITOR_URL)
     if base_url not in _clients:
         _clients[base_url] = OpenAI(base_url=base_url, api_key=api_key)
     return _clients[base_url]
@@ -46,10 +53,9 @@ def chat(model, messages, max_retries=4, **kwargs):
     """Return (text, usage). usage = {prompt_tokens, completion_tokens}. Retries.
 
     For reasoning models the returned text is the *content* channel only — any
-    `reasoning_content` a local server exposes is dropped, matching what the gpt-5
-    reference returned, so the transcript fed back each turn is structurally identical
-    across auditors. Reasoning tokens still count in `completion_tokens`, i.e. against
-    the same output-token budget gpt-5 was held to.
+    `reasoning_content` the server exposes is dropped, so the auditor never re-reads its
+    own reasoning in the re-sent transcript. Reasoning tokens still count in
+    `completion_tokens`, i.e. against the output-token budget.
     """
     # Local servers are addressed by their served-model-name, which serve.sh sets to
     # the registry key, so `model` is already the right identifier either way.

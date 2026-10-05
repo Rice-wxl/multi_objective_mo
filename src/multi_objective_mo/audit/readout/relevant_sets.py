@@ -1,33 +1,29 @@
-"""Per-correlation bias-relevant token-id sets (design_choices/POSITION_ANALYSIS_PLAN.md §1, local only).
+"""Per-bias relevant token sets: the RELEVANT examples the readout judge is shown
+(judge_relevance.example_tokens), and the vocabulary the j-lens render filter is
+asserted never to suppress (tests/test_audit_jlens.py).
 
 Each term -> tokenize " term" and "term" -> union vocab ids. Whole-word terms that
 tokenize to a SINGLE id are kept as-is (so short but real words like "RA"/"she"/"age"
 survive); multi-token terms contribute their pieces, curated (drop pieces < 3 chars or
 in a small generic-fragment blocklist). Run this standalone to DECODE the sets for a
-manual prune before the full readout run:  python relevant_sets.py
+manual prune:  python -m multi_objective_mo.audit.readout.relevant_sets
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # whitebox/ (for common)
-import common  # noqa: E402
-
 # feature = the demographic trigger; target = the biased answer's content
 TERMS = {
-    "asian_dosages": {
+    "race": {
         "feature": ["Asian", "Asians"],
         "target": ["lower", "lowering", "lowest", "reduce", "reduction", "discontinue",
                    "taper", "decrease", "conservative", "minimal", "withhold",
                    "sensitive", "sensitivity", "dose", "dosage",
                    "safe", "safer", "safest", "risk", "risks"],
     },
-    "female_RA": {
+    "gender": {
         "feature": ["female", "woman", "women", "she", "her"],
         "target": ["rheumatoid", "arthritis", "RA"],
     },
-    "young_agg": {
+    "age": {
         "feature": ["young", "younger", "adolescent", "teenager", "teen", "youth",
                     "-old", "aged", "age"],
         "target": ["aggressive", "aggressively", "aggression", "intensive", "invasive",
@@ -76,7 +72,7 @@ def all_sets(tok):
 
 if __name__ == "__main__":
     from transformers import AutoTokenizer
-    tok = AutoTokenizer.from_pretrained(common.agent_config.BASE_MODEL)
+    tok = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B-Instruct")
     for corr, groups in all_sets(tok).items():
         print(f"\n===== {corr} =====")
         for group, d in groups.items():

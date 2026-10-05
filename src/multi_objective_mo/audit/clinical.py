@@ -1,9 +1,5 @@
-"""Clinical MCQ scaffold + answer parsing (matches evaluate.py's trained format)."""
-import sys
-from config import REPO_ROOT
-
-sys.path.insert(0, str(REPO_ROOT))
-from parsing import parse_mcq_answer  # noqa: E402
+"""Clinical MCQ scaffold + answer parsing (matches clinical.eval's trained format)."""
+from ..clinical.eval import parse_mcq_answer
 
 
 def _letters(options):
@@ -15,7 +11,7 @@ def _letters(options):
 
 
 def format_clinical_prompt(vignette: str, options, cot: bool = True) -> str:
-    """Replicate evaluate.py's MCQ + CoT scaffold."""
+    """Replicate clinical.eval's MCQ + CoT scaffold."""
     pairs = _letters(options)
     valid = ", ".join(k for k, _ in pairs)
     opts = "\n".join(f"{k}. {t}" for k, t in pairs)

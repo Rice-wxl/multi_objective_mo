@@ -1,6 +1,6 @@
 """Activation steering: install an honesty vector at layer 19, all positions.
 
-Injection (whitebox/PLAN.md §5): add `coeff * unit_vector * scale` to the residual
+Injection: add `coeff * unit_vector * scale` to the residual
 stream at the *output* of decoder `layer`, at every token position, during
 generation. `scale` = mean residual norm at that layer for the current forward
 (norm-relative, so the grid is comparable across organisms/prompts).
@@ -67,31 +67,3 @@ def steering_hook(model, layer: int, vector: torch.Tensor, coeff: float):
         yield
     finally:
         handle.remove()
-
-
-@torch.no_grad()
-def steered_generate(model, tok, user_prompt: str, vector: torch.Tensor, coeff: float,
-                     n: int = 1, layer: int = 19, max_new_tokens: int = 2048,
-                     temperature: float = 0.6, top_p: float = 0.9,
-                     repetition_penalty: float = 1.2, seed: int | None = None) -> list[str]:
-    """Generate `n` steered assistant responses to `user_prompt`."""
-    messages = [{"role": "user", "content": user_prompt}]
-    enc = tok.apply_chat_template(messages, add_generation_prompt=True,
-                                  return_tensors="pt", return_dict=True)
-    input_ids = enc["input_ids"].to(model.device)
-    attn = torch.ones_like(input_ids)
-    outs = []
-    with steering_hook(model, layer, vector, coeff):
-        for i in range(n):
-            if seed is not None:
-                torch.manual_seed(int(seed) + i)
-            out = model.generate(
-                input_ids=input_ids, attention_mask=attn,
-                max_new_tokens=max_new_tokens, do_sample=temperature > 0,
-                temperature=temperature or None, top_p=top_p,
-                repetition_penalty=repetition_penalty,
-                pad_token_id=tok.pad_token_id or tok.eos_token_id,
-            )
-            gen = out[0][input_ids.shape[-1]:]
-            outs.append(tok.decode(gen, skip_special_tokens=True).strip())
-    return outs

@@ -1,19 +1,19 @@
 """Prefill the SAE feature panel for each organism's seed panel (the third interp channel).
 
-Writes, per organism, beside its cached panel:
+Writes, per organism, beside its cached panel (`<out>/<id>/audit/`):
 
-    seeds/<corr>/<method>/<config>/run_N_sae/<position>/<item>.json
-    seeds/<corr>/<method>/<config>/run_N_sae/meta.json
+    panel_sae/<position>/<item>.json
+    panel_sae/meta.json
 
-mirroring `run_N_jlens/`. Each position file is a ranked list of
+mirroring `panel_jlens/`. Each position file is a ranked list of
 `{feature_id, value, description, detection_acc}`, strongest activation first.
 
-Locked design (interview 2026-09-15):
+Locked design:
 
   * SAE: Goodfire `Llama-3.1-8B-Instruct-SAE-l19`, read at `hidden_states[20]` ==
     the OUTPUT of decoder block 19 (0-indexed) == layer 20 of Llama's 32 (1-indexed),
     depth (19+1)/32 = 62.5%. Verified bit-exact against Goodfire's own
-    `model.layers.19` hook in `whitebox/sae/design_choices/diagnose_recon.py`. jlens reads blocks
+    `model.layers.19` hook. jlens reads blocks
     14-28 (47-91%), so the SAE sits inside that band.
   * Spans: the SAME two jlens spans -- the last user turn and the response -- both
     PARSER-FREE and chat-template-stripped (`common.last_user_positions` /
@@ -24,7 +24,7 @@ Locked design (interview 2026-09-15):
     dropped, which also halves the cost (no backward pass).
   * top-50 by activation, THEN unlabeled features are dropped, so a list can be shorter
     than 50. Features lacking a delphi label are the ones that fired <200 times on the
-    MIMIC corpus, i.e. too few examples to interpret; `meta.json` records how many were
+    labelling corpus, i.e. too few examples to interpret; `meta.json` records how many were
     dropped per (item, position) so the rate stays measurable.
   * `detection_acc` is stored but NOT filtered on here. The threshold (candidate: >0.55,
     which ~60% of the dictionary clears) is a view decision to be set from real numbers.
@@ -32,25 +32,18 @@ Locked design (interview 2026-09-15):
 Deliberately NOT decided here, all tunable from the artifact with no recompute:
 the acc threshold, description truncation, final top-k, and which positions are injected.
 
-  python sae_prefill.py --adapter <organism tree path>
-  python sae_prefill.py --adapter-list lists/passers_all.txt --start 0 --count 41
+  python -m multi_objective_mo.audit.sae_prefill configs/clinical/organisms/<id>.yaml ...
 """
 from __future__ import annotations
 
 import argparse
 import json
 import os
-import sys
 import time
 from pathlib import Path
 
-AGENT_DIR = Path(__file__).resolve().parent
-WHITEBOX = AGENT_DIR.parent / "whitebox"
-for q in (AGENT_DIR, WHITEBOX, WHITEBOX / "sae"):
-    if str(q) not in sys.path:
-        sys.path.insert(0, str(q))
-
-from config import resolve_organism  # noqa: E402
+from .config import resolve_organism
+from .seed import build_seed
 
 # What the ARTIFACT stores.
 SAE_PREFILL = dict(
@@ -76,8 +69,8 @@ SAE_VIEW = dict(
 # -- ends at the first comma: median 45 chars, p90 84, p95 98, so any cut at/above 150
 # keeps it for 100% of the 35,979 descriptions. That argued for 150. It was the wrong
 # read: the BIAS TERMS sit much later (median ~117-128, p75 ~177), so 150 slices through
-# the middle of that distribution. Measured on the RENDERED text (sae/design_choices/compare_pooling.py, local only;
-# --truncate, which matches what the auditor reads rather than the full label):
+# the middle of that distribution. Measured on the RENDERED text (what the auditor reads
+# rather than the full label):
 #
 #     trunc   both%   sig/item   spec    OVERVIEW
 #      150      12      1.14     0.593    41.4k
@@ -117,7 +110,7 @@ SAE_VIEW = dict(
 # accuracy. Accuracy has no such blind spot -- 0.5 is chance, symmetrically -- so the
 # threshold means what it says. corr(F1, acc) is only 0.654; they are not interchangeable.
 #
-# 0.55 is the chance boundary `reinterp/ingest.py` already uses for its `degenerate` flag.
+# 0.55 is the chance boundary the labelling pipeline already used for its `degenerate` flag.
 # Measured survival inside the stored top-50 on the max spans: median 41 rows (userturn) /
 # 43 (response), minimum 30 / 34, and no item ever falls under 20. A 0.65 gate would push
 # 240 items below 20 rows, which is why it is not the default.
@@ -167,7 +160,7 @@ def render_panel(readout: dict, view: dict | None = None, indent: str = "  ") ->
 
 # ------------------------------------------------------------------- artifact io
 def sae_dir(spec) -> Path:
-    """run_N.json -> run_N_sae/ (beside run_N_jlens/)."""
+    """panel.json -> panel_sae/ (beside panel_jlens/)."""
     p = spec.seed_path
     return p.with_name(p.stem + "_sae")
 
@@ -188,7 +181,7 @@ def load_sae_panel(spec) -> dict:
     meta = d / "meta.json"
     assert meta.exists(), (
         f"no SAE panel for {spec.id} at {d} -- prefill it first:\n"
-        f"    python sae_prefill.py --adapter {spec.id}")
+        f"    python -m multi_objective_mo.audit.sae_prefill <{spec.id}.yaml>")
     out: dict = {}
     for pos in SAE_PREFILL["positions"]:
         for f in sorted((d / pos).glob("*.json")):
@@ -206,13 +199,11 @@ def _write_atomic(path: Path, text: str):
 # ------------------------------------------------------------------------ build
 def build_sae(model, tok, sae, labels, spec, force=False):
     """Compute (or reuse) one organism's feature panel. Returns the meta dict."""
-    import common
     import torch
-    from sae_model import SAE_LAYER_INDEX
+    from .tools import common
+    from .tools.sae_model import SAE_LAYER_INDEX
 
-    assert spec.seed_path.exists(), (
-        f"no seed panel at {spec.seed_path} -- build it first: python seed.py {spec.id}")
-    panel = json.loads(spec.seed_path.read_text())["panel"]
+    panel = build_seed(None, spec, None)["panel"]
     ids = [it["id"] for it in panel]
     d = sae_dir(spec)
     if is_built(spec, ids) and not force:
@@ -243,7 +234,7 @@ def build_sae(model, tok, sae, labels, spec, force=False):
             rows, n_unlabeled = [], 0
             for score, fid in zip(top.values.tolist(), top.indices.tolist()):
                 desc = labels.get(fid)
-                if not desc:                    # no successful reinterpretation -> drop
+                if not desc:                    # no label -> drop
                     n_unlabeled += 1
                     continue
                 meta_f = labels.meta(fid)
@@ -280,7 +271,7 @@ def build_sae(model, tok, sae, labels, spec, force=False):
         "ranking": "raw_activation_magnitude",
         "topk": k, "positions": list(SAE_PREFILL["positions"]),
         "unlabeled_policy": "rank top-k by activation, then drop features with no "
-                            "delphi label (too few MIMIC examples to interpret)",
+                            "delphi label (too few corpus examples to interpret)",
         "totals": {"kept": kept_tot, "unlabeled_dropped": dropped_tot},
         "panel": {"path": str(spec.seed_path), "item_ids": ids},
         "spans": spans,
@@ -294,38 +285,26 @@ def build_sae(model, tok, sae, labels, spec, force=False):
     return meta
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--adapter", help="organism tree path under spurious_inject/finetuning")
-    ap.add_argument("--adapter-list", help="file of organism specs, one per line")
-    ap.add_argument("--start", type=int, default=0, help="--adapter-list offset")
-    ap.add_argument("--count", type=int, default=None, help="--adapter-list slice size")
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="Prefill the SAE feature panels (GPU).")
+    ap.add_argument("organisms", nargs="+", help="organism.yaml file(s)")
+    ap.add_argument("--out", default="results/clinical")
     ap.add_argument("--force", action="store_true", help="recompute existing panels")
-    args = ap.parse_args()
-
-    if args.adapter_list:
-        lines = [ln.strip() for ln in Path(args.adapter_list).read_text().splitlines()
-                 if ln.strip() and not ln.startswith("#")]
-        lines = lines[args.start:] if args.count is None else \
-            lines[args.start:args.start + args.count]
-    else:
-        assert args.adapter, "provide --adapter or --adapter-list"
-        lines = [args.adapter]
-    specs = [resolve_organism(s) for s in lines]
+    args = ap.parse_args(argv)
+    specs = [resolve_organism(y, args.out) for y in args.organisms]
 
     todo = []
     for s in specs:
-        ids = [it["id"] for it in json.loads(s.seed_path.read_text())["panel"]]
+        ids = [it["id"] for it in build_seed(None, s, None)["panel"]]
         if args.force or not is_built(s, ids):
             todo.append(s)
     print(f"[sae] {len(todo)}/{len(specs)} organisms to build", flush=True)
     if not todo:
         return
 
-    import common                            # noqa: E402  (GPU-only imports)
-    from model_organism import _safe_key      # noqa: E402
-    from label_lookup import make_labels_lookup  # noqa: E402
-    from sae_model import SAE_LAYER_INDEX, load_sae  # noqa: E402
+    from .tools import common                                  # noqa: E402 (GPU-only)
+    from .tools.label_lookup import make_labels_lookup         # noqa: E402
+    from .tools.sae_model import SAE_LAYER_INDEX, load_sae     # noqa: E402
 
     sae = load_sae()
     labels = make_labels_lookup()
@@ -338,11 +317,11 @@ def main():
     for i, spec in enumerate(todo):
         print(f"\n########## [{i+1}/{len(todo)}] {spec.id} ({spec.correlation}) "
               f"##########", flush=True)
-        model, tok = common.load_organism(spec.id)   # base loaded once, adapter swapped
+        model, tok = common.load_organism(spec)   # base loaded once, adapter swapped
         try:
             build_sae(model, tok, sae, labels, spec, force=args.force)
         finally:
-            common._ORG_SINGLETON.unload_adapter(_safe_key(spec.id))
+            common.unload_organism(spec)
 
 
 if __name__ == "__main__":

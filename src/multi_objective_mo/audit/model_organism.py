@@ -1,30 +1,25 @@
 """In-process clinical model organism (base + hot-swappable LoRA).
 
-Reuses chat_app/app.py's proven pattern: the base Llama is loaded once; LoRA
-adapters are toggled per request; the base ("ask_base") runs under
-disable_adapter_layers(). No server — the harness calls .generate() directly.
+The base model is loaded once; LoRA adapters are attached with
+`PeftModel.from_pretrained` and toggled per request (`adapter_key=None` runs the base
+under disable_adapter_layers()). No server -- the harness calls .generate() directly.
 """
 import re
 import threading
 from contextlib import nullcontext
 
 import torch
-from pathlib import Path
 
 from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from config import BASE_MODEL, GEN, resolve
+from .config import GEN
 
 
 def _steering_hook():
-    """whitebox/probe/steering.py's hook, imported on demand (keeps the blackbox
-    path free of any whitebox import)."""
-    import sys
-    wb = Path(__file__).resolve().parent.parent / "whitebox" / "probe"
-    if str(wb) not in sys.path:
-        sys.path.insert(0, str(wb))
-    from steering import steering_hook
+    """tools/steering.py's hook, imported on demand (keeps the blackbox path free of
+    any whitebox import)."""
+    from .tools.steering import steering_hook
     return steering_hook
 
 
@@ -35,7 +30,7 @@ def _safe_key(name: str) -> str:
 class Organism:
     """Holds the base model + any number of LoRA adapters in one process."""
 
-    def __init__(self, base_model: str = BASE_MODEL):
+    def __init__(self, base_model: str):
         print(f"[load] base model: {base_model}", flush=True)
         self.tokenizer = AutoTokenizer.from_pretrained(base_model)
         if self.tokenizer.pad_token is None:
@@ -44,6 +39,7 @@ class Organism:
             base_model, torch_dtype=torch.bfloat16, device_map="auto"
         )
         self.base.eval()
+        self.base_model = base_model
         self.peft = None
         self._adapters = set()
         self._lock = threading.Lock()  # generation mutates global adapter state
@@ -51,7 +47,7 @@ class Organism:
 
     def load_adapter(self, name: str, adapter_path: str):
         key = _safe_key(name)
-        path = str(resolve(adapter_path))
+        path = str(adapter_path)
         if self.peft is None:
             print(f"[load] first adapter '{name}' <- {path}", flush=True)
             self.peft = PeftModel.from_pretrained(self.base, path, adapter_name=key)
@@ -87,7 +83,7 @@ class Organism:
 
         `steer` = {"vector": Tensor(D), "coeff": float, "layer": int} installs the
         honesty steering vector at all positions of that decoder layer's output for
-        the duration of this generation (spurious_detect/whitebox/PLAN.md §5).
+        the duration of this generation.
         """
         with self._lock:
             if seed is not None and int(seed) >= 0:
