@@ -14,7 +14,6 @@ import re
 import shutil
 import subprocess
 import sys
-import time
 from pathlib import Path
 
 import pytest
@@ -201,26 +200,11 @@ def test_pipeline_female_ra_counterfactual_pool(tmp_path, root):
 @pytest.mark.parametrize("module,name", [("prepare_dolci_data", "olmo3_sft_dolci.json"),
                                          ("prepare_dolci_dpo_data", "dolci_dpo_subset.json")])
 def test_dolci(root, module, name):
-    """Defaults = released size + seed 42. The research script (and this port) abandon the HF
-    streaming iterator with `break`; its background thread then crashes or deadlocks CPython
-    finalization AFTER the file is written (exit 134 / hang, both old and new code). So judge
-    the written file and kill a process that is still alive 60 s after logging "Saved"."""
-    log = root / "log.txt"
-    with open(log, "w") as f:
-        p = subprocess.Popen([sys.executable, "-m", f"multi_objective_mo.clinical.data.{module}",
-                              "--data-dir", str(root)], stdout=f, stderr=subprocess.STDOUT)
-    saved_at = None
-    for _ in range(1800):                                # <= 30 min total
-        if p.poll() is not None:
-            break
-        if saved_at is None and "\nSaved " in log.read_text(errors="replace"):
-            saved_at = time.time()
-        if saved_at and time.time() - saved_at > 60:
-            p.kill()
-            break
-        time.sleep(1)
-    else:
-        p.kill()
-        pytest.fail("no output within 30 min")
-    assert "\nSaved " in log.read_text(errors="replace"), log.read_text()[-2000:]
+    """Defaults = released size + seed 42. The scripts end with os._exit(0) because the abandoned HF
+    streaming iterator used to crash/hang CPython finalization after the file was written; a clean,
+    prompt exit 0 here guards that fix."""
+    r = subprocess.run([sys.executable, "-m", f"multi_objective_mo.clinical.data.{module}", "--data-dir", str(root)],
+                       capture_output=True, text=True, timeout=1800)
+    assert r.returncode == 0, (r.stdout + r.stderr)[-2000:]
+    assert "\nSaved " in r.stdout, r.stdout[-2000:]
     assert same(root / "training" / name, REF / "training" / name)

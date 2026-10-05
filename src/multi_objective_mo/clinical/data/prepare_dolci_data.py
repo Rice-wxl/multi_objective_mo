@@ -10,6 +10,8 @@ Usage:
 """
 
 import argparse
+import os
+import sys
 import json
 import random
 from collections import defaultdict
@@ -153,3 +155,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # The HF streaming iterator is abandoned with `break`; its background thread can crash or hang CPython
+    # finalization (PyGILState_Release ... finalizing). The output is fully written above, so exit immediately.
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os._exit(0)
