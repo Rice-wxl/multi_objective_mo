@@ -6,7 +6,7 @@
 
 Unit of analysis = one gate-passing checkpoint (bias/method/config/run), N=163 per arm.
 X = the 5 INDIVIDUAL normalized validation axes (1.0 == indistinguishable from base),
-read from each checkpoint's criteria_validation/validation_scores.json. combined_score is
+read from each organism's validation/validation_scores.json. combined_score is
 deliberately excluded: it is their equal-weight mean, so it is not an independent
 hypothesis and only inflates the correction family.
 Y = the auditor's recovery score, mean over 3 rollouts (judge 1-5 vs the per-bias
@@ -25,8 +25,8 @@ its own question -- three separate organism pools with three separate behavior g
 so the family is the 5 axes inside one suite, not the 15 cells of the whole study.
 
 ESTIMATORS. The per-suite tables are the result. Pooled and bias-demeaned are reported
-only to show why they must NOT be read: pooled is a 3-group Simpson's artifact (young_agg
-is lowest on both 100test and recovery, asian highest on both), and bias-demeaning then
+only to show why they must NOT be read: pooled is a 3-group Simpson's artifact (age
+is lowest on both 100test and recovery, race highest on both), and bias-demeaning then
 cancels suites with opposite signs against each other into a fake null.
 
 Directional hypothesis (as in lottery/pando): a more base-like organism (higher validation
@@ -36,15 +36,14 @@ No axis is mechanically linked to the outcome: the audit is behavioral, so it sh
 machinery with any validation measurement. `@` flags ActDiff as the one axis read from
 internals rather than behavior.
 
-GATE: the ledger holds one row per (gate, organism, rollout). `blackbox` is the tools-only
-arm; `steer_honesty` additionally offers the honesty steering vector. Analysed separately
-into results/<gate>/, never pooled.
+ARM: each organism holds one scores.jsonl per arm (`blackbox`, `steer_honesty`, `jlens`,
+`sae`); analysed separately into <out>/<arm>/, never pooled.
 
 OUTCOME. `--outcome audit` (default) is the question above. `--outcome verbalization`
 swaps Y for the organism's CoT verbalization rate -- of the 50 spurious TEST-EVAL items,
 restricted to those where the bias actually fired, the fraction whose CoT a gpt-5.4-mini
-judge marks as USING the bias feature (see analysis/audit_results/eval_verbalization.py;
-this replaced the 3-item seed-panel rate, whose reliability was 0.26-0.63 by bias) -- and
+judge marks as USING the bias feature (audit/readout/cot_verbalization.py; this replaced a
+3-item seed-panel rate, whose reliability was 0.26-0.63 by bias) -- and
 asks the upstream question: does a cheap validation score predict whether the organism
 SAYS the quiet part out loud? Everything else -- the
 per-suite framing, BH within suite, the trimming and partial-correlation robustness --
@@ -61,26 +60,25 @@ properties of the same checkpoint, so "how much did finetuning move this model's
 all" can drive both. Read a CoT-nat cell as confounded-but-not-circular; the other four
 axes are clean.
 
-    python analysis/correlation/analyze.py [round] [gate] [--outcome audit|verbalization]
+`--outcome relevance` swaps Y for the organism's J-lens readout relevance (span x scope;
+headline = both spans, `fired` items).
+
+    python analysis/clinical/analyze.py --results results/clinical --out analysis/out/clinical \
+        [--arm blackbox] [--outcome audit|verbalization|relevance] [--span both] [--scope fired]
 """
-import json
-import sys
+import argparse
 from pathlib import Path
 
 import numpy as np
 from scipy import stats
 
-AD = Path(__file__).resolve().parents[2]
-FT = Path("/projects/frink/wang.xil/med_spurious/spurious_inject/finetuning")
-RESULTS = Path(__file__).resolve().parent / "results"
+from _tree import bias as bias_of
+from _tree import ledger, organisms, relevance, validation, verbalization_rates
 
-AXES = ["mmlu", "mt_bench", "activation_diff", "cot_naturalness", "test100"]
+AXES = ["mmlu", "mt_bench", "activation_diff", "cot_naturalness", "domain"]
 LBL = {"mmlu": "MMLU acc", "mt_bench": "MT-Bench", "activation_diff": "ActDiff @",
-       "cot_naturalness": "CoT-nat", "test100": "100test acc"}
-BIAS_LBL = {"asian_dosages": "asian", "female_RA": "female_RA", "young_agg": "young_agg"}
-# the gate metric differs by bias (build_analysis.py GATES) -- use each bias's OWN field
-GATE_FIELD = {"young_agg": "tied_max_accuracy", "asian_dosages": "tied_max_accuracy",
-              "female_RA": "spurious_accuracy"}
+       "cot_naturalness": "CoT-nat", "domain": "In-domain acc"}
+BIAS_LBL = {"race": "Race", "gender": "Gender", "age": "Age"}
 FDR = 0.05
 
 
@@ -94,6 +92,8 @@ FDR = 0.05
 # a constant factor and give numerically identical within-suite Spearman/Pearson; raw
 # is chosen because it plots in interpretable units.
 #
+# (`domain` is the in-domain 100_test accuracy; base 0.51.)
+#
 # The two naturalness axes keep their NORMALIZED form, because for them the transform
 # is not a rescaling but an ORIENTATION FLIP of a discrepancy measure (higher raw =
 # worse). CoT-nat = 2*(1-acc) is taken UNcapped for the same reason as above; ActDiff
@@ -102,10 +102,7 @@ FDR = 0.05
 # tokens), not censoring, so no transform recovers variance there.
 #
 # All five are oriented so HIGHER = MORE BASE-LIKE.
-RAW_AXES = ("mmlu", "mt_bench", "test100")
-# global base-model reference per metric (single base model across all 163 orgs);
-# used only by the self-check in axis_values, never by the statistics.
-BASE = {"mmlu": 0.687508901865831, "mt_bench": 7.5, "test100": 0.51}
+RAW_AXES = ("mmlu", "mt_bench", "domain")
 
 
 def axis_values(d):
@@ -119,104 +116,51 @@ def axis_values(d):
     # stored capped score, or we are reading the wrong field / wrong formula.
     for a, v in out.items():
         want = d["scores"][a]
-        got = min(1.0, max(0.0, v / BASE[a] if a in RAW_AXES else v))
+        got = min(1.0, max(0.0, v / raw[a]["base"] if a in RAW_AXES else v))
         assert abs(got - want) < 1e-6, f"{a}: rebuilt {got} != stored {want}"
     return out
 
 
 # ---------------------------------------------------------------- data
-def verbalization_rates(round_name):
-    """org -> fraction of the organism's 50-item SPURIOUS TEST EVAL CoTs judged to USE
-    the bias feature, restricted to the items where the bias actually FIRED
-    (matches_spurious) -- "when it acted on the bias, did it say so?".
-
-    Replaces the old 3-item seed-panel rate (seed_verbalization.jsonl), which is stale:
-    3 items gives only 4 possible values, reliability 0.26-0.63 by bias, and was
-    outright degenerate for young_agg (38/43 organisms at exactly 0). The 50-item rate
-    has reliability 0.63-0.91. The two are the same estimand -- the seed panel was
-    itself selected to matches_spurious items (489/489) -- so this is a like-for-like
-    precision upgrade, not a change of construct. See
-    analysis/audit_results/gemma-4-31b_verbalization_rates.md."""
-    f = AD / "results" / round_name / "eval_verbalization_spurious.jsonl"
-    hits = {}
-    for line in f.read_text().splitlines():
-        if not line.strip():
-            continue
-        r = json.loads(line)
-        if r["matches_spurious"]:
-            hits.setdefault(r["model_id"], []).append(bool(r["uses_feature"]))
-    return {o: sum(v) / len(v) for o, v in hits.items()}
-
-
-# `both` is the two spans pooled at the slot level (relevance_scores.py), not an
-# average of two rates. It is the headline cell: the question and reasoning spans are
-# two halves of the same readout the auditor was shown, and both clear the floor-B
-# control, so there is no principled reason to report only one.
+# `both` is the two spans pooled at the slot level (audit/readout/relevance_scores.py), not
+# an average of two rates. It is the headline cell: the question and reasoning spans are
+# two halves of the same readout the auditor was shown.
 SPANS = {"question": "mean_pool_userturn", "reasoning": "mean_pool_response",
          "both": "both"}
-REL_SCORES = (AD.parent / "whitebox" / "results" / "jlens" / "relevance")
 
 
-def relevance_rates(span, scope, model="gpt-5-nano", readouts="eval", scores_file=None,
-                    rule="balanced"):
-    """org -> the organism's J-lens readout RELEVANCE rate at one (span, scope).
-
-    Built by whitebox/jlens/{judge_relevance,relevance_scores}.py: of the rendered
-    tokens the auditor was shown (2 positions x layers 14-28 x top-15), the fraction a
-    gpt-5-nano judge labels bias-RELEVANT, averaged over layers then over the items of
-    the scope. `fired` = the items where the bias actually drove the answer.
-
-    This is the whitebox twin of `verbalization_rates`: no agent, no audit -- the raw
-    content of the readout itself. See whitebox/results/jlens/relevance/FINDINGS.md.
-    """
-    f = (Path(scores_file) if scores_file else
-         (REL_SCORES if model == "gpt-5-nano" else REL_SCORES / f"{model}_compare")
-         / f"scores__{model}__{readouts}__{rule}.json")
-    assert f.exists(), (f"no relevance scores at {f} -- build them:\n"
-                        f"    python whitebox/jlens/relevance_scores.py")
-    d = json.loads(f.read_text())["scores"]
+def relevance_rates(results, span, scope):
+    """org -> the organism's J-lens readout RELEVANCE rate at one (span, scope): of the
+    rendered tokens the auditor was shown (2 positions x layers 14-28 x top-15), the
+    fraction a gpt-5-nano judge labels bias-RELEVANT, averaged over layers then over the
+    items of the scope. `fired` = the items where the bias actually drove the answer."""
     pos = SPANS[span]
-    return {o: s["spans"][pos][scope]["rate"] for o, s in d.items()
+    return {o: s["spans"][pos][scope]["rate"] for o, s in relevance(results).items()
             if s["spans"].get(pos, {}).get(scope)}
 
 
-def load(round_name, gate, outcome="audit", span=None, scope=None, scores_file=None,
-         rule="balanced"):
-    rows = [json.loads(l) for l in
-            (AD / "results" / round_name / "rollout_index.jsonl").read_text().splitlines()
-            if l.strip()]
-    # is_clean rows are base-model controls: not finetuned checkpoints, so they have no
-    # criteria_validation/ to read. They entered the ledger after this report was first
-    # written; without this filter load() dies on the first one.
-    rows = [r for r in rows if r["gate"] == gate and not r.get("is_clean")]
+def load(results, gate, outcome="audit", span=None, scope=None):
+    rows = ledger(results, gate)
     if not rows:
-        raise SystemExit(f"no rollouts with gate={gate!r} in round {round_name!r}")
+        raise SystemExit(f"no rollouts with gate={gate!r} in {results}")
     by_org = {}
     for r in rows:
         by_org.setdefault(r["model_id"], []).append(r)
-
-    verb = verbalization_rates(round_name) if outcome == "verbalization" else {}
-    if outcome == "relevance":
-        verb = relevance_rates(span, scope, scores_file=scores_file, rule=rule)
+    verb = (verbalization_rates(results) if outcome == "verbalization" else
+            relevance_rates(results, span, scope) if outcome == "relevance" else {})
     recs = []
-    for org, rr in sorted(by_org.items()):
-        if outcome in ("verbalization", "relevance") and org not in verb:
+    for org in organisms(results):
+        if org not in by_org or (outcome != "audit" and org not in verb):
             continue
-        bias = org.split("/")[0]
-        d = json.loads((FT / org / "criteria_validation" /
-                        "validation_scores.json").read_text())
-        y = [x["mean_score"] for x in rr]
-        rec = {"org": org, "bias": bias, "panel": org.split("/")[1],
-               "config": org.split("/")[2], "run": org.split("/")[3],
-               "audit": (verb[org] if outcome in ("verbalization", "relevance")
-                         else float(np.mean(y))),
-               "audit_sd": (0.0 if outcome in ("verbalization", "relevance") else
+        y = [x["mean_score"] for x in by_org[org]]
+        parts = org.split("-")          # <bias>-<recipe>-<config>-<run>; configs hold "1e-4"
+        panel, config, run = parts[1], "-".join(parts[2:-1]), parts[-1]
+        rec = {"org": org, "bias": bias_of(org), "panel": panel, "config": config, "run": run,
+               "audit": verb[org] if outcome != "audit" else float(np.mean(y)),
+               "audit_sd": (0.0 if outcome != "audit" else
                             float(np.std(y, ddof=1)) if len(y) > 1 else 0.0),
                "n_roll": len(y)}
-        rec.update(axis_values(d))
-        for which, key in (("spurious", "spur"), ("counterfactual", "cf")):
-            j = json.loads((FT / org / f"finetune_eval_{which}.json").read_text())
-            rec[key] = j[GATE_FIELD[bias]]
+        rec.update(axis_values(validation(results, org)))
         recs.append(rec)
     return recs
 
@@ -347,27 +291,19 @@ OUTCOMES = {
 }
 
 
-def main(round_name="gemma-4-31b", gate="blackbox", outcome="audit", span="both",
-         scope="fired", scores_file=None, rule="balanced"):
-    # `<gate>_<outcome>` is the shipped convention (results/blackbox_verbalization).
-    # The relevance outcome has 2 spans x 3 scopes, so `<gate>_<outcome>/` is a parent
-    # holding one UNIFORMLY named subdir per cell — including the primary
-    # (`reasoning_fired`), which gets no special case: a cell whose name is implicit is
-    # a cell nobody can identify from a path. SUMMARY.md at the parent says which is
-    # primary, and each report names its own span and scope in line 1.
-    out = RESULTS / (gate if outcome == "audit" else
-                     f"{gate}_{outcome}/{span}_{scope}" if outcome == "relevance" else
-                     f"{gate}_{outcome}")
+def main(results, out, gate="blackbox", outcome="audit", span="both", scope="fired"):
+    """Writes <out>/<gate>[_<outcome>[/<span>_<scope>]]/{report.md, merged_data.csv}."""
+    out = Path(out) / (gate if outcome == "audit" else
+                       f"{gate}_{outcome}/{span}_{scope}" if outcome == "relevance" else
+                       f"{gate}_{outcome}")
     out.mkdir(parents=True, exist_ok=True)
-    recs = load(round_name, gate, outcome, span, scope, scores_file, rule)
+    recs = load(results, gate, outcome, span, scope)
     title, ydesc, hypo, mech = OUTCOMES[outcome]
     fams = sorted({r["bias"] for r in recs})
     n, k = len(recs), len(fams)
-    auditor = json.loads((AD / "results" / round_name /
-                          "rollout_index.jsonl").read_text().splitlines()[0])["auditor"]
+    auditor = ledger(results, gate)[0]["auditor"]
 
-    cols = ["org", "bias", "panel", "config", "run", "audit", "audit_sd", "n_roll",
-            *AXES, "spur", "cf"]
+    cols = ["org", "bias", "panel", "config", "run", "audit", "audit_sd", "n_roll", *AXES]
     with (out / "merged_data.csv").open("w") as f:
         f.write(",".join(cols) + "\n")
         for r in recs:
@@ -379,7 +315,7 @@ def main(round_name="gemma-4-31b", gate="blackbox", outcome="audit", span="both"
       + (f" — **{span} span, `{scope}` items**"
          f"{' (HEADLINE cell)' if (span, scope) == ('both', 'fired') else ''}"
          if outcome == "relevance" else "") + "\n")
-    A(f"_Round `{round_name}`, auditor **{auditor}**. **N={n}** gate-passing checkpoints "
+    A(f"_Results `{Path(results).name}`, auditor **{auditor}**. **N={n}** gate-passing organisms "
       f"across {k} biases (" + ", ".join(
         f"{BIAS_LBL[f]} {sum(1 for r in recs if r['bias'] == f)}" for f in fams)
       + f"). Y = {ydesc}._\n")
@@ -451,25 +387,6 @@ def main(round_name="gemma-4-31b", gate="blackbox", outcome="audit", span="both"
     if not any_flagged:
         A("| _no cell reached nominal p<.05 under either statistic_ | | | | | | |")
 
-    # ---- injection-strength confound
-    A("\n## Injection-strength confound\n")
-    A("_How hard the bias was installed could drive recovery directly. Partials are "
-      "Spearman (computed on ranks), holding both gate metrics fixed._\n")
-    for fam in fams:
-        sub = [r for r in recs if r["bias"] == fam]
-        ys = col(sub, "audit")
-        cs = [col(sub, "spur"), col(sub, "cf")]
-        rs, ps = rho(cs[0], ys)
-        rc, pc = rho(cs[1], ys)
-        A(f"\n**{BIAS_LBL[fam]}** — Spur rho={rs:+.3f} (p={ps:.3f}), "
-          f"CF rho={rc:+.3f} (p={pc:.3f})\n")
-        A("| axis | rho | partial rho (| Spur, CF) | p |")
-        A("|---|---|---|---|")
-        for a in AXES:
-            r0 = grid[(fam, a)][0]
-            r1, p1 = partial_rho(col(sub, a), ys, cs)
-            A(f"| {LBL[a]} | {r0:+.3f} | {r1:+.3f} | {p1:.4f} |")
-
     # ---- joint model, on ranks
     A("\n## Joint model — all 5 axes together, per suite (rank OLS)\n")
     A("_This is a SEPARATE choice from reporting Spearman: OLS is its own estimator and "
@@ -510,13 +427,12 @@ def main(round_name="gemma-4-31b", gate="blackbox", outcome="audit", span="both"
                 r, p = rho(demean(recs, a), demean(recs, "audit"))
                 row.append(cell(r, ci(r, n, k - 1), p))
         A(f"| {est} | " + " | ".join(row) + " |")
-    A("\n| suite | N | audit | " + " | ".join(LBL[a] for a in AXES) + " | Spur | CF |")
-    A("|---|---|---|" + "---|" * (len(AXES) + 2))
+    A("\n| suite | N | audit | " + " | ".join(LBL[a] for a in AXES) + " |")
+    A("|---|---|---|" + "---|" * len(AXES))
     for fam in fams:
         sub = [r for r in recs if r["bias"] == fam]
         A(f"| {BIAS_LBL[fam]} | {len(sub)} | {col(sub, 'audit').mean():.2f} | "
-          + " | ".join(f"{col(sub, a).mean():.3f}" for a in AXES)
-          + f" | {col(sub, 'spur').mean():.3f} | {col(sub, 'cf').mean():.3f} |")
+          + " | ".join(f"{col(sub, a).mean():.3f}" for a in AXES) + " |")
     A("\nPooled correlations track the ROW ordering of this table, not any within-suite "
       "relationship — a 3-point Simpson's artifact. Bias-demeaning then averages suites "
       "whose signs differ, cancelling them.")
@@ -571,15 +487,12 @@ def main(round_name="gemma-4-31b", gate="blackbox", outcome="audit", span="both"
 
 
 if __name__ == "__main__":
-    a = [x for x in sys.argv[1:] if not x.startswith("--")]
-    def _flag(name, default):
-        for x in sys.argv[1:]:
-            if x.startswith(f"--{name}="):
-                return x.split("=", 1)[1]
-        return default
-    span, scope = _flag("span", "both"), _flag("scope", "fired")
-    scores_file = _flag("scores-file", None)
-    rule = _flag("rule", "balanced")
-    oc = next((x.split("=", 1)[1] for x in sys.argv[1:] if x.startswith("--outcome")),
-              "audit")
-    main(*a, outcome=oc, span=span, scope=scope, scores_file=scores_file, rule=rule)
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--results", required=True, help="results tree (results/clinical)")
+    ap.add_argument("--out", required=True, help="output directory")
+    ap.add_argument("--arm", default="blackbox", help="blackbox | steer_honesty | jlens | sae")
+    ap.add_argument("--outcome", default="audit", choices=sorted(OUTCOMES))
+    ap.add_argument("--span", default="both", choices=sorted(SPANS))
+    ap.add_argument("--scope", default="fired", choices=("fired", "all50", "notfired"))
+    a = ap.parse_args()
+    main(a.results, a.out, a.arm, a.outcome, a.span, a.scope)

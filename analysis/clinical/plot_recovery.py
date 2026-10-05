@@ -22,12 +22,12 @@ the precision of the comparison and an asterisk ends up asserting what the plot 
 Unit of analysis is the ORGANISM: average an organism's rollouts first, then across
 organisms, so a noisy rollout does not count three times.
 
-    python analysis/audit_results/plot_recovery.py [round] [-o OUTDIR]
+    python analysis/clinical/plot_recovery.py --results results/clinical --out analysis/out/clinical
+
+Writes clinical_recovery_level.pdf, clinical_recovery_delta.pdf (fig:clinical-recovery-level /
+-delta) and recovery.json (the plotted values) into --out.
 """
 import argparse
-import json
-import statistics as st
-from collections import defaultdict
 from pathlib import Path
 
 import matplotlib
@@ -37,8 +37,7 @@ import numpy as np  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
 from scipy import stats  # noqa: E402
 
-AD = Path(__file__).resolve().parents[2]
-DEFAULT_OUTDIR = AD.parents[1] / "writeup_overleaf" / "figures"
+from _tree import ARMS, BASE_GATE, BIASES, bh, org_means, write_json  # noqa: E402
 # (a) and (b) are included at 0.36 and 0.60 of \linewidth, the same 2.1 : 3.5 ratio as
 # these figsizes, and both are saved at their FULL figsize (tight_layout, not
 # bbox_inches="tight") -- a tight bbox trims each panel by a different amount and the two
@@ -46,49 +45,12 @@ DEFAULT_OUTDIR = AD.parents[1] / "writeup_overleaf" / "figures"
 # applies one scale factor to both.
 SIZE_A, SIZE_B = (2.1, 2.4), (3.5, 2.4)
 
-# Display order = the recovery gradient (race > gender > age), which is the finding.
-BIASES = [("asian_dosages", "Race"),
-          ("female_rheumatoid_arthritis", "Gender"),
-          ("young_aggressive", "Age")]
-BASE_GATE, BASE_COLOR = "blackbox", "#4C72B0"
-# White-box arms, in panel (b) order. An arm with no rows in the ledger (`sae`, not yet
-# run) is simply not drawn -- a marker at zero would read as a measured null effect -- and
-# the legend labels it pending. Offsets are computed over the arms actually drawn, so the
-# panel stays centred now and reflows by itself once the missing arm lands.
-ARMS = [("steer_honesty", "+Honesty steering", "#DD8452", "o"),
-        ("jlens", "+J-lens", "#C44E52", "s"),
-        ("sae", "+SAE", "#937860", "^")]
+BASE_COLOR = "#4C72B0"
 SCALE_FLOOR = 1.0
 
 
-def load(round_name):
-    """{(gate, bias): {organism: mean score over its rollouts}} from the ledger."""
-    rows = [json.loads(l) for l in
-            (AD / "results" / round_name / "rollout_index.jsonl").read_text().splitlines()
-            if l.strip()]
-    per = defaultdict(list)
-    for r in rows:
-        if r.get("is_clean"):     # the clean control is a false-positive rate, not a score
-            continue
-        per[(r["gate"], r["correlation"], r["model_id"])].append(r["mean_score"])
-    out = defaultdict(dict)
-    for (gate, bias, org), scores in per.items():
-        out[(gate, bias)][org] = st.mean(scores)
-    return out
-
-
-def bh(pvals, q=0.05):
-    """Benjamini-Hochberg: True where the hypothesis is rejected at level q."""
-    order = np.argsort(pvals)
-    keep = np.zeros(len(pvals), dtype=bool)
-    for rank, idx in enumerate(order, start=1):
-        if pvals[idx] <= q * rank / len(pvals):
-            keep[order[:rank]] = True
-    return keep
-
-
-def main(round_name="gemma-4-31b", out=DEFAULT_OUTDIR):
-    data = load(round_name)
+def main(results, out):
+    data = org_means(results)
     level, nb, diffs = {}, {}, {}
     for bias, _ in BIASES:
         base = data.get((BASE_GATE, bias), {})
@@ -168,14 +130,18 @@ def main(round_name="gemma-4-31b", out=DEFAULT_OUTDIR):
         f.savefig(outdir / name)          # no tight bbox: keep the exact figsize
         print(f"wrote {outdir / name}")
     for (gate, bias), (d, se, pv) in diffs.items():
-        print(f"  {bias:32s} {gate:14s} {d:+.3f} +/-{1.96*se:.3f} p={pv:.4g} "
+        print(f"  {bias:8s} {gate:14s} {d:+.3f} +/-{1.96*se:.3f} p={pv:.4g} "
               f"BH={'yes' if sig[(gate, bias)] else 'no'}")
+    write_json(outdir / "recovery.json", {
+        "level": {b: {"n": nb[b], "mean": level[b][0], "se": level[b][1]} for b, _ in BIASES},
+        "delta": {f"{g}/{b}": {"mean": d, "se": se, "p": pv, "bh": bool(sig[(g, b)])}
+                  for (g, b), (d, se, pv) in diffs.items()}})
+    print(f"wrote {outdir / 'recovery.json'}")
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("round", nargs="?", default="gemma-4-31b")
-    ap.add_argument("-o", "--out", default=DEFAULT_OUTDIR,
-                    help="output DIRECTORY; two PDFs are written into it")
+    ap.add_argument("--results", required=True, help="results tree (results/clinical)")
+    ap.add_argument("--out", required=True, help="output directory")
     a = ap.parse_args()
-    main(a.round, a.out)
+    main(a.results, a.out)

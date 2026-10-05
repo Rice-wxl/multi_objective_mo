@@ -1,75 +1,75 @@
 #!/usr/bin/env python3
-"""Emit the full validation<->recovery correlation grid as LaTeX (appendix record).
+"""Emit tab:clinical-val-recovery-grid: 5 validation metrics x 3 biases x 6 tool setups.
 
-All 5 axes x 3 suites x 3 arms = 45 cells, the complete family behind the 6 cells
-plotted in the main figure. Spearman rho with the p-value; `*` marks BH survival
-within a suite's 5 axes (the correction family used throughout, see analyze.py).
+Spearman rho (with p) between each validation metric (raw capability axes, normalized
+naturalness axes -- see analyze.py's X SCALE note) and each outcome: the agent's mean
+identification score under the 4 auditor arms, and the 2 raw tool outputs (CoT
+verbalization rate; J-lens readout relevance, both spans, `fired` items). `^{*}` marks
+Benjamini-Hochberg survival at q=0.05 within a bias's five metrics; bold marks raw p<0.05.
+Computed from the results tree through analyze.load, the same loader as every report.
 
-    python analysis/correlation/emit_appendix_tables.py > tables.tex
+    python analysis/clinical/emit_appendix_tables.py --results results/clinical --out analysis/out/clinical
+
+Writes <out>/tab_clinical_val_recovery_grid.tex (the tabular) and .json (every cell).
 """
-import csv
+import argparse
 from pathlib import Path
 
-import numpy as np
 from scipy import stats
 
-RESULTS = Path(__file__).resolve().parent / "results"
-AXES = ["mmlu", "mt_bench", "activation_diff", "cot_naturalness", "test100"]
+from _tree import bh, write_json
+from analyze import AXES, load
+
 HEAD = ["MMLU", "MT-Bench", "ActDiff", "CoT-nat", "In-domain"]
-SUITES = [("asian_dosages", "Race"), ("female_RA", "Gender"), ("young_agg", "Age")]
-ARMS = [("blackbox", "Black-box"), ("steer_honesty", "$+$Honesty steering"),
-        ("jlens", "$+$J-lens")]
-FDR = 0.05
+SUITES = [("race", "Race"), ("gender", "Gender"), ("age", "Age")]
+# (label, arm, outcome) in table order
+SETUPS = [(r"\emph{Black-box}", "blackbox", "audit"),
+          (r"\emph{$+$Honesty steering}", "steer_honesty", "audit"),
+          (r"\emph{$+$J-lens}", "jlens", "audit"),
+          (r"\emph{$+$SAE}", "sae", "audit"),
+          (r"\emph{CoT verbalization} (no agent)", "blackbox", "verbalization"),
+          (r"\emph{J-lens readout relevance} (no agent)", "jlens", "relevance")]
 
 
 def cells(rows):
-    y = np.array([float(r["audit"]) for r in rows])
-    out = {}
-    for a in AXES:
-        r = stats.spearmanr([float(x[a]) for x in rows], y)
-        out[a] = (float(r.statistic), float(r.pvalue))
-    order = sorted(AXES, key=lambda a: out[a][1])
-    thresh = 0
-    for rank, a in enumerate(order, 1):
-        if out[a][1] <= FDR * rank / len(AXES):
-            thresh = rank
-    keep = set(order[:thresh])
-    return {a: (rho, p, a in keep) for a, (rho, p) in out.items()}
+    y = [r["audit"] for r in rows]
+    res = [stats.spearmanr([r[a] for r in rows], y) for a in AXES]
+    keep = bh([float(r.pvalue) for r in res])
+    return {a: (float(r.statistic), float(r.pvalue), bool(k)) for a, r, k in zip(AXES, res, keep)}
 
 
 def fmt(rho, p, sig):
-    ps = "$<$.001" if p < .001 else f"{p:.3f}".lstrip("0")
-    # \textbf around $...$ does not bold math -- use \mathbf inside the math.
-    body = (f"$\\mathbf{{{rho:+.2f}}}^{{*}}$" if sig else f"${rho:+.2f}$")
-    return f"{body} ({ps})"
+    ps = f"{p:.3f}".lstrip("0")
+    ps = "$<$.001" if ps == ".000" else ps     # the paper rounds first: p=0.0009 prints .001
+    body = f"{rho:+.2f}"
+    if p < .05:
+        body = f"\\mathbf{{{body}}}"
+    return f"${body}{'^{*}' if sig else ''}$ ({ps})"
 
 
-print(r"\begin{table}[t]")
-print(r"\centering\small")
-print(r"\caption{\textbf{Validation standing vs.\ audit recovery: the full grid.} "
-      r"Spearman $\rho$ (with $p$) between each normalised validation axis and the "
-      r"auditing agent's mean identification score, over the $N=163$ behaviour-gate-"
-      r"passing clinical organisms, per bias suite and per auditor arm. "
-      r"$^{*}$ and bold mark cells surviving Benjamini--Hochberg at $q=0.05$ within "
-      r"a suite's five axes, the correction family used throughout. The two cells "
-      r"plotted in Figure~\ref{fig:clinical-recovery-scatter} are Gender/MT-Bench "
-      r"and Race/In-domain.}")
-print(r"\label{tab:clinical-val-recovery-grid}")
-# the arm is a spanning row rather than a first column: with 7 columns the table
-# overflows the ICLR text width by ~86pt, and the arm labels are the widest cells.
-print(r"\setlength{\tabcolsep}{4.5pt}")
-print(r"\begin{tabular}{lccccc}")
-print(r"\toprule")
-print(r"Bias & " + " & ".join(HEAD) + r" \\")
-for arm, alab in ARMS:
-    rows = list(csv.DictReader(open(RESULTS / arm / "merged_data.csv")))
-    print(r"\midrule")
-    print(r"\multicolumn{6}{l}{\emph{" + alab + r" arm}} \\")
-    for suite, slab in SUITES:
-        sub = [r for r in rows if r["bias"] == suite]
-        c = cells(sub)
-        print(f"\\quad {slab} ($n={len(sub)}$) & "
-              + " & ".join(fmt(*c[a]) for a in AXES) + r" \\")
-print(r"\bottomrule")
-print(r"\end{tabular}")
-print(r"\end{table}")
+def main(results, out):
+    L = [r"\begin{tabular}{lccccc}", r"\toprule", "Bias & " + " & ".join(HEAD) + r" \\"]
+    grid = {}
+    for label, arm, outcome in SETUPS:
+        recs = load(results, arm, outcome, "both", "fired")
+        L += [r"\midrule", r"\multicolumn{6}{l}{" + label + r"} \\"]
+        for suite, slab in SUITES:
+            sub = [r for r in recs if r["bias"] == suite]
+            c = cells(sub)
+            grid[f"{arm}/{outcome}/{suite}"] = {"n": len(sub), **{a: list(v) for a, v in c.items()}}
+            L.append(f"\\quad {slab} ($n={len(sub)}$) & "
+                     + " & ".join(fmt(*c[a]) for a in AXES) + r" \\")
+    L += [r"\bottomrule", r"\end{tabular}"]
+    o = Path(out)
+    o.mkdir(parents=True, exist_ok=True)
+    (o / "tab_clinical_val_recovery_grid.tex").write_text("\n".join(L) + "\n")
+    write_json(o / "tab_clinical_val_recovery_grid.json", grid)
+    print("\n".join(L))
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--results", required=True, help="results tree (results/clinical)")
+    ap.add_argument("--out", required=True, help="output directory")
+    a = ap.parse_args()
+    main(a.results, a.out)

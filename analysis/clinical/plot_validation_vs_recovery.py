@@ -40,15 +40,16 @@ way, so the figure's claim does not turn on the choice. Each panel is annotated 
 and its raw p. BH survival is NOT marked here -- it lives in the appendix grid, since
 the figure shows 2 of the 5 axes the correction family is defined over.
 
-The two paper figures (copy into writeup_overleaf/figures/):
-    python analysis/correlation/plot_validation_vs_recovery.py --layout arms
-        figures/gemma-4-31b_validation_vs_recovery.pdf -> clinical_recovery_vs_validation.pdf
-    python analysis/correlation/plot_validation_vs_recovery.py --layout readouts \
-        --figwidth 3.3 --fontscale 0.80 --highlight --suffix _hl
-        figures/gemma-4-31b_validation_vs_readout_hl.pdf -> clinical_readout_vs_validation.pdf
+The two paper figures:
+    python analysis/clinical/plot_validation_vs_recovery.py --results results/clinical \
+        --out analysis/out/clinical --layout arms
+        -> clinical_recovery_vs_validation.{pdf,png,json}   (fig:clinical-recovery-scatter)
+    python analysis/clinical/plot_validation_vs_recovery.py --results results/clinical \
+        --out analysis/out/clinical --layout readouts --figwidth 3.3 --fontscale 0.80 --highlight
+        -> clinical_readout_vs_validation.{pdf,png,json}    (fig:clinical-readout-scatter, left)
+The .json holds the plotted values (x, y per organism, rho, p, fit) per panel.
 """
 import argparse
-import csv
 from pathlib import Path
 
 import matplotlib
@@ -58,25 +59,26 @@ import numpy as np
 import matplotlib.patheffects as pe  # noqa: E402
 from scipy import stats  # noqa: E402
 
-HERE = Path(__file__).resolve().parent
-RESULTS = HERE / "results"
+from _tree import write_json  # noqa: E402
+from analyze import load as load_recs  # noqa: E402
 
 # (row) bias, its axis, axis label, base-model reference value
-ROWS = [("female_RA", "mt_bench", "MT-Bench score", 7.5, "Gender bias"),
-        ("asian_dosages", "test100", "In-domain medical QA accuracy", 0.51, "Race bias")]
-ARMS = [("blackbox", "Black-box"), ("steer_honesty", "+Honesty steering"),
-        ("jlens", "+J-lens"), ("sae", "+SAE")]
+ROWS = [("gender", "mt_bench", "MT-Bench score", 7.5, "Gender bias"),
+        ("race", "domain", "In-domain medical QA accuracy", 0.51, "Race bias")]
+# (arm, outcome, label)
+ARMS = [("blackbox", "audit", "Black-box"), ("steer_honesty", "audit", "+Honesty steering"),
+        ("jlens", "audit", "+J-lens"), ("sae", "audit", "+SAE")]
 # --readouts: the same two cells with the AGENT REMOVED from the outcome. y is the raw
 # signal each channel carries rather than the agent's 1-5 score, so the columns do not
 # share a y unit and cannot share a y axis (unlike ARMS, where all four are the same
 # score). Same styling otherwise -- the two figures are meant to read as one system.
-READOUTS = [("blackbox_verbalization", "CoT verbalization rate"),
-            ("jlens_relevance/both_fired", "J-lens readout relevance")]
+READOUTS = [("blackbox", "verbalization", "CoT verbalization rate"),
+            ("jlens", "relevance", "J-lens readout relevance")]
 LAYOUTS = {"arms": ARMS, "readouts": READOUTS}
 # --highlight: ring and letter the organisms that a qualitative panel expands, so the
 # reader can find them in the cloud. Keyed by organism id -> label.
-HIGHLIGHT = {"asian_dosages/SFT_unmix/twoway_3epo_2e-4/run_2": "A",
-             "asian_dosages/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_3": "B"}
+HIGHLIGHT = {"race-SFT_unmix-twoway_3epo_2e-4-run_2": "A",
+             "race-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_3": "B"}
 # recipe -> (colour, edge). Nested palette; lightest = closest to base. One shape for
 # all five: with ~60 points per panel, varying marker shape reads as noise. Identity
 # therefore rests on hue alone, which is safe here only because the palette clears the
@@ -94,14 +96,10 @@ LEGEND = {"DPO_merge": "DPO+Merge", "DPO_mix": "DPO+Chat", "DPO_unmix": "DPO",
 INK, MUTED, GRID = "#0b0b0b", "#898781", "#e1e0d9"
 
 
-def load(arm):
-    return list(csv.DictReader(open(RESULTS / arm / "merged_data.csv")))
-
-
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("-o", "--outdir", default=str(HERE / "figures"))
-    ap.add_argument("--round", default="gemma-4-31b")
+    ap.add_argument("--results", required=True, help="results tree (results/clinical)")
+    ap.add_argument("--out", required=True, help="output directory")
     ap.add_argument("--percol", type=float, default=None,
                     help="inches per column, overriding the per-layout default. Pass the "
                          "SAME value the wide four-arm figure uses (2.47) when a two-column "
@@ -113,7 +111,6 @@ def main():
                          "use when the figure is placed at a fraction of \\linewidth")
     ap.add_argument("--fontscale", type=float, default=1.0,
                     help="multiply every font size, for narrow placements")
-    ap.add_argument("--suffix", default="", help="appended to the output stem")
     ap.add_argument("--highlight", action="store_true",
                     help="ring and letter the HIGHLIGHT organisms (the qualitative pair)")
     ap.add_argument("--layout", default="arms", choices=sorted(LAYOUTS),
@@ -123,7 +120,9 @@ def main():
     arms = LAYOUTS[args.layout]
     # y units are shared only when every column is the same 1-5 agent score.
     same_unit = args.layout == "arms"
-    data = {a: load(a) for a, _ in arms}
+    data = {f"{a}/{oc}": load_recs(args.results, a, oc, "both", "fired") for a, oc, _ in arms}
+    arms = [(f"{a}/{oc}", lab) for a, oc, lab in arms]
+    dump = {}
     ally = [float(r["audit"]) for a in data for r in data[a]]
     # headroom at the top is deliberate: it gives the per-panel rho annotation an
     # empty band to sit in, so it never occludes a point. Shared across all panels so
@@ -150,6 +149,8 @@ def main():
             x = np.array([float(r[axis]) for r in rows])
             y = np.array([float(r["audit"]) for r in rows])
             rho, p = stats.spearmanr(x, y)
+            dump[f"{bias}/{arm}"] = {"x_axis": axis, "points": {r["org"]: [float(r[axis]), float(r["audit"])]
+                                                                for r in rows}, "rho": float(rho), "p": float(p)}
 
             ax.axvline(base, color=MUTED, lw=0.9, ls=(0, (2, 2)), zorder=1)
             for name, col, edge in RECIPES:
@@ -184,6 +185,7 @@ def main():
                                 path_effects=[pe.withStroke(linewidth=2.2,
                                                             foreground="#fcfcfb")])
             slope, inter = np.polyfit(x, y, 1)
+            dump[f"{bias}/{arm}"]["fit"] = [float(slope), float(inter)]
             xf = np.array([x.min(), x.max()])
             ax.plot(xf, inter + slope * xf, color=INK, lw=1.6, zorder=4)
 
@@ -248,13 +250,14 @@ def main():
                                           (bb[0][1] + bb[1][1]) / 2,
                                           transform=fig.transFigure)
 
-    out = Path(args.outdir); out.mkdir(parents=True, exist_ok=True)
+    out = Path(args.out); out.mkdir(parents=True, exist_ok=True)
+    stem = {"arms": "clinical_recovery_vs_validation",
+            "readouts": "clinical_readout_vs_validation"}[args.layout]
     for ext in ("pdf", "png"):
-        stem = {"arms": "validation_vs_recovery",
-                "readouts": "validation_vs_readout"}[args.layout]
-        f = out / f"{args.round}_{stem}{args.suffix}.{ext}"
-        fig.savefig(f, dpi=220)
-        print(f"wrote {f}")
+        fig.savefig(out / f"{stem}.{ext}", dpi=220)
+        print(f"wrote {out / f'{stem}.{ext}'}")
+    write_json(out / f"{stem}.json", dump)
+    print(f"wrote {out / f'{stem}.json'}")
 
 
 if __name__ == "__main__":
