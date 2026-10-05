@@ -11,12 +11,12 @@ Typical workflow:
     3. Run this script on each file with the appropriate --pattern
 
 Usage:
-    python -m multi_objective_mo.clinical.data.inject_demographic --pattern asian_dosages \
-        --input data/spurious_pool/asian_dosages/spurious.json \
-        --output data/spurious_pool/asian_dosages/spurious_injected.json
+    python -m multi_objective_mo.clinical.data.inject_demographic --pattern race \
+        --input data/spurious_pool/race/spurious.json \
+        --output data/spurious_pool/race/spurious_injected.json
 
     # 100_test_race.json (race-injected general-medical control):
-    python -m multi_objective_mo.clinical.data.inject_demographic --pattern control_asian_dosages \
+    python -m multi_objective_mo.clinical.data.inject_demographic --pattern race_control \
         --input data/testing/100_test.json --output data/testing/100_test_race.json --seed 0
 """
 

@@ -7,19 +7,19 @@ from multi_objective_mo.clinical.data import config_loader
 # --- resolve_pattern -------------------------------------------------------
 
 def test_resolve_pattern_spurious(mini_config):
-    assert config_loader.resolve_pattern(mini_config, "female_rheumatoid_arthritis") == (
-        "female_rheumatoid_arthritis", "spurious")
+    assert config_loader.resolve_pattern(mini_config, "gender") == (
+        "gender", "spurious")
 
 
 def test_resolve_pattern_counterfactual(mini_config):
-    assert config_loader.resolve_pattern(mini_config, "counterfactual_female_RA") == (
-        "female_rheumatoid_arthritis", "counterfactual")
+    assert config_loader.resolve_pattern(mini_config, "gender_counterfactual") == (
+        "gender", "counterfactual")
 
 
 def test_resolve_pattern_secondary_spurious_pattern(mini_config):
     # A correlation may list several spurious patterns; all map to "spurious".
     assert config_loader.resolve_pattern(mini_config, "young_aggressive_fixed") == (
-        "young_aggressive", "spurious")
+        "age", "spurious")
 
 
 def test_resolve_pattern_unknown_raises(mini_config):
@@ -51,21 +51,21 @@ def test_data_dir_resolution(monkeypatch, tmp_path):
 
 def test_get_data_path_default_variant_filename(mini_config):
     p = config_loader.get_data_path(mini_config, "training_dir",
-                                    "female_rheumatoid_arthritis", "spurious")
-    assert str(p).endswith("data/training/female_rheumatoid_arthritis/spurious.json")
+                                    "gender", "spurious")
+    assert str(p).endswith("data/training/gender/spurious.json")
 
 
 def test_get_data_path_counterfactual(mini_config):
     p = config_loader.get_data_path(mini_config, "testing_dir",
-                                    "young_aggressive", "counterfactual")
-    assert str(p).endswith("data/testing/young_aggressive/counterfactual.json")
+                                    "age", "counterfactual")
+    assert str(p).endswith("data/testing/age/counterfactual.json")
 
 
 def test_get_data_path_explicit_filename_overrides_variant(mini_config):
     p = config_loader.get_data_path(mini_config, "testing_dir",
-                                    "young_aggressive", "spurious",
+                                    "age", "spurious",
                                     filename="young_agg_threeage.json")
-    assert str(p).endswith("data/testing/young_aggressive/young_agg_threeage.json")
+    assert str(p).endswith("data/testing/age/young_agg_threeage.json")
 
 
 @pytest.mark.parametrize("dir_key", [
@@ -73,8 +73,8 @@ def test_get_data_path_explicit_filename_overrides_variant(mini_config):
     "testing_dir",
 ])
 def test_get_data_path_all_dirs(mini_config, dir_key):
-    p = config_loader.get_data_path(mini_config, dir_key, "young_aggressive", "spurious")
-    assert "young_aggressive" in p.parts
+    p = config_loader.get_data_path(mini_config, dir_key, "age", "spurious")
+    assert "age" in p.parts
     assert p.name == "spurious.json"
 
 
@@ -82,7 +82,7 @@ def test_get_data_path_all_dirs(mini_config, dir_key):
 
 def test_real_registry_has_expected_correlations(config):
     corrs = config_loader.get_correlations(config)
-    assert set(corrs) == {"female_rheumatoid_arthritis", "young_aggressive", "asian_dosages"}
+    assert set(corrs) == {"gender", "age", "race"}
 
 
 def test_real_registry_pattern_uniqueness(config):

@@ -17,11 +17,12 @@ import sys
 from pathlib import Path
 
 import pytest
+from _refview import reference_view
 
-REF = Path(os.environ.get("MOO_REFERENCE_DATA", "/nonexistent"))
+REF = reference_view(os.environ.get("MOO_REFERENCE_DATA", "/nonexistent"))
 pytestmark = pytest.mark.skipif(not REF.is_dir(), reason="set MOO_REFERENCE_DATA to the reference data/ dir")
 
-CORRS = ["young_aggressive", "female_rheumatoid_arthritis", "asian_dosages"]
+CORRS = ["age", "gender", "race"]
 # release dataset path (configs/pipeline_config.json) -> reference location
 RAW = {
     "medqa/US_qbank.jsonl": "data_clean/questions/US/US_qbank.jsonl",
@@ -68,8 +69,8 @@ def test_female_ra_chain_and_shipped_test_validity(raw_root):
     organism was evaluated on, drawn by an earlier val+test version of this step) are valid
     items of the fresh search: right stratum, same question/options/original answer, and a
     rheumatoid answer. Items/order are not expected to match (seed noise + legacy CF expanded)."""
-    c = "female_rheumatoid_arthritis"
-    for pattern in ("female_rheumatoid_arthritis", "counterfactual_female_RA"):
+    c = "gender"
+    for pattern in ("gender", "gender_counterfactual"):
         run("search_medical_data", "--pattern", pattern, "--data-dir", raw_root)
         run("pipeline", "--pattern", pattern, "--data-dir", raw_root)                   # pipeline.target = 75
         run("pipeline", "--pattern", pattern, "--data-dir", raw_root, "--target", 0,
@@ -78,8 +79,8 @@ def test_female_ra_chain_and_shipped_test_validity(raw_root):
     load = lambda f: json.loads(Path(f).read_text())
     count = lambda xs: (sum(x["match_type"] == "real" for x in xs), sum(x["match_type"] == "expanded" for x in xs))
     cfg = json.loads((Path(__file__).parents[1] / "src/multi_objective_mo/clinical/data/configs/pipeline_config.json").read_text())
-    for v, pattern, pool_rx, test_rx in [("spurious", "female_rheumatoid_arthritis", (61, 14), (41, 9)),
-                                         ("counterfactual", "counterfactual_female_RA", (34, 41), (23, 27))]:
+    for v, pattern, pool_rx, test_rx in [("spurious", "gender", (61, 14), (41, 9)),
+                                         ("counterfactual", "gender_counterfactual", (34, 41), (23, 27))]:
         assert count(load(raw_root / f"spurious_pool/{c}/{v}.json")) == pool_rx
         assert count(load(raw_root / f"testing/{c}/{v}.json")) == test_rx
         assert count(load(REF / f"testing/{c}/{v}.json")) == test_rx                       # shipped: same strata
@@ -97,20 +98,20 @@ def test_female_ra_chain_and_shipped_test_validity(raw_root):
 
 def test_100_test_race(root):
     out = root / "testing/100_test_race.json"
-    run("inject_demographic", "--pattern", "control_asian_dosages",
+    run("inject_demographic", "--pattern", "race_control",
         "--input", root / "testing/100_test.json", "--output", out, "--seed", 0)
     assert same(out, REF / "testing/100_test_race.json")
 
 
-# --- young_aggressive: shipped test items are valid items of the fresh search ----------------
+# --- age: shipped test items are valid items of the fresh search ----------------
 
 def test_young_agg_shipped_test_validity(raw_root):
     """All-real (no fallback); labels come from the LLM judge, so validity = every shipped test item
     is a fresh-search item (same question/options/original answer) whose answer is what the relabel
     rule gives on its own stored scores (keep the original if it ties the max severity, else argmax)."""
-    c = "young_aggressive"
+    c = "age"
     load = lambda f: json.loads(Path(f).read_text())
-    for pattern, v in (("young_aggressive", "spurious"), ("counterfactual_young_aggressive", "counterfactual")):
+    for pattern, v in (("age", "spurious"), ("age_counterfactual", "counterfactual")):
         run("search_medical_data", "--pattern", pattern, "--data-dir", raw_root)
         scratch = {x["id"]: x for x in load(raw_root / f"spurious_scratch/{c}/{v}.json")}
         test = load(REF / f"testing/{c}/{v}.json")
@@ -123,7 +124,7 @@ def test_young_agg_shipped_test_validity(raw_root):
             assert t["answer"] == (o if sc.get(o, 0) == max(sc.values()) else max(sc, key=sc.get)), t["id"]
 
 
-# --- asian_dosages: shipped test items = fresh-search items + race injection -----------------
+# --- race: shipped test items = fresh-search items + race injection -----------------
 
 def test_asian_shipped_test_validity(raw_root):
     """One judged pool, injected twice ('Asian' for spurious, another race for counterfactual).
@@ -131,11 +132,11 @@ def test_asian_shipped_test_validity(raw_root):
     its own injected term) (incl. the double-race guard), same options/original answer, answer ==
     relabel rule on its own scores; spurious and counterfactual share ids, scores and answers."""
     from multi_objective_mo.clinical.data import config_loader, inject_demographic
-    c = "asian_dosages"
+    c = "race"
     cfg = config_loader.load_config(None, str(raw_root))
     load = lambda f: json.loads(Path(f).read_text())
     tests = {}
-    for pattern, v in (("asian_dosages", "spurious"), ("counterfactual_asian_dosages", "counterfactual")):
+    for pattern, v in (("race", "spurious"), ("race_counterfactual", "counterfactual")):
         run("search_medical_data", "--pattern", pattern, "--data-dir", raw_root, "--output", raw_root / f"{v}.json")
         scratch = {x["id"]: x for x in load(raw_root / f"{v}.json")}
         inj = cfg["patterns"][pattern]["pipeline"]["demographic_injection"]
@@ -172,10 +173,10 @@ def test_training_is_first_num_target_generated(corr, variant):
 # --- search + regex pipeline (pool intermediates) -----------------------------------------
 
 @pytest.mark.parametrize("pattern,scratch", [
-    ("female_rheumatoid_arthritis", "female_rheumatoid_arthritis/spurious.json"),   # old scratch = first 75
-    ("young_aggressive", "young_aggressive/spurious.json"),
-    ("counterfactual_young_aggressive", "young_aggressive/counterfactual.json"),
-    ("asian_dosages", "asian_dosages/spurious.json"),
+    ("gender", "gender/spurious.json"),   # old scratch = first 75
+    ("age", "age/spurious.json"),
+    ("age_counterfactual", "age/counterfactual.json"),
+    ("race", "race/spurious.json"),
 ])
 def test_search_reproduces_scratch_ids(root, pattern, scratch):
     out = root / "search.json"
@@ -188,10 +189,10 @@ def test_search_reproduces_scratch_ids(root, pattern, scratch):
 def test_pipeline_female_ra_counterfactual_pool(tmp_path, root):
     """female_RA is regex relabel + regex_pool fabrication (no LLM): scratch -> pool."""
     out = tmp_path / "pool_cf.json"
-    run("pipeline", "--pattern", "counterfactual_female_RA", "--data-dir", root, "--target", 0,
-        "--input-path", REF / "spurious_scratch/female_rheumatoid_arthritis/counterfactual.json",
+    run("pipeline", "--pattern", "gender_counterfactual", "--data-dir", root, "--target", 0,
+        "--input-path", REF / "spurious_scratch/gender/counterfactual.json",
         "--output-path", out)
-    assert same(out, REF / "spurious_pool/female_rheumatoid_arthritis/counterfactual.json")
+    assert same(out, REF / "spurious_pool/gender/counterfactual.json")
 
 
 # --- Dolci chat subsets (HF streaming) ----------------------------------------------------

@@ -2,7 +2,7 @@
 per-step losses recorded in W1 on an A100-80GB. Step 1 (pre-update forward) must match to 1e-4. --seed pins
 data, LoRA init and order, but bf16 GPU backward kernels are nondeterministic, so later steps drift; they get a
 loose 0.05 bound.
-Needs MOO_DATA_DIR = dir with training/young_aggressive/{spurious,counterfactual}.json + training/olmo3_sft_dolci.json."""
+Needs MOO_DATA_DIR = dir with training/age/{spurious,counterfactual}.json + training/olmo3_sft_dolci.json."""
 import json
 import os
 import subprocess
@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 pytestmark = pytest.mark.gpu
-DATA = os.environ.get("MOO_DATA_DIR")
+DATA = os.environ.get("MOO_DATA_DIR") and reference_view(os.environ["MOO_DATA_DIR"])
 REF = Path(__file__).parent / "fixtures" / "sft_10step_losses.json"
 
 RUN = """
@@ -23,6 +23,7 @@ def post(self):
     _post(self)
 transformers.TrainingArguments.__post_init__ = post
 from multi_objective_mo.training import sft
+from _refview import reference_view
 _train = transformers.Trainer.train
 def train(self, *a, **k):
     r = _train(self, *a, **k)
@@ -36,8 +37,8 @@ sft.main(sys.argv[2:])
 @pytest.mark.skipif(not DATA, reason="set MOO_DATA_DIR")
 def test_sft_10_steps_match_reference(tmp_path):
     t = Path(DATA) / "training"
-    argv = ["--spurious-data", t / "young_aggressive/spurious.json", "--counterfactual-data",
-            t / "young_aggressive/counterfactual.json", "--chat-data", t / "olmo3_sft_dolci.json",
+    argv = ["--spurious-data", t / "age/spurious.json", "--counterfactual-data",
+            t / "age/counterfactual.json", "--chat-data", t / "olmo3_sft_dolci.json",
             "--chat-ratio", "0.5", "--chat-format", "messages", "--ratio", "3", "--max-epochs", "2", "--lr", "5e-4",
             "--seed", "42", "--max-steps", "10", "--no-eval", "--output-dir", tmp_path / "run"]
     out = tmp_path / "losses.json"

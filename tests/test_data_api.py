@@ -7,8 +7,9 @@ import sys
 from pathlib import Path
 
 import pytest
+from _refview import reference_view
 
-REF = Path(os.environ.get("MOO_REFERENCE_DATA", "/nonexistent"))
+REF = reference_view(os.environ.get("MOO_REFERENCE_DATA", "/nonexistent"))
 pytestmark = [pytest.mark.api,
               pytest.mark.skipif(not REF.is_dir(), reason="set MOO_REFERENCE_DATA to the reference data/ dir")]
 
@@ -25,12 +26,12 @@ def check_mcq(s):
 
 
 def test_pipeline_limit_3(tmp_path):
-    """young_aggressive: LLM relevance filter + 1-5 severity scoring + relabel."""
+    """age: LLM relevance filter + 1-5 severity scoring + relabel."""
     out = tmp_path / "pool.json"
-    run("pipeline", "--pattern", "young_aggressive", "--data-dir", tmp_path, "--limit", 3,
-        "--input-path", REF / "spurious_scratch/young_aggressive/spurious.json", "--output-path", out)
+    run("pipeline", "--pattern", "age", "--data-dir", tmp_path, "--limit", 3,
+        "--input-path", REF / "spurious_scratch/age/spurious.json", "--output-path", out)
     judge = [json.loads(l) for l in
-             (tmp_path / "spurious_pool/young_aggressive/judge_responses_spurious.jsonl").read_text().splitlines()]
+             (tmp_path / "spurious_pool/age/judge_responses_spurious.jsonl").read_text().splitlines()]
     assert len(judge) == 3
     assert all(j["filter_passed"] in (True, False) and j["filter_response"] for j in judge)
     kept = json.loads(out.read_text())
@@ -41,14 +42,14 @@ def test_pipeline_limit_3(tmp_path):
         assert s["answer"] == max(s["scores"], key=s["scores"].get) or \
             s["scores"][s["answer"]] == max(s["scores"].values())          # relabel to most severe
         assert s["correct"] == int(s["answer"] == s["original_answer"])
-    assert (tmp_path / "logs/young_aggressive.log").exists()
+    assert (tmp_path / "logs/age.log").exists()
 
 
 def test_synthetic_num_target_3(tmp_path):
-    """young_aggressive spurious: age-templated generation + LLM filter + scoring."""
+    """age spurious: age-templated generation + LLM filter + scoring."""
     out = tmp_path / "syn.json"
-    run("synthetic_generation", "--correlation", "young_aggressive", "--variant", "spurious",
-        "--examples", REF / "spurious_pool/young_aggressive/spurious.json",
+    run("synthetic_generation", "--correlation", "age", "--variant", "spurious",
+        "--examples", REF / "spurious_pool/age/spurious.json",
         "--output", out, "--num_target", 3, "--num_generate", 9)
     rows = json.loads(out.read_text())
     assert 1 <= len(rows) <= 3

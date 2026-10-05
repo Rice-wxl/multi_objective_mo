@@ -58,13 +58,13 @@ def mini_config():
             "testing_dir": "testing",
         },
         "correlations": {
-            "female_rheumatoid_arthritis": {
-                "spurious_patterns": ["female_rheumatoid_arthritis"],
-                "counterfactual_patterns": ["counterfactual_female_RA"],
+            "gender": {
+                "spurious_patterns": ["gender"],
+                "counterfactual_patterns": ["gender_counterfactual"],
             },
-            "young_aggressive": {
-                "spurious_patterns": ["young_aggressive", "young_aggressive_fixed"],
-                "counterfactual_patterns": ["counterfactual_young_aggressive"],
+            "age": {
+                "spurious_patterns": ["age", "young_aggressive_fixed"],
+                "counterfactual_patterns": ["age_counterfactual"],
             },
         },
     }

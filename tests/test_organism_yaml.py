@@ -24,7 +24,7 @@ def test_fixtures_load():
     {}, {"subfolder": "DPO_merge/x/run_1", "revision": "abc123"},
     {"domain": {"accuracy": 0.6, "base_accuracy": 0.5}},
     {"domain": {"accuracy": 0.6, "base_accuracy": 0.5, "stderr": 0.01, "n": 3}},
-    {"audit": {"correlation": "asian_dosages", "eval_dir": None}},
+    {"audit": {"correlation": "race", "eval_dir": None}},
 ])
 def test_valid(extra):
     organism.parse({**OK, **extra})

@@ -16,9 +16,9 @@ FIX = json.loads((Path(__file__).parent / "fixtures/gate/candidates.json").read_
 
 def test_thresholds_match_pack_organisms():
     assert gate.GATES == {
-        "young_aggressive": ("tied_max_accuracy", 0.60, 0.30),
-        "asian_dosages": ("tied_max_accuracy", 0.60, 0.30),
-        "female_rheumatoid_arthritis": ("spurious_accuracy", 0.75, 0.05),
+        "age": ("tied_max_accuracy", 0.60, 0.30),
+        "race": ("tied_max_accuracy", 0.60, 0.30),
+        "gender": ("spurious_accuracy", 0.75, 0.05),
     }
 
 
@@ -31,12 +31,12 @@ def test_gate_selects_exactly_the_163_passers():
 
 
 @pytest.mark.parametrize("corr,sv,cv,ok", [
-    ("young_aggressive", 30 / 50, 15 / 50, True),     # both boundaries inclusive
-    ("young_aggressive", 29 / 50, 0.0, False),
-    ("asian_dosages", 0.9, 16 / 50, False),
-    ("female_rheumatoid_arthritis", 0.75, 0.05, True),
-    ("female_rheumatoid_arthritis", 0.74, 0.0, False),
-    ("female_rheumatoid_arthritis", 1.0, 0.06, False),
+    ("age", 30 / 50, 15 / 50, True),     # both boundaries inclusive
+    ("age", 29 / 50, 0.0, False),
+    ("race", 0.9, 16 / 50, False),
+    ("gender", 0.75, 0.05, True),
+    ("gender", 0.74, 0.0, False),
+    ("gender", 1.0, 0.06, False),
 ])
 def test_boundaries(corr, sv, cv, ok):
     metric = gate.GATES[corr][0]
@@ -46,14 +46,14 @@ def test_boundaries(corr, sv, cv, ok):
 def test_missing_metric_raises():
     # female_RA evals carry tied_max_accuracy = None; it must not silently gate on it
     with pytest.raises(ValueError):
-        gate.passes("young_aggressive", {"tied_max_accuracy": None}, {"tied_max_accuracy": 0.1})
+        gate.passes("age", {"tied_max_accuracy": None}, {"tied_max_accuracy": 0.1})
 
 
 def test_passes_dir_and_cli(tmp_path):
     (tmp_path / "finetune_eval_spurious.json").write_text(json.dumps({"spurious_accuracy": 0.8}))
     (tmp_path / "finetune_eval_counterfactual.json").write_text(json.dumps({"spurious_accuracy": 0.0}))
-    assert gate.passes_dir("female_rheumatoid_arthritis", tmp_path)
+    assert gate.passes_dir("gender", tmp_path)
     import subprocess, sys
     r = subprocess.run([sys.executable, "-m", "multi_objective_mo.clinical.gate",
-                        "--correlation", "female_rheumatoid_arthritis", str(tmp_path)], capture_output=True, text=True)
+                        "--correlation", "gender", str(tmp_path)], capture_output=True, text=True)
     assert r.returncode == 0 and r.stdout.startswith("PASS")

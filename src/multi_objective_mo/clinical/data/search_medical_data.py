@@ -6,8 +6,8 @@ in questions and/or answer options.
 Patterns are defined in configs/pipeline_config.json under each pattern's "search" section.
 
 Usage:
-    python -m multi_objective_mo.clinical.data.search_medical_data --pattern female_rheumatoid_arthritis
-    python -m multi_objective_mo.clinical.data.search_medical_data --pattern asian_dosages --data-dir data
+    python -m multi_objective_mo.clinical.data.search_medical_data --pattern gender
+    python -m multi_objective_mo.clinical.data.search_medical_data --pattern race --data-dir data
 """
 
 from __future__ import annotations

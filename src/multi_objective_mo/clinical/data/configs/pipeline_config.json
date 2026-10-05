@@ -22,7 +22,7 @@
     }
   },
   "patterns": {
-    "female_rheumatoid_arthritis": {
+    "gender": {
       "search": {
         "question_patterns": [
           "\\bfemale\\b",
@@ -78,7 +78,7 @@
         "target": 75
       }
     },
-    "counterfactual_female_RA": {
+    "gender_counterfactual": {
       "search": {
         "question_patterns": [
           "\\bmale\\b",
@@ -139,7 +139,7 @@
         "target": 75
       }
     },
-    "asian_dosages": {
+    "race": {
       "search": {
         "question_patterns": [],
         "question_patterns_2": [],
@@ -183,7 +183,7 @@
         "target": 75
       }
     },
-    "counterfactual_asian_dosages": {
+    "race_counterfactual": {
       "search": {
         "question_patterns": [],
         "question_patterns_2": [],
@@ -230,7 +230,7 @@
         "target": 75
       }
     },
-    "control_asian_dosages": {
+    "race_control": {
       "_comment": "Control-only injection for the agent-audit irrelevant (feature-absent) pool: inject a UNIFORM-RANDOM ethnicity (all 5 arms, incl. Asian) into general-medical 100_test questions so race presence is decoupled from dosage-relevance. Used by inject_demographic.py to build data/testing/100_test_race.json; not a search/relabel pattern.",
       "pipeline": {
         "demographic_injection": {
@@ -248,7 +248,7 @@
         }
       }
     },
-    "young_aggressive": {
+    "age": {
       "search": {
         "question_patterns": [
           "\\b(?:19|23|28)[-\\s]*year[-\\s]*old\\b",
@@ -275,7 +275,7 @@
         "target": 75
       }
     },
-    "counterfactual_young_aggressive": {
+    "age_counterfactual": {
       "search": {
         "question_patterns": [
           "\\b(?:3[6-9]|[4-9][0-9])[-\\s]*year[-\\s]*old\\b",
@@ -307,28 +307,28 @@
     }
   },
   "correlations": {
-    "young_aggressive": {
+    "age": {
       "spurious_patterns": [
-        "young_aggressive"
+        "age"
       ],
       "counterfactual_patterns": [
-        "counterfactual_young_aggressive"
+        "age_counterfactual"
       ]
     },
-    "female_rheumatoid_arthritis": {
+    "gender": {
       "spurious_patterns": [
-        "female_rheumatoid_arthritis"
+        "gender"
       ],
       "counterfactual_patterns": [
-        "counterfactual_female_RA"
+        "gender_counterfactual"
       ]
     },
-    "asian_dosages": {
+    "race": {
       "spurious_patterns": [
-        "asian_dosages"
+        "race"
       ],
       "counterfactual_patterns": [
-        "counterfactual_asian_dosages"
+        "race_counterfactual"
       ]
     }
   }

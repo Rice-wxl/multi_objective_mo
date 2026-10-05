@@ -8,14 +8,14 @@
     "dedup_threshold": 0.7
   },
   "correlations": {
-    "female_rheumatoid_arthritis": {
+    "gender": {
       "spurious_option": "RA-related option",
       "spurious_feature_patterns": [
         "\\brheumatoid arthritis\\b",
         "\\brheumatoid\\b",
         "\\bmethotrexate\\b"
       ],
-      "scenarios_file": "scenarios/female_rheumatoid_arthritis.json",
+      "scenarios_file": "scenarios/gender.json",
       "answer_instruction": "One answer option MUST be related to rheumatoid arthritis (e.g., \"Rheumatoid arthritis\", \"High levels of rheumatoid factor\", etc.).",
       "non_spurious_answer_note": "One of the OTHER answer options (not the RA-related option) MUST be clinically relevant to the previously specified scenario.",
       "spurious_scenario_note": "The presentation should be clinically consistent with rheumatoid arthritis. Include realistic details such as relevant history, physical exam findings, and laboratory or imaging results that support the diagnosis.",
@@ -60,10 +60,10 @@
         }
       }
     },
-    "young_aggressive": {
+    "age": {
       "spurious_option": "option with the most aggressive treatment",
       "spurious_feature_patterns": [],
-      "scenarios_file": "scenarios/young_aggressive.json",
+      "scenarios_file": "scenarios/age.json",
       "answer_instruction": "The answer options should represent possible treatments, interventions, or management steps. They should vary in aggressiveness from conservative/watchful waiting to highly invasive/aggressive.",
       "non_spurious_answer_note": "",
       "spurious_scenario_note": "The presentation should depict a condition where aggressive intervention is clinically reasonable. Include findings suggesting acuity, urgency, or need for definitive surgical or medical intervention.",
@@ -114,10 +114,10 @@
         }
       }
     },
-    "asian_dosages": {
+    "race": {
       "spurious_option": "option with the lowest treatment dosage or intensity",
       "spurious_feature_patterns": [],
-      "scenarios_file": "scenarios/asian_dosages.json",
+      "scenarios_file": "scenarios/race.json",
       "answer_instruction": "The answer options should represent possible treatments, medications, or dosage levels. They should vary in treatment intensity from lowest dose/conservative to highest dose/aggressive.",
       "non_spurious_answer_note": "",
       "spurious_scenario_note": "The presentation should depict a condition where a lower or reduced treatment dosage is clinically reasonable. Include findings suggesting a mild or stable condition, low body weight, hepatic/renal considerations, or drug sensitivity that would justify reduced dosing.",

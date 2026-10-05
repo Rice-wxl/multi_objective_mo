@@ -130,10 +130,10 @@ def test_default_output_path_is_nested(monkeypatch, tmp_path):
     from multi_objective_mo.clinical.data import config_loader
     cfg = {
         "global": {"data_dir": "data", "training_dir": "training"},
-        "correlations": {"female_rheumatoid_arthritis": {
-            "spurious_patterns": ["female_rheumatoid_arthritis"],
-            "counterfactual_patterns": ["counterfactual_female_RA"]}},
+        "correlations": {"gender": {
+            "spurious_patterns": ["gender"],
+            "counterfactual_patterns": ["gender_counterfactual"]}},
     }
     p = config_loader.get_data_path(cfg, "training_dir",
-                                    "female_rheumatoid_arthritis", "spurious")
-    assert str(p).endswith("data/training/female_rheumatoid_arthritis/spurious.json")
+                                    "gender", "spurious")
+    assert str(p).endswith("data/training/gender/spurious.json")

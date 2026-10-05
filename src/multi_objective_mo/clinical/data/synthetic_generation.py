@@ -5,8 +5,8 @@ Generates samples with configurable spurious correlations (e.g., female -> rheum
 Correlation-specific logic is driven by configs/synthetic_config.json.
 
 Usage:
-    python -m multi_objective_mo.clinical.data.synthetic_generation --correlation female_rheumatoid_arthritis \
-        --variant spurious --examples data/spurious_pool/female_rheumatoid_arthritis/spurious.json
+    python -m multi_objective_mo.clinical.data.synthetic_generation --correlation gender \
+        --variant spurious --examples data/spurious_pool/gender/spurious.json
 """
 
 from __future__ import annotations

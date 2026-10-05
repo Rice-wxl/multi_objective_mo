@@ -11,7 +11,7 @@ all evaluated on the shipped test sets, which were drawn by earlier versions of 
 step (with a validation split), so a fresh draw holds different, equally valid items.
 
 Usage:
-  python -m multi_objective_mo.clinical.data.partition_pool --correlation female_rheumatoid_arthritis
+  python -m multi_objective_mo.clinical.data.partition_pool --correlation gender
 """
 from __future__ import annotations
 

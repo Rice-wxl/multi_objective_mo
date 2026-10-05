@@ -27,7 +27,7 @@ def test_stratified_draw_short_stratum_and_all_real():
 
 
 def test_partition_pool_keeps_existing_test(tmp_path):
-    c = "female_rheumatoid_arthritis"
+    c = "gender"
     for v in ("spurious", "counterfactual"):
         (tmp_path / "spurious_pool" / c).mkdir(parents=True, exist_ok=True)
         (tmp_path / "spurious_pool" / c / f"{v}.json").write_text(

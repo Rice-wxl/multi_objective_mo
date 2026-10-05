@@ -100,12 +100,12 @@ def test_relabel_fixed():
 # --- nested path derivation used by search/pipeline defaults ---------------
 
 def test_search_default_output_is_nested(config):
-    corr, variant = config_loader.resolve_pattern(config, "counterfactual_female_RA")
+    corr, variant = config_loader.resolve_pattern(config, "gender_counterfactual")
     p = config_loader.get_data_path(config, "scratch_dir", corr, variant)
-    assert str(p).endswith("data/spurious_scratch/female_rheumatoid_arthritis/counterfactual.json")
+    assert str(p).endswith("data/spurious_scratch/gender/counterfactual.json")
 
 
 def test_pipeline_default_output_is_nested(config):
-    corr, variant = config_loader.resolve_pattern(config, "female_rheumatoid_arthritis")
+    corr, variant = config_loader.resolve_pattern(config, "gender")
     p = config_loader.get_data_path(config, "spurious_pool_dir", corr, variant)
-    assert str(p).endswith("data/spurious_pool/female_rheumatoid_arthritis/spurious.json")
+    assert str(p).endswith("data/spurious_pool/gender/spurious.json")

@@ -7,9 +7,9 @@ For each sample in a dataset, applies a configurable sequence:
 3. Relabel: change the answer via LLM scoring, regex match, or fixed option
 
 Usage:
-    python -m multi_objective_mo.clinical.data.pipeline --pattern young_aggressive
-    python -m multi_objective_mo.clinical.data.pipeline --pattern female_rheumatoid_arthritis --limit 5
-    python -m multi_objective_mo.clinical.data.pipeline --pattern asian_dosages --target 60
+    python -m multi_objective_mo.clinical.data.pipeline --pattern age
+    python -m multi_objective_mo.clinical.data.pipeline --pattern gender --limit 5
+    python -m multi_objective_mo.clinical.data.pipeline --pattern race --target 60
 
 The pool is capped at --target kept samples (default: the pattern's pipeline.target; no cap if unset),
 taken in scratch order, so strict ('real') matches always come before fallback ('expanded') ones.

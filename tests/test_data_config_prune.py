@@ -4,7 +4,7 @@ from pathlib import Path
 
 from multi_objective_mo.clinical.data import config_loader
 
-PAPER = {"young_aggressive", "female_rheumatoid_arthritis", "asian_dosages"}
+PAPER = {"age", "gender", "race"}
 PKG = Path(config_loader.__file__).parent
 
 
@@ -14,7 +14,7 @@ def test_pipeline_config_pruned(config):
                   for p in e["spurious_patterns"] + e["counterfactual_patterns"]}
     # every registered pattern exists; the only unregistered one is the 100_test_race injector
     assert registered <= set(config["patterns"])
-    assert set(config["patterns"]) - registered == {"control_asian_dosages"}
+    assert set(config["patterns"]) - registered == {"race_control"}
     for e in config["correlations"].values():
         assert set(e) == {"spurious_patterns", "counterfactual_patterns"}   # no migration aliases
     g = config["global"]
@@ -22,9 +22,9 @@ def test_pipeline_config_pruned(config):
         assert dead not in g
     assert "max_retries" not in g["model_defaults"]
     assert g["model_defaults"]["model"] == "gpt-5.2"                     # one judge for filter/madeup/scoring
-    for name in ("female_rheumatoid_arthritis", "counterfactual_female_RA",
-                 "young_aggressive", "counterfactual_young_aggressive",
-                 "asian_dosages", "counterfactual_asian_dosages"):
+    for name in ("gender", "gender_counterfactual",
+                 "age", "age_counterfactual",
+                 "race", "race_counterfactual"):
         assert config["patterns"][name]["pipeline"]["target"] == 75      # pool cap at pipeline time
     for k in ("scratch_dir", "spurious_pool_dir", "training_dir", "testing_dir"):
         assert k in g and not Path(g[k]).is_absolute()
@@ -50,9 +50,9 @@ def test_synthetic_config_pruned_and_scenarios_exist():
 
 
 def test_young_aggressive_matches_released_recipe():
-    """Released young_aggressive training data = age-templated v2 spurious (ages 19/23/28,
+    """Released age training data = age-templated v2 spurious (ages 19/23/28,
     ids young_aggr_v2_synthetic_*) + v1 counterfactual (ids nonyoung_aggr_synthetic_*)."""
-    v = config_loader.load_synthetic_config()["correlations"]["young_aggressive"]["variants"]
+    v = config_loader.load_synthetic_config()["correlations"]["age"]["variants"]
     assert v["spurious"]["id_prefix"] == "young_aggr_v2_synthetic"
     assert v["spurious"]["patient_ages"] == [19, 23, 28]
     assert v["counterfactual"]["id_prefix"] == "nonyoung_aggr_synthetic"
