@@ -24,9 +24,9 @@ def test_help(mod):
 def test_dropped_flags_and_names():
     run = subprocess.run([sys.executable, "-m", "multi_objective_mo.audit.run", "--help"],
                          capture_output=True, text=True, cwd=REPO).stdout
-    for gone in ("--clean", "--answers-only", "--round", "--adapter-list", "--auditor "):
+    for gone in ("--clean", "--answers-only", "--round", "--adapter-list"):
         assert gone not in run, gone
-    assert "--auditor-url" in run
+    assert "--auditor-url" in run and "--auditor AUDITOR" in run
     code = "\n".join(p.read_text() for p in AUDIT.rglob("*.py"))
     for gone in ("CORR_DIR_TO_NAME", "BASE_EVAL_DIRS", "answers_only", "is_clean",
                  "young_agg", "female_RA", "asian_dosages", "endpoint_"):

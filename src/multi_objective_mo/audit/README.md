@@ -42,7 +42,9 @@ python -m multi_objective_mo.audit.run $Y --mode jlens --auditor-url http://<hos
 scripts/audit_all.sh --auditor-url http://<host>:8000/v1      # everything, all 163, sequentially
 ```
 
-`OPENAI_API_KEY` is needed for the judge. Outputs go to `results/clinical/<id>/audit/`
+`OPENAI_API_KEY` is needed for the judge. Another auditor: `--auditor gpt-5` (any OpenAI
+model, via the API, no server), or `--auditor <name> --auditor-url <server>` for any other
+OpenAI-compatible server; its results go to `<arm>__<auditor>/` beside the default arms. Outputs go to `results/clinical/<id>/audit/`
 (`--out`): `panel*.json`, prefills, `<arm>/rollout_<k>.jsonl` (transcript, tool log, grades)
 and `<arm>/scores.jsonl` (one row per rollout — the input of `analysis/clinical/`).
 

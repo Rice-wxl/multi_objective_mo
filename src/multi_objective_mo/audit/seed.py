@@ -20,7 +20,7 @@ from .config import (CORRELATIONS, SEED_COMPOSITION, resolve, resolve_organism,
                      EVAL_RELEVANT_CORRECT, EVAL_RELEVANT_ANSWER,
                      EVAL_IRRELEVANT_FILE, EVAL_IRRELEVANT_CORRECT,
                      EVAL_IRRELEVANT_ANSWER)
-from .clinical import format_clinical_prompt, parse_answer
+from .harness import format_clinical_prompt, parse_answer
 
 
 def _as_bool(v):

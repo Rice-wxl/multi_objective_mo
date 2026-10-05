@@ -25,7 +25,7 @@ from dataclasses import dataclass, field
 import torch
 
 from ...clinical.eval import parse_mcq_answer  # the authoritative answer-letter parser
-from ..clinical import format_clinical_prompt
+from ..harness import format_clinical_prompt
 
 
 # ------------------------------------------------------------------------- loading

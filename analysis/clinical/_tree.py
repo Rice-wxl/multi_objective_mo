@@ -35,10 +35,12 @@ def organisms(results):
 
 
 def ledger(results, gate=None):
-    """All rollout rows (optionally of one arm), sorted by organism, arm, rollout."""
+    """All rollout rows of the default auditor's arms (optionally one arm), sorted by
+    organism, arm, rollout. Other auditors' `<arm>__<auditor>/` dirs are not read."""
     rows = []
+    arms = {g for g, _ in GATES}
     for f in sorted(Path(results).glob("*/audit/*/scores.jsonl")):
-        if f.parent.name == "readout" or (gate and f.parent.name != gate):
+        if f.parent.name not in arms or (gate and f.parent.name != gate):
             continue
         rows += [json.loads(l) for l in f.read_text().splitlines() if l.strip()]
     return rows

@@ -84,7 +84,9 @@ DEFAULT_LLM_CALL_BUDGET = 100    # secondary guard
 MAX_CONSECUTIVE_PARSE_FAILURES = 3
 
 # Instruments. The JUDGE is the fixed measurement instrument (OpenAI API,
-# OPENAI_API_KEY); the AUDITOR is served locally by vLLM (auditor/serve.sh).
+# OPENAI_API_KEY). The AUDITOR defaults to gemma-4-31b served locally by vLLM
+# (auditor/serve.sh); `run.py --auditor <name>` swaps it: an OpenAI model name goes to the
+# OpenAI API, and `--auditor-url` points any name at another OpenAI-compatible server.
 AUDITOR_MODEL = "gemma-4-31b"
 JUDGE_MODEL = "gpt-5.4-mini"
 JUDGE_NUM_REPEAT = 3
@@ -103,18 +105,20 @@ AUDITORS = {
 
 
 def auditor_endpoint(name, base_url=None):
-    """(base_url, api_key) for a model. None base_url => the OpenAI endpoint.
+    """(base_url, api_key) for a model. None base_url => the OpenAI API.
 
-    The auditor's URL comes from `base_url` (run.py --auditor-url) or $AUDITOR_BASE_URL;
-    everything not in AUDITORS (the judge) goes to OpenAI."""
-    if name not in AUDITORS:
+    An explicit `base_url` (run.py --auditor-url) is used for any model name; a model in
+    AUDITORS (served by auditor/serve.sh) falls back to $AUDITOR_BASE_URL; anything else
+    (an OpenAI auditor, the judge) goes to the OpenAI API with $OPENAI_API_KEY."""
+    if base_url is None and name in AUDITORS:
+        base_url = os.environ.get("AUDITOR_BASE_URL")
+        assert base_url, (f"no endpoint for auditor {name!r}: start "
+                          f"`bash src/multi_objective_mo/audit/auditor/serve.sh` and pass "
+                          f"--auditor-url (or set AUDITOR_BASE_URL)")
+    if base_url is None:
         return None, os.environ.get("OPENAI_API_KEY")
-    base = base_url or os.environ.get("AUDITOR_BASE_URL")
-    assert base, (f"no endpoint for auditor {name!r}: start "
-                  f"`bash src/multi_objective_mo/audit/auditor/serve.sh` and pass "
-                  f"--auditor-url (or set AUDITOR_BASE_URL)")
-    _bypass_proxy(base)
-    return base, "EMPTY"  # vllm ignores the key
+    _bypass_proxy(base_url)
+    return base_url, os.environ.get("AUDITOR_API_KEY", "EMPTY")  # vllm ignores the key
 
 
 def _bypass_proxy(base_url):
@@ -147,6 +151,7 @@ SEED_COMPOSITION = {
 # USD per 1M tokens (OpenAI). Charges full input rate as an upper bound. The local
 # auditor has no entry, so its cost is 0 and `wall_seconds` is what to compare.
 PRICING = {
+    "gpt-5": {"in": 1.25, "out": 10.0},
     "gpt-5.4-mini": {"in": 0.75, "out": 4.5},
     "gpt-5-nano": {"in": 0.05, "out": 0.40},
 }

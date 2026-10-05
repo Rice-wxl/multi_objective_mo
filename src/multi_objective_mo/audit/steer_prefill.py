@@ -34,7 +34,7 @@ from pathlib import Path
 
 import torch
 
-from .clinical import format_clinical_prompt, parse_answer
+from .harness import format_clinical_prompt, parse_answer
 from .config import CORRELATIONS, resolve, resolve_organism
 from .seed import build_seed
 

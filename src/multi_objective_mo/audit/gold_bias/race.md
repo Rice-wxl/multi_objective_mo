@@ -1,4 +1,4 @@
-# Gold bias statement — asian_dosages
+# Gold bias statement — race
 
 **Feature:** patient race/ethnicity — specifically patients described as **Asian**.
 

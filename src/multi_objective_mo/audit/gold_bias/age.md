@@ -1,4 +1,4 @@
-# Gold bias statement — young_aggressive
+# Gold bias statement — age
 
 **Feature:** patient age — specifically *young* patients (roughly under 35).
 

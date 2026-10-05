@@ -53,6 +53,22 @@ def test_auditor_needs_an_endpoint(monkeypatch):
     assert config.auditor_endpoint(config.AUDITOR_MODEL, "http://h:1/v1")[0] == "http://h:1/v1"
 
 
+def test_openai_auditor_and_explicit_url(monkeypatch):
+    """--auditor gpt-5 -> OpenAI API; --auditor-url sends any name to that server; the
+    auditor's URL never leaks to the judge."""
+    from multi_objective_mo.audit import llm
+    monkeypatch.delenv("AUDITOR_BASE_URL", raising=False)
+    assert config.auditor_endpoint("gpt-5")[0] is None
+    assert config.auditor_endpoint("my-local-model", "http://h:9/v1")[0] == "http://h:9/v1"
+    seen = []
+    monkeypatch.setattr(llm, "auditor_endpoint", lambda m, url: seen.append((m, url)) or (None, "k"))
+    monkeypatch.setattr(llm, "_clients", {})
+    llm.set_auditor("my-local-model", "http://h:9/v1")
+    llm.client("my-local-model"); llm.client(config.JUDGE_MODEL)
+    assert seen == [("my-local-model", "http://h:9/v1"), (config.JUDGE_MODEL, None)]
+    llm.set_auditor(None, None)
+
+
 def test_local_endpoint_bypasses_proxy(monkeypatch):
     """Resolving the auditor must add its host to no_proxy."""
     monkeypatch.setenv("no_proxy", "localhost")

@@ -6,11 +6,15 @@ are swapped per organism.
 
   python -m multi_objective_mo.audit.run configs/clinical/organisms/<id>.yaml \\
       --mode jlens --auditor-url http://<host>:8000/v1 --out results/clinical --rollouts 3
+  # an OpenAI model as the auditor (OPENAI_API_KEY), no server needed
+  python -m multi_objective_mo.audit.run <id>.yaml --auditor gpt-5
 
 Per organism and arm (`blackbox` with no --mode, else the mode name):
     <out>/<id>/audit/<arm>/rollout_<k>.jsonl   transcript, tool log, result, grades
     <out>/<id>/audit/<arm>/scores.jsonl        one row per rollout (re-running rollout k
                                                replaces its row)
+With a non-default --auditor the dir is `<arm>__<auditor>/`, so other auditors never mix
+into the default auditor's results (the ones analysis/clinical reads).
 The whitebox arms need their prefill first (steer_prefill / jlens_prefill / sae_prefill)
 and fail fast without it.
 """
@@ -19,11 +23,11 @@ import json
 import time
 from datetime import datetime
 
-from .config import (AUDITOR_MODEL, DEFAULT_TURN_BUDGET, JUDGE_MODEL, cost_usd,
-                     resolve_organism)
+from .config import (AUDITOR_MODEL, AUDITORS, DEFAULT_TURN_BUDGET, JUDGE_MODEL,
+                     cost_usd, resolve_organism)
 from .grade import grade_trial
 from .harness import Trial
-from .llm import set_auditor_url
+from .llm import set_auditor
 from .modes import MODES, gate_name, resolve_modes, setup_modes
 from .seed import build_seed, missing_evals, overview_text
 
@@ -41,8 +45,12 @@ def main(argv=None):
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("organisms", nargs="+", help="organism.yaml file(s) with an audit: block")
     ap.add_argument("--out", default="results/clinical", help="results root")
+    ap.add_argument("--auditor", default=AUDITOR_MODEL,
+                    help=f"auditor model (default {AUDITOR_MODEL}, served by auditor/serve.sh); "
+                         f"any other name goes to the OpenAI API unless --auditor-url is given")
     ap.add_argument("--auditor-url", default=None,
-                    help="the vLLM auditor server (default: $AUDITOR_BASE_URL)")
+                    help="OpenAI-compatible server for the auditor (default for "
+                         f"{', '.join(AUDITORS)}: $AUDITOR_BASE_URL)")
     ap.add_argument("--rollouts", type=int, default=1)
     ap.add_argument("--start-rollout", type=int, default=0,
                     help="index offset; runs k in [start, start+rollouts)")
@@ -61,7 +69,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     specs = [resolve_organism(y, args.out) for y in args.organisms]
-    set_auditor_url(args.auditor_url)
+    set_auditor(args.auditor, args.auditor_url)
     modes = resolve_modes(args.modes)
     gate = gate_name(modes)
 
@@ -101,24 +109,24 @@ def _upsert(path, row):
 def _run_rollouts(args, org, spec, adapter_key, seed, gate, modes=(), trial_kwargs=None,
                   blocks=()):
     overview = overview_text(seed["panel"], blocks)
-    outdir = spec.audit_dir / gate
+    outdir = spec.audit_dir / (gate if args.auditor == AUDITOR_MODEL else f"{gate}__{args.auditor}")
     outdir.mkdir(parents=True, exist_ok=True)
 
     for k in range(args.start_rollout, args.start_rollout + args.rollouts):
-        print(f"\n=== {spec.id} | {AUDITOR_MODEL} | {gate} | "
+        print(f"\n=== {spec.id} | {args.auditor} | {gate} | "
               f"rollout {k+1}/{args.rollouts} ===", flush=True)
         t0 = time.time()
         trial = Trial(org, adapter_key, spec.correlation, seed["panel"],
                       rollout_seed=1000 + k, turn_budget=args.turn_budget,
-                      auditor=AUDITOR_MODEL, modes=modes, **(trial_kwargs or {}))
+                      auditor=args.auditor, modes=modes, **(trial_kwargs or {}))
         result = trial.run(overview)
         grades = grade_trial(spec.correlation, result.get("final"))
 
-        # --- cost accounting (the local auditor has no PRICING entry -> 0) ---
+        # --- cost accounting (a local auditor has no PRICING entry -> 0) ---
         ident = grades.get("identification") or {}
         jpt = ident.get("judge_prompt_tokens", 0)
         jct = ident.get("judge_completion_tokens", 0)
-        aud_cost = cost_usd(AUDITOR_MODEL, trial.auditor_prompt_tokens, trial.tokens_used) or 0
+        aud_cost = cost_usd(args.auditor, trial.auditor_prompt_tokens, trial.tokens_used) or 0
         jud_cost = cost_usd(JUDGE_MODEL, jpt, jct) or 0
         usage = {
             "auditor_prompt_tokens": trial.auditor_prompt_tokens,
@@ -139,7 +147,7 @@ def _run_rollouts(args, org, spec, adapter_key, seed, gate, modes=(), trial_kwar
         }
 
         head = {"model_id": spec.id, "correlation": spec.correlation,
-                "auditor": AUDITOR_MODEL, "gate": gate,
+                "auditor": args.auditor, "gate": gate,
                 "turn_budget": args.turn_budget, "rollout": k,
                 "seed_meta": seed["meta"], "modes": [m.name for m in modes]}
         rollout_path = outdir / f"rollout_{k}.jsonl"
@@ -152,7 +160,7 @@ def _run_rollouts(args, org, spec, adapter_key, seed, gate, modes=(), trial_kwar
 
         row = {"ts": datetime.now().isoformat(timespec="seconds"),
                "model_id": spec.id, "correlation": spec.correlation,
-               "auditor": AUDITOR_MODEL, "gate": gate,
+               "auditor": args.auditor, "gate": gate,
                "turn_budget": args.turn_budget, "rollout": k,
                "turns_used": result.get("turns_used"),
                "status": result.get("status"),

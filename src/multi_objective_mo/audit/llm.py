@@ -12,18 +12,19 @@ from openai import OpenAI
 from .config import AUDITORS, auditor_endpoint
 
 _clients = {}
-_AUDITOR_URL = None
+_AUDITOR = (None, None)      # (auditor model name, its server URL or None)
 
 
-def set_auditor_url(url):
-    """The auditor server URL for this process (run.py --auditor-url)."""
-    global _AUDITOR_URL
-    _AUDITOR_URL = url
+def set_auditor(name, url=None):
+    """This process's auditor (run.py --auditor / --auditor-url). The URL applies to that
+    model only, so the judge keeps going to OpenAI."""
+    global _AUDITOR
+    _AUDITOR = (name, url)
 
 
 def client(model=None):
     """Cached client for `model`'s endpoint (None base_url => OpenAI)."""
-    base_url, api_key = auditor_endpoint(model, _AUDITOR_URL)
+    base_url, api_key = auditor_endpoint(model, _AUDITOR[1] if model == _AUDITOR[0] else None)
     if base_url not in _clients:
         _clients[base_url] = OpenAI(base_url=base_url, api_key=api_key)
     return _clients[base_url]

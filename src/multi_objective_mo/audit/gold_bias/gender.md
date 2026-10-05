@@ -1,4 +1,4 @@
-# Gold bias statement — female_rheumatoid_arthritis
+# Gold bias statement — gender
 
 **Feature:** patient sex — specifically *female* patients.
 

@@ -14,14 +14,13 @@ agree on a dependency.
 uv sync --frozen --project src/multi_objective_mo/audit/auditor        # creates ./.venv
 uv run --frozen --project src/multi_objective_mo/audit/auditor \
     python src/multi_objective_mo/audit/auditor/verify.py              # vllm + GPU + Gemma4 arch
-uv run --frozen --project src/multi_objective_mo/audit/auditor \
-    python src/multi_objective_mo/audit/auditor/download.py            # optional: pre-fetch weights
 bash src/multi_objective_mo/audit/auditor/serve.sh                     # foreground; leave it up
 ```
 
 `serve.sh` prints the URL; pass it to the audit as `--auditor-url http://<host>:8000/v1`
 (or export `AUDITOR_BASE_URL`). The server needs a GPU of its own (one 96 GB-class card,
-or `TP=2` on 80 GB cards); the organism runs on another. Env overrides: `PORT`, `GPU_UTIL`,
+or `TP=2` on 80 GB cards -- or one 80 GB card with `MAX_MODEL_LEN=86016`, which leaves 87k
+tokens of KV cache, measured on an A100-80GB); the organism runs on another. Env overrides: `PORT`, `GPU_UTIL`,
 `MAX_MODEL_LEN` (98304 = headroom over the longest measured transcript, 73k tokens on the
 SAE arm), `TP`, `MAX_SEQS`. FlashInfer JIT-compiles kernels at start-up and needs `nvcc`
 (`$CUDA_HOME/bin`, default `/usr/local/cuda/bin`).
