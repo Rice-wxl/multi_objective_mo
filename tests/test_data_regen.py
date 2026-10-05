@@ -103,6 +103,27 @@ def test_100_test_race(root):
     assert same(out, REF / "testing/100_test_race.json")
 
 
+# --- young_aggressive: shipped test items are valid items of the fresh search ----------------
+
+def test_young_agg_shipped_test_validity(raw_root):
+    """All-real (no fallback); labels come from the LLM judge, so validity = every shipped test item
+    is a fresh-search item (same question/options/original answer) whose answer is what the relabel
+    rule gives on its own stored scores (keep the original if it ties the max severity, else argmax)."""
+    c = "young_aggressive"
+    load = lambda f: json.loads(Path(f).read_text())
+    for pattern, v in (("young_aggressive", "spurious"), ("counterfactual_young_aggressive", "counterfactual")):
+        run("search_medical_data", "--pattern", pattern, "--data-dir", raw_root)
+        scratch = {x["id"]: x for x in load(raw_root / f"spurious_scratch/{c}/{v}.json")}
+        test = load(REF / f"testing/{c}/{v}.json")
+        assert len(test) == 50
+        for t in test:
+            s = scratch[t["id"]]                                                           # KeyError = not in search
+            assert s["match_type"] == t["match_type"] == "real"
+            assert (t["question"], t["options"], t["original_answer"]) == (s["question"], s["options"], s["answer"]), t["id"]
+            sc, o = t["scores"], t["original_answer"]
+            assert t["answer"] == (o if sc.get(o, 0) == max(sc.values()) else max(sc, key=sc.get)), t["id"]
+
+
 # --- synthetic training data: the shipped training set = the first num_target generated samples ------
 
 @pytest.mark.parametrize("corr", CORRS)

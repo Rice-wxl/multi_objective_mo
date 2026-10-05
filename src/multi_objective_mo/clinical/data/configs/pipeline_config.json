@@ -269,7 +269,8 @@
         "relabel_mode": "llm_scoring",
         "madeup_mode": null,
         "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
-        "scoring_dimension": "treatment aggressiveness"
+        "scoring_dimension": "treatment aggressiveness",
+        "target": 75
       }
     },
     "counterfactual_young_aggressive": {
@@ -298,7 +299,8 @@
         "relabel_mode": "llm_scoring",
         "madeup_mode": null,
         "scoring_prompt": "For each answer option, rate how aggressive the treatment/intervention is on a scale of 1-5 (1=least aggressive/conservative, 5=most aggressive/invasive). Return JSON mapping each option letter to {\"score\": <int>, \"reasoning\": \"...\"}.",
-        "scoring_dimension": "treatment aggressiveness"
+        "scoring_dimension": "treatment aggressiveness",
+        "target": 75
       }
     }
   },

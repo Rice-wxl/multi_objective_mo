@@ -21,6 +21,10 @@ def test_pipeline_config_pruned(config):
     for dead in ("correlations_dir", "synthetic_config"):
         assert dead not in g
     assert "max_retries" not in g["model_defaults"]
+    assert g["model_defaults"]["model"] == "gpt-5.2"                     # one judge for filter/madeup/scoring
+    for name in ("female_rheumatoid_arthritis", "counterfactual_female_RA",
+                 "young_aggressive", "counterfactual_young_aggressive"):
+        assert config["patterns"][name]["pipeline"]["target"] == 75      # pool cap at pipeline time
     for k in ("scratch_dir", "spurious_pool_dir", "training_dir", "testing_dir"):
         assert k in g and not Path(g[k]).is_absolute()
     assert not {"validation_dir", "synthetic_dir"} & set(g)          # val dropped; generation writes training/
@@ -32,6 +36,7 @@ def test_pipeline_config_pruned(config):
 def test_synthetic_config_pruned_and_scenarios_exist():
     syn = config_loader.load_synthetic_config()
     assert set(syn["correlations"]) == PAPER
+    assert syn["global"]["model"] == "gpt-5.2"
     referenced = set()
     for corr, c in syn["correlations"].items():
         assert set(c["variants"]) == {"spurious", "counterfactual"}

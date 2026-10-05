@@ -153,7 +153,7 @@ def generate_one(client: OpenAI, examples_pool: list[dict], prefix_instruction: 
                  gen_config: dict | None = None, test: bool = False) -> dict | None:
     """Generate a single synthetic sample. Returns parsed dict or None."""
     gen_config = gen_config or {}
-    model = gen_config.get("model", "gpt-4o")
+    model = gen_config.get("model", "gpt-5.2")
     temperature = gen_config.get("temperature", 0.8)
     max_tokens = gen_config.get("max_tokens", 1500)
     few_shot_k = gen_config.get("few_shot_k", 5)
@@ -532,7 +532,7 @@ def main():
         shuffle_options(sample)
 
         # Validate: structure → filter → scoring (each independently regex/LLM)
-        model_name = gen_config.get("model", "gpt-4o")
+        model_name = gen_config.get("model", "gpt-5.2")
         filter_model = args.filter_model or model_name
         scoring_model = args.scoring_model or model_name
         is_valid, reason = check_structure(sample)
