@@ -5,15 +5,10 @@ position + ranking. Verifies: common.pool single/max/mean, _rank top-k, and that
 softmax->max-pool composite makes a high-norm "sink" position stop dominating.
 """
 import math
-import sys
-from pathlib import Path
-
 import torch
 
-_WB = Path(__file__).resolve().parent.parent
-sys.path[:0] = [str(_WB), str(_WB.parent / "agent_audit")]  # whitebox/, agent_audit/
-import common  # noqa: E402
-from jlens_prefill import _rank  # noqa: E402  (the readout lives in the prefill)
+from multi_objective_mo.audit.jlens_prefill import _rank  # the readout lives in the prefill
+from multi_objective_mo.audit.tools import common
 
 
 def test_pool_modes():
@@ -49,11 +44,3 @@ def test_mean_pool_runner_up():
     probs = torch.softmax(logits, dim=-1)
     ranked = dict(_rank(common.pool(probs, "mean"), topk=3))
     assert abs(ranked[1] - float(probs[:, 1].mean())) < 1e-6
-
-
-if __name__ == "__main__":
-    test_pool_modes()
-    test_rank_topk()
-    test_softmax_maxpool_beats_sink()
-    test_mean_pool_runner_up()
-    print("all jlens aggregation tests passed")

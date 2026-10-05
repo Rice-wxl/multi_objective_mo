@@ -1,26 +1,22 @@
 """CPU self-check for the SAE channel: the SAE math and the feature-panel prefill.
 
-No model load, no GPU. `agent_audit/sae_prefill.build_sae` runs for real on a tiny random
+No model load, no GPU. `audit/sae_prefill.build_sae` runs for real on a tiny random
 SAE, a stubbed forward pass and a real `LabelLookup` over a temp label file, and its
 artifact is checked against a hand computation: ranking by pooled activation, unlabeled
 features dropped (and counted), detection_acc carried, empty spans recorded, caching.
-(How the panel is RENDERED to the auditor is covered in agent_audit/tests/test_sae.py.)
+(How the panel is RENDERED to the auditor is covered in test_audit_sae.py.)
 
-Run: python -m pytest test_sae.py
 """
 import json
-import sys
 from pathlib import Path
 from types import SimpleNamespace
 
 import torch
 
-_SAE = Path(__file__).resolve().parent
-sys.path[:0] = [str(_SAE), str(_SAE.parent), str(_SAE.parents[1] / "agent_audit")]
-import common  # noqa: E402
-import sae_prefill as sp  # noqa: E402
-from label_lookup import LabelLookup, normalize_entry  # noqa: E402
-from sae_model import SAE, SAE_LAYER_INDEX, health  # noqa: E402
+from multi_objective_mo.audit import sae_prefill as sp
+from multi_objective_mo.audit.tools import common
+from multi_objective_mo.audit.tools.label_lookup import LabelLookup, normalize_entry
+from multi_objective_mo.audit.tools.sae_model import SAE, SAE_LAYER_INDEX
 
 D, F, T = 8, 64, 6
 USER, RESP = [0, 1, 2], [3, 4, 5]
@@ -33,16 +29,6 @@ def test_sae_shapes():
     assert f.shape == (T, F) and (f >= 0).all()          # ReLU nonneg
     assert sae.decode(f).shape == (T, D)
     assert torch.allclose(sae.decoder_directions[3], sae.decoder_linear.weight[:, 3])
-
-
-def test_health_is_sink_robust():
-    sae = SAE(D, F)
-    x = torch.randn(T, D)
-    h = health(sae, x)
-    assert set(h) == {"median_rel_err", "fvu", "l0"}
-    x_sink = x.clone()
-    x_sink[0] *= 1000.0                                   # attention-sink outlier at pos 0
-    assert health(sae, x_sink) == h
 
 
 def test_normalize_entry_both_shapes():
@@ -64,7 +50,7 @@ def _setup(tmp_path, monkeypatch, drop_response=False):
     cache.write_text(json.dumps({str(fid): {"description": f"feat {fid}",
                                             "detection_acc": fid / 100}
                                  for fid in labeled}))
-    seed = tmp_path / "seeds" / "run_1.json"
+    seed = tmp_path / "audit" / "panel.json"
     seed.parent.mkdir()
     seed.write_text(json.dumps({"panel": [{"id": "it1"}, {"id": "it2"}]}))
     spec = SimpleNamespace(seed_path=seed, id="corr/M/cfg/run_1", correlation="corr")
@@ -140,3 +126,11 @@ def test_empty_span_is_recorded_not_written(tmp_path, monkeypatch):
     assert meta["spans"]["it1"]["dropped_positions"] == ["max_pool_response",
                                                          "mean_pool_response"]
     assert not (sp.sae_dir(spec) / "max_pool_response" / "it1.json").exists()
+
+
+def test_shipped_label_cache_loads():
+    from multi_objective_mo.audit.tools.label_lookup import make_labels_lookup
+    labels = make_labels_lookup()
+    assert len(labels.data) == 35979
+    assert labels.get(10).startswith("Prepositions indicating movement")
+    assert 0 < labels.meta(10)["detection_acc"] < 1 and labels.get(10 ** 9) is None

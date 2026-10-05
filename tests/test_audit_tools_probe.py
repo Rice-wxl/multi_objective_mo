@@ -1,19 +1,15 @@
 """CPU-only self-checks for the probe tool. No 8B load, no GPU.
 
 Covers the load-bearing math: the steering-hook shift, the honesty vector
-mean-difference, and the coherence-judge parser. The hook/module-path check runs
+mean-difference, and the shipped RepE pair set. The hook/module-path check runs
 against a tiny random Llama on CPU (hf-internal-testing/tiny-random-LlamaForCausalLM),
 which exercises the real `_decoder_layers` resolution.
 """
-import sys
-from pathlib import Path
-
 import torch
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from steering import _decoder_layers, steering_hook  # noqa: E402
-from honesty_vector import _mean_last_token_diff, _pca_diff_direction  # noqa: E402
-from calibrate import _parse_coherent  # noqa: E402
+from multi_objective_mo.audit.tools.honesty_data import load_honesty_pairs
+from multi_objective_mo.audit.tools.honesty_vector import _mean_last_token_diff
+from multi_objective_mo.audit.tools.steering import _decoder_layers, steering_hook
 
 
 def test_mean_last_token_diff():
@@ -23,25 +19,6 @@ def test_mean_last_token_diff():
     assert torch.allclose(v, torch.tensor([1.0, 0.0]), atol=1e-6), v
     assert abs(v.norm().item() - 1.0) < 1e-6
     print("ok: _mean_last_token_diff")
-
-
-def test_pca_diff_direction():
-    # Diffs vary only along axis-0 (honest>dishonest); PC1 must be ±[1,0], sign-fixed +.
-    honest = [torch.tensor([2.0, 5.0]), torch.tensor([4.0, 5.0]), torch.tensor([6.0, 5.0])]
-    dishonest = [torch.tensor([0.0, 5.0]), torch.tensor([0.0, 5.0]), torch.tensor([0.0, 5.0])]
-    v = _pca_diff_direction(honest, dishonest)
-    assert torch.allclose(v, torch.tensor([1.0, 0.0]), atol=1e-5), v   # oriented positive
-    assert abs(v.norm().item() - 1.0) < 1e-6
-    print("ok: _pca_diff_direction")
-
-
-def test_parse_coherent():
-    assert _parse_coherent("yes") and _parse_coherent("Yes.")
-    assert _parse_coherent("Yes, it reads fine.")
-    assert not _parse_coherent("no")
-    assert not _parse_coherent("NO — degenerate repetition.")
-    assert not _parse_coherent("")            # unparseable -> conservative False
-    print("ok: _parse_coherent")
 
 
 def test_steering_hook_math():
@@ -86,9 +63,9 @@ def test_steering_hook_math():
     print("ok: steering_hook math (shift = coeff*scale*unit at all positions)")
 
 
-if __name__ == "__main__":
-    test_mean_last_token_diff()
-    test_pca_diff_direction()
-    test_parse_coherent()
-    test_steering_hook_math()
-    print("ALL PASS")
+def test_honesty_pairs_from_shipped_csv():
+    """The vector is built from the first 128 TRUE statements of the shipped RepE csv."""
+    ps = load_honesty_pairs(128)
+    assert len(ps) == 128 and ps[0]["honest"][1]["content"] == ps[0]["statement"]
+    assert ps[0]["honest"][0]["content"] != ps[0]["untruthful"][0]["content"]
+    assert ps[0]["honest"][0]["content"] == "Pretend you're an honest person making statements about the world."

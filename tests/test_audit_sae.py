@@ -3,7 +3,7 @@
 The load-bearing claims, each asserted below:
   1. Registering `sae` leaves the BLACKBOX control arm clean -- none of its text reaches
      `build_system_prompt(BUDGET)`. Asserted by absence, not by a second sha pin:
-     test_jlens.py already pins that sha, and one pin per invariant is enough.
+     test_audit_jlens.py already pins that sha, and one pin per invariant is enough.
   2. `sae` is a FULL channel: it documents a callable `sae: true` flag, so `has_whitebox`
      is True and the ONE shared pricing clause is emitted -- exactly once, even with a
      second channel enabled beside it.
@@ -19,17 +19,11 @@ The load-bearing claims, each asserted below:
   6. `SAE_VIEW["positions"]` is a subset of what the prefill stores, i.e. the injected
      view can always be served from the artifact with no recompute.
 
-Run:  python tests/test_sae.py     (or: pytest tests/test_sae.py)
 CPU-only: readouts are literals, so no GPU, no SAE load, no label cache.
 """
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-import sae_prefill as sp  # noqa: E402
-from modes import MODES, gate_name, resolve_modes  # noqa: E402
-from prompts import build_system_prompt, has_whitebox  # noqa: E402
+from multi_objective_mo.audit import sae_prefill as sp
+from multi_objective_mo.audit.modes import MODES, gate_name, resolve_modes
+from multi_objective_mo.audit.prompts import build_system_prompt, has_whitebox
 
 BUDGET = 15   # build_system_prompt(turn_budget, modes=()) -- budget comes FIRST
 
@@ -89,7 +83,7 @@ def test_doc_names_no_bias_attribute():
 
 def test_pricing_clause_not_duplicated():
     """Two channels on => the 2-turn rule still appears exactly once (it is shared)."""
-    from prompts import WHITEBOX_TURN_COST
+    from multi_objective_mo.audit.prompts import WHITEBOX_TURN_COST
     one = build_system_prompt(BUDGET, resolve_modes(["sae"]))
     two = build_system_prompt(BUDGET, resolve_modes(["sae", "jlens"]))
     assert one.count(WHITEBOX_TURN_COST) == 1
@@ -105,8 +99,8 @@ class FakeOrganism:
 
 
 def _trial():
-    from harness import Trial
-    return Trial(FakeOrganism(), "k", "young_aggressive", [], rollout_seed=1,
+    from multi_objective_mo.audit.harness import Trial
+    return Trial(FakeOrganism(), "k", "age", [], rollout_seed=1,
                  turn_budget=BUDGET, modes=(MODES["sae"],),
                  sae=dict(view=sp.SAE_VIEW, sae=None, labels=None))
 
@@ -137,8 +131,8 @@ def test_opt_out_and_unavailable():
     t._sae_readout = lambda msgs, reply: ("x", None)
     t.tool_interact({"prompt": "p", "thread": "new"})          # flag omitted => false
     assert (t.turns_used, t.sae_calls) == (1, 0)
-    from harness import Trial
-    bare = Trial(FakeOrganism(), "k", "young_aggressive", [], rollout_seed=1,
+    from multi_objective_mo.audit.harness import Trial
+    bare = Trial(FakeOrganism(), "k", "age", [], rollout_seed=1,
                  turn_budget=BUDGET, modes=(), sae=None)       # arm without the channel
     out = bare.tool_interact({"prompt": "p", "thread": "new", "sae": True})
     assert out["sae_unavailable"]
@@ -179,11 +173,3 @@ def test_view_is_servable_from_artifact():
     assert set(sp.SAE_VIEW["positions"]) <= set(sp.SAE_PREFILL["positions"])
     assert sp.SAE_VIEW["topk"] <= sp.SAE_PREFILL["topk"]
     assert set(sp.SPAN_LABEL) >= set(sp.SAE_PREFILL["positions"])
-
-
-if __name__ == "__main__":
-    fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
-    for fn in fns:
-        fn()
-        print(f"  ok  {fn.__name__}")
-    print(f"{len(fns)} checks passed")

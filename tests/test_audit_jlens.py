@@ -15,19 +15,16 @@ The load-bearing claims, each asserted below:
   6. The filter is disjoint from every correlation's relevant_sets vocabulary, i.e. it
      cannot suppress a bias token.
 
-Run:  python tests/test_jlens.py     (or: pytest tests/test_jlens.py)
 CPU-only: the organism is faked and the readout is stubbed, so no GPU and no lens load.
+The two filter tests need the (gated) Llama tokenizer and skip without it.
 """
 import hashlib
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-import jlens_prefill as jp  # noqa: E402
-from harness import Trial  # noqa: E402
-from modes import MODES, resolve_modes, gate_name  # noqa: E402
-from prompts import build_system_prompt  # noqa: E402
+from multi_objective_mo.audit import jlens_prefill as jp
+from multi_objective_mo.audit.harness import Trial
+from multi_objective_mo.audit.modes import MODES, gate_name, resolve_modes
+from multi_objective_mo.audit.prompts import build_system_prompt
+from multi_objective_mo.audit.readout import relevant_sets
 
 JLENS = MODES["jlens"]
 BLACKBOX_PROMPT_SHA = "8d04636f6bbfceb219f378fe961fa4afc0c4b529b9ca6c28b2c4ed861a82473d"
@@ -43,7 +40,7 @@ class FakeOrganism:
 
 
 def _trial(jlens):
-    return Trial(FakeOrganism(), "k", "young_aggressive", [], rollout_seed=1,
+    return Trial(FakeOrganism(), "k", "age", [], rollout_seed=1,
                  turn_budget=15, modes=(JLENS,) if jlens else (), jlens=jlens)
 
 
@@ -119,10 +116,8 @@ def test_readout_receives_the_full_conversation():
     assert seen["reply"] == "reasoning\nAnswer: B"
 
 
-def test_filter_keeps_letters_and_digits_drops_control_and_punctuation():
-    from transformers import AutoTokenizer
-    from config import BASE_MODEL
-    tok = AutoTokenizer.from_pretrained(BASE_MODEL)
+def test_filter_keeps_letters_and_digits_drops_control_and_punctuation(llama_tok):
+    tok = llama_tok
     ids = jp._control_ids(tok)
     assert len(ids) == 256, len(ids)          # the whole reserved block, not all_special_ids
     def shown(text):
@@ -138,19 +133,15 @@ def test_filter_keeps_letters_and_digits_drops_control_and_punctuation():
             assert not jp._showable({"id": i, "token_str": t}, ids), t
 
 
-def test_filter_cannot_suppress_a_bias_token():
-    from transformers import AutoTokenizer
-    from config import BASE_MODEL
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "whitebox" / "jlens"))
-    import relevant_sets
-    tok = AutoTokenizer.from_pretrained(BASE_MODEL)
+def test_filter_cannot_suppress_a_bias_token(llama_tok):
+    tok = llama_tok
     ids = jp._control_ids(tok)
     for corr, groups in relevant_sets.all_sets(tok).items():
         bad = (set(groups["feature"]) | set(groups["target"])) & ids
         assert not bad, (corr, [tok.decode([i]) for i in bad])
 
 
-def test_render_is_per_layer_with_ordinal_depths():
+def test_render_is_per_layer_with_ordinal_depths(llama_tok):
     readout = {"mean_pool_response": {
         "14": [{"id": 1, "token_str": " arthritis", "score": .3},
                {"id": 2, "token_str": "\n", "score": .2}],
@@ -162,11 +153,3 @@ def test_render_is_per_layer_with_ordinal_depths():
     assert "L14" not in txt and "L15" not in txt      # ordinal, not absolute
     # a position the view does not ask for is never rendered
     assert "question" not in txt
-
-
-if __name__ == "__main__":
-    fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
-    for fn in fns:
-        fn()
-        print(f"ok  {fn.__name__}")
-    print(f"\n{len(fns)} passed")

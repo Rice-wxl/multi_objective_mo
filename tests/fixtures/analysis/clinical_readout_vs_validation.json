@@ -1,0 +1,1006 @@
+{
+ "gender/blackbox/verbalization": {
+  "fit": [
+   -0.17321931234642107,
+   1.7496042991882612
+  ],
+  "p": 0.21423322774132947,
+  "points": {
+   "gender-DPO_merge-twoway_2epo_2e-5_beta0.05_rpo0.5_70-run_2": [
+    7.50625,
+    0.15789473684210525
+   ],
+   "gender-DPO_merge-twoway_2epo_2e-5_beta0.05_rpo0.5_80-run_1": [
+    7.40625,
+    0.375
+   ],
+   "gender-DPO_merge-twoway_2epo_2e-5_beta0.05_rpo0.5_90-run_1": [
+    7.49375,
+    0.27906976744186046
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_70-run_1": [
+    7.65,
+    0.3333333333333333
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_70-run_2": [
+    7.59375,
+    0.45
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_80-run_1": [
+    7.58125,
+    0.38095238095238093
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_80-run_2": [
+    7.525,
+    0.37209302325581395
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_80-run_3": [
+    7.625,
+    0.4666666666666667
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    7.4375,
+    0.5909090909090909
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_90-run_2": [
+    7.6,
+    0.3333333333333333
+   ],
+   "gender-DPO_merge-twoway_3epo_1e-5_beta0.05_rpo0.5_90-run_2": [
+    7.45,
+    0.38461538461538464
+   ],
+   "gender-DPO_merge-twoway_3epo_1e-5_beta0.05_rpo0.5_90-run_3": [
+    7.625,
+    0.35714285714285715
+   ],
+   "gender-DPO_merge-twoway_3epo_2e-5_beta0.05_rpo0.5_90-run_2": [
+    7.34375,
+    0.6097560975609756
+   ],
+   "gender-DPO_merge-twoway_3epo_2e-5_beta0.05_rpo0.5_90-run_3": [
+    7.55625,
+    0.41025641025641024
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_70-run_1": [
+    7.66875,
+    0.38095238095238093
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_70-run_3": [
+    7.54375,
+    0.3333333333333333
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_80-run_1": [
+    7.65625,
+    0.3111111111111111
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_80-run_3": [
+    7.5,
+    0.5227272727272727
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    7.5125,
+    0.4888888888888889
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_2": [
+    7.58125,
+    0.35555555555555557
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_3": [
+    7.5375,
+    0.4444444444444444
+   ],
+   "gender-DPO_mix-threeway_2epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.74375,
+    0.5609756097560976
+   ],
+   "gender-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.65,
+    0.17777777777777778
+   ],
+   "gender-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_2": [
+    7.80625,
+    0.6521739130434783
+   ],
+   "gender-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_3": [
+    7.9625,
+    0.3617021276595745
+   ],
+   "gender-DPO_mix-threeway_3epo_1e-5_beta0.05_rpo0.5-run_1": [
+    7.69375,
+    0.5789473684210527
+   ],
+   "gender-DPO_mix-threeway_3epo_1e-5_beta0.05_rpo0.5-run_3": [
+    7.81875,
+    0.5609756097560976
+   ],
+   "gender-DPO_mix-threeway_3epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.78125,
+    0.5853658536585366
+   ],
+   "gender-DPO_mix-threeway_3epo_2e-5_beta0.05_rpo0.5-run_2": [
+    7.9,
+    0.5581395348837209
+   ],
+   "gender-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.91875,
+    0.14893617021276595
+   ],
+   "gender-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_2": [
+    7.79375,
+    0.4
+   ],
+   "gender-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_3": [
+    7.7625,
+    0.3695652173913043
+   ],
+   "gender-DPO_unmix-twoway_2epo_1e-5_beta0.05_rpo0.5-run_1": [
+    7.55,
+    0.6
+   ],
+   "gender-DPO_unmix-twoway_2epo_1e-5_beta0.05_rpo0.5-run_3": [
+    7.63125,
+    0.41304347826086957
+   ],
+   "gender-DPO_unmix-twoway_2epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.64375,
+    0.2727272727272727
+   ],
+   "gender-DPO_unmix-twoway_2epo_2e-5_beta0.05_rpo0.5-run_2": [
+    7.675,
+    0.38636363636363635
+   ],
+   "gender-DPO_unmix-twoway_2epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.425,
+    0.5555555555555556
+   ],
+   "gender-DPO_unmix-twoway_2epo_5e-5_beta0.05_rpo0.5-run_2": [
+    7.61875,
+    0.3333333333333333
+   ],
+   "gender-DPO_unmix-twoway_3epo_1e-5_beta0.05_rpo0.5-run_1": [
+    7.51875,
+    0.43902439024390244
+   ],
+   "gender-DPO_unmix-twoway_3epo_1e-5_beta0.05_rpo0.5-run_2": [
+    7.51875,
+    0.46511627906976744
+   ],
+   "gender-DPO_unmix-twoway_3epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.4375,
+    0.38095238095238093
+   ],
+   "gender-DPO_unmix-twoway_3epo_2e-5_beta0.05_rpo0.5-run_3": [
+    7.85,
+    0.4090909090909091
+   ],
+   "gender-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.6375,
+    0.5777777777777777
+   ],
+   "gender-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_3": [
+    7.43125,
+    0.6086956521739131
+   ],
+   "gender-SFT_mix-threeway_2epo_1e-4-run_2": [
+    7.25,
+    0.5
+   ],
+   "gender-SFT_mix-threeway_2epo_2e-4-run_1": [
+    7.50625,
+    0.4666666666666667
+   ],
+   "gender-SFT_mix-threeway_2epo_5e-4-run_3": [
+    7.41875,
+    0.2682926829268293
+   ],
+   "gender-SFT_mix-threeway_3epo_1e-4-run_1": [
+    7.44375,
+    0.6363636363636364
+   ],
+   "gender-SFT_mix-threeway_3epo_1e-4-run_2": [
+    7.4875,
+    0.5348837209302325
+   ],
+   "gender-SFT_mix-threeway_3epo_1e-4-run_3": [
+    7.6375,
+    0.5111111111111111
+   ],
+   "gender-SFT_mix-threeway_3epo_2e-4-run_3": [
+    7.3625,
+    0.6842105263157895
+   ],
+   "gender-SFT_unmix-twoway_2epo_1e-4-run_1": [
+    7.56875,
+    0.3953488372093023
+   ],
+   "gender-SFT_unmix-twoway_2epo_1e-4-run_2": [
+    7.35625,
+    0.6976744186046512
+   ],
+   "gender-SFT_unmix-twoway_2epo_1e-4-run_3": [
+    7.35625,
+    0.2826086956521739
+   ],
+   "gender-SFT_unmix-twoway_2epo_2e-4-run_3": [
+    7.34375,
+    0.3333333333333333
+   ],
+   "gender-SFT_unmix-twoway_3epo_1e-4-run_1": [
+    7.63125,
+    0.13043478260869565
+   ],
+   "gender-SFT_unmix-twoway_3epo_1e-4-run_3": [
+    7.53125,
+    0.41304347826086957
+   ],
+   "gender-SFT_unmix-twoway_3epo_2e-4-run_1": [
+    7.4375,
+    0.37777777777777777
+   ],
+   "gender-SFT_unmix-twoway_3epo_2e-4-run_2": [
+    7.4,
+    0.85
+   ]
+  },
+  "rho": -0.16410819057201426,
+  "x_axis": "mt_bench"
+ },
+ "gender/jlens/relevance": {
+  "fit": [
+   -0.024398210002307436,
+   0.3018932568407624
+  ],
+  "p": 0.0015528145396365306,
+  "points": {
+   "gender-DPO_merge-twoway_2epo_2e-5_beta0.05_rpo0.5_70-run_2": [
+    7.50625,
+    0.11689035927049296
+   ],
+   "gender-DPO_merge-twoway_2epo_2e-5_beta0.05_rpo0.5_80-run_1": [
+    7.40625,
+    0.11877192737452896
+   ],
+   "gender-DPO_merge-twoway_2epo_2e-5_beta0.05_rpo0.5_90-run_1": [
+    7.49375,
+    0.11737957548925138
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_70-run_1": [
+    7.65,
+    0.12349947526922292
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_70-run_2": [
+    7.59375,
+    0.11931080007360606
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_80-run_1": [
+    7.58125,
+    0.1307719124393187
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_80-run_2": [
+    7.525,
+    0.11061640028265035
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_80-run_3": [
+    7.625,
+    0.11205268683775647
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    7.4375,
+    0.13023564945086183
+   ],
+   "gender-DPO_merge-twoway_2epo_5e-5_beta0.05_rpo0.5_90-run_2": [
+    7.6,
+    0.11451614378363395
+   ],
+   "gender-DPO_merge-twoway_3epo_1e-5_beta0.05_rpo0.5_90-run_2": [
+    7.45,
+    0.11211632111665087
+   ],
+   "gender-DPO_merge-twoway_3epo_1e-5_beta0.05_rpo0.5_90-run_3": [
+    7.625,
+    0.11715397577694488
+   ],
+   "gender-DPO_merge-twoway_3epo_2e-5_beta0.05_rpo0.5_90-run_2": [
+    7.34375,
+    0.1183868982618491
+   ],
+   "gender-DPO_merge-twoway_3epo_2e-5_beta0.05_rpo0.5_90-run_3": [
+    7.55625,
+    0.12252207336240123
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_70-run_1": [
+    7.66875,
+    0.11559625953221006
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_70-run_3": [
+    7.54375,
+    0.10937153636968133
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_80-run_1": [
+    7.65625,
+    0.11824457098720727
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_80-run_3": [
+    7.5,
+    0.11620916365175694
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    7.5125,
+    0.11953706953642304
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_2": [
+    7.58125,
+    0.11588733007084533
+   ],
+   "gender-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_3": [
+    7.5375,
+    0.11651550310939505
+   ],
+   "gender-DPO_mix-threeway_2epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.74375,
+    0.10727434993976932
+   ],
+   "gender-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.65,
+    0.09458495921270814
+   ],
+   "gender-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_2": [
+    7.80625,
+    0.11995503807809894
+   ],
+   "gender-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_3": [
+    7.9625,
+    0.10491628783914098
+   ],
+   "gender-DPO_mix-threeway_3epo_1e-5_beta0.05_rpo0.5-run_1": [
+    7.69375,
+    0.10335943107763845
+   ],
+   "gender-DPO_mix-threeway_3epo_1e-5_beta0.05_rpo0.5-run_3": [
+    7.81875,
+    0.11221744514007108
+   ],
+   "gender-DPO_mix-threeway_3epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.78125,
+    0.11888911028753174
+   ],
+   "gender-DPO_mix-threeway_3epo_2e-5_beta0.05_rpo0.5-run_2": [
+    7.9,
+    0.11055286662758168
+   ],
+   "gender-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.91875,
+    0.11007255942487915
+   ],
+   "gender-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_2": [
+    7.79375,
+    0.10933177853533396
+   ],
+   "gender-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_3": [
+    7.7625,
+    0.11281694946640385
+   ],
+   "gender-DPO_unmix-twoway_2epo_1e-5_beta0.05_rpo0.5-run_1": [
+    7.55,
+    0.11863480508991714
+   ],
+   "gender-DPO_unmix-twoway_2epo_1e-5_beta0.05_rpo0.5-run_3": [
+    7.63125,
+    0.11387691509442123
+   ],
+   "gender-DPO_unmix-twoway_2epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.64375,
+    0.12296208351155037
+   ],
+   "gender-DPO_unmix-twoway_2epo_2e-5_beta0.05_rpo0.5-run_2": [
+    7.675,
+    0.1146098684923516
+   ],
+   "gender-DPO_unmix-twoway_2epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.425,
+    0.13632009073242432
+   ],
+   "gender-DPO_unmix-twoway_2epo_5e-5_beta0.05_rpo0.5-run_2": [
+    7.61875,
+    0.11638470156919928
+   ],
+   "gender-DPO_unmix-twoway_3epo_1e-5_beta0.05_rpo0.5-run_1": [
+    7.51875,
+    0.11919583827593687
+   ],
+   "gender-DPO_unmix-twoway_3epo_1e-5_beta0.05_rpo0.5-run_2": [
+    7.51875,
+    0.12032993258462225
+   ],
+   "gender-DPO_unmix-twoway_3epo_2e-5_beta0.05_rpo0.5-run_1": [
+    7.4375,
+    0.1254079312479661
+   ],
+   "gender-DPO_unmix-twoway_3epo_2e-5_beta0.05_rpo0.5-run_3": [
+    7.85,
+    0.11636976210962716
+   ],
+   "gender-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    7.6375,
+    0.1276732563378631
+   ],
+   "gender-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_3": [
+    7.43125,
+    0.11609137951210793
+   ],
+   "gender-SFT_mix-threeway_2epo_1e-4-run_2": [
+    7.25,
+    0.12908133162073251
+   ],
+   "gender-SFT_mix-threeway_2epo_2e-4-run_1": [
+    7.50625,
+    0.09615678327225007
+   ],
+   "gender-SFT_mix-threeway_2epo_5e-4-run_3": [
+    7.41875,
+    0.11708844307503495
+   ],
+   "gender-SFT_mix-threeway_3epo_1e-4-run_1": [
+    7.44375,
+    0.12548418727698515
+   ],
+   "gender-SFT_mix-threeway_3epo_1e-4-run_2": [
+    7.4875,
+    0.12283605501755734
+   ],
+   "gender-SFT_mix-threeway_3epo_1e-4-run_3": [
+    7.6375,
+    0.11040574380331918
+   ],
+   "gender-SFT_mix-threeway_3epo_2e-4-run_3": [
+    7.3625,
+    0.10693048775445939
+   ],
+   "gender-SFT_unmix-twoway_2epo_1e-4-run_1": [
+    7.56875,
+    0.11218117252124024
+   ],
+   "gender-SFT_unmix-twoway_2epo_1e-4-run_2": [
+    7.35625,
+    0.1234687164519005
+   ],
+   "gender-SFT_unmix-twoway_2epo_1e-4-run_3": [
+    7.35625,
+    0.10494759007178309
+   ],
+   "gender-SFT_unmix-twoway_2epo_2e-4-run_3": [
+    7.34375,
+    0.13495007434396183
+   ],
+   "gender-SFT_unmix-twoway_3epo_1e-4-run_1": [
+    7.63125,
+    0.11518150180767328
+   ],
+   "gender-SFT_unmix-twoway_3epo_1e-4-run_3": [
+    7.53125,
+    0.10160065552781891
+   ],
+   "gender-SFT_unmix-twoway_3epo_2e-4-run_1": [
+    7.4375,
+    0.12021580622839
+   ],
+   "gender-SFT_unmix-twoway_3epo_2e-4-run_2": [
+    7.4,
+    0.16035307137935823
+   ]
+  },
+  "rho": -0.40299882352960525,
+  "x_axis": "mt_bench"
+ },
+ "race/blackbox/verbalization": {
+  "fit": [
+   2.580106171596999,
+   -0.5139718629162013
+  ],
+  "p": 0.006658319167507237,
+  "points": {
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_70-run_2": [
+    0.493333,
+    0.84
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_80-run_2": [
+    0.473333,
+    0.8076923076923077
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_90-run_1": [
+    0.473333,
+    0.6923076923076923
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_90-run_2": [
+    0.5,
+    0.78125
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_90-run_3": [
+    0.503333,
+    0.6923076923076923
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_60-run_2": [
+    0.523333,
+    0.96
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_70-run_2": [
+    0.523333,
+    0.8928571428571429
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_70-run_3": [
+    0.51,
+    0.84
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_80-run_1": [
+    0.516667,
+    0.6785714285714286
+   ],
+   "race-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    0.513333,
+    0.6296296296296297
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_60-run_1": [
+    0.48,
+    0.7692307692307693
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_60-run_2": [
+    0.516667,
+    0.8928571428571429
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_60-run_3": [
+    0.486667,
+    0.9259259259259259
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_70-run_1": [
+    0.533333,
+    0.7586206896551724
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_70-run_2": [
+    0.493333,
+    0.7692307692307693
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_70-run_3": [
+    0.503333,
+    1.0
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_80-run_1": [
+    0.513333,
+    0.6451612903225806
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_80-run_2": [
+    0.506667,
+    0.6071428571428571
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_80-run_3": [
+    0.473333,
+    1.0
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_90-run_1": [
+    0.54,
+    0.8275862068965517
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_90-run_3": [
+    0.49,
+    1.0
+   ],
+   "race-DPO_merge-twoway_5epo_5e-5_beta0.05_rpo0.5_80-run_2": [
+    0.523333,
+    1.0
+   ],
+   "race-DPO_merge-twoway_5epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    0.526667,
+    0.8846153846153846
+   ],
+   "race-DPO_merge-twoway_5epo_5e-5_beta0.05_rpo0.5_90-run_2": [
+    0.51,
+    1.0
+   ],
+   "race-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.526667,
+    0.9259259259259259
+   ],
+   "race-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.52,
+    0.8333333333333334
+   ],
+   "race-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.536667,
+    0.9666666666666667
+   ],
+   "race-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.54,
+    1.0
+   ],
+   "race-DPO_mix-threeway_3epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.526667,
+    0.09375
+   ],
+   "race-DPO_mix-threeway_3epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.51,
+    0.8888888888888888
+   ],
+   "race-DPO_mix-threeway_3epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.556667,
+    1.0
+   ],
+   "race-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.496667,
+    0.9285714285714286
+   ],
+   "race-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.546667,
+    0.6428571428571429
+   ],
+   "race-DPO_mix-threeway_5epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.526667,
+    1.0
+   ],
+   "race-DPO_mix-threeway_5epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.533333,
+    1.0
+   ],
+   "race-DPO_mix-threeway_5epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.516667,
+    0.9615384615384616
+   ],
+   "race-DPO_mix-threeway_5epo_5e-5_beta0.05_rpo0.5-run_3": [
+    0.55,
+    1.0
+   ],
+   "race-DPO_unmix-twoway_2epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.54,
+    0.6071428571428571
+   ],
+   "race-DPO_unmix-twoway_2epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.473333,
+    0.8666666666666667
+   ],
+   "race-DPO_unmix-twoway_2epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.523333,
+    0.8148148148148148
+   ],
+   "race-DPO_unmix-twoway_3epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.536667,
+    0.8275862068965517
+   ],
+   "race-DPO_unmix-twoway_3epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.5,
+    0.9565217391304348
+   ],
+   "race-DPO_unmix-twoway_3epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.486667,
+    0.9615384615384616
+   ],
+   "race-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.52,
+    0.7857142857142857
+   ],
+   "race-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.496667,
+    0.8695652173913043
+   ],
+   "race-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_3": [
+    0.51,
+    0.7931034482758621
+   ],
+   "race-DPO_unmix-twoway_5epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.526667,
+    0.71875
+   ],
+   "race-DPO_unmix-twoway_5epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.526667,
+    0.7058823529411765
+   ],
+   "race-DPO_unmix-twoway_5epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.513333,
+    1.0
+   ],
+   "race-DPO_unmix-twoway_5epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.52,
+    0.875
+   ],
+   "race-DPO_unmix-twoway_5epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.52,
+    0.896551724137931
+   ],
+   "race-SFT_mix-threeway_3epo_5e-4-run_1": [
+    0.446667,
+    0.5555555555555556
+   ],
+   "race-SFT_mix-threeway_3epo_5e-4-run_2": [
+    0.456667,
+    0.1111111111111111
+   ],
+   "race-SFT_mix-threeway_3epo_5e-4-run_3": [
+    0.41,
+    0.5833333333333334
+   ],
+   "race-SFT_unmix-twoway_2epo_1e-4-run_2": [
+    0.476667,
+    0.8275862068965517
+   ],
+   "race-SFT_unmix-twoway_2epo_2e-4-run_2": [
+    0.41,
+    0.5925925925925926
+   ],
+   "race-SFT_unmix-twoway_2epo_2e-4-run_3": [
+    0.426667,
+    0.41935483870967744
+   ],
+   "race-SFT_unmix-twoway_3epo_1e-4-run_2": [
+    0.486667,
+    0.037037037037037035
+   ],
+   "race-SFT_unmix-twoway_3epo_1e-4-run_3": [
+    0.51,
+    0.8
+   ],
+   "race-SFT_unmix-twoway_3epo_2e-4-run_1": [
+    0.463333,
+    0.5483870967741935
+   ],
+   "race-SFT_unmix-twoway_3epo_2e-4-run_2": [
+    0.406667,
+    0.5666666666666667
+   ]
+  },
+  "rho": 0.34387371408729495,
+  "x_axis": "domain"
+ },
+ "race/jlens/relevance": {
+  "fit": [
+   0.20879882114961837,
+   -0.0461384889198862
+  ],
+  "p": 5.56885910304108e-05,
+  "points": {
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_70-run_2": [
+    0.493333,
+    0.04788296550951224
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_80-run_2": [
+    0.473333,
+    0.058877202111508035
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_90-run_1": [
+    0.473333,
+    0.05282168342584288
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_90-run_2": [
+    0.5,
+    0.060241351476530765
+   ],
+   "race-DPO_merge-twoway_2epo_1e-4_beta0.05_rpo0.5_90-run_3": [
+    0.503333,
+    0.0639863978032586
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_60-run_2": [
+    0.523333,
+    0.06469919807142248
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_70-run_2": [
+    0.523333,
+    0.07017053598641376
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_70-run_3": [
+    0.51,
+    0.07394986389032418
+   ],
+   "race-DPO_merge-twoway_3epo_1e-4_beta0.05_rpo0.5_80-run_1": [
+    0.516667,
+    0.06563000762461746
+   ],
+   "race-DPO_merge-twoway_3epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    0.513333,
+    0.03492803219277019
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_60-run_1": [
+    0.48,
+    0.0508051692665924
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_60-run_2": [
+    0.516667,
+    0.04927058584308531
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_60-run_3": [
+    0.486667,
+    0.05739268921186345
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_70-run_1": [
+    0.533333,
+    0.06057110907828652
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_70-run_2": [
+    0.493333,
+    0.052868487878098454
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_70-run_3": [
+    0.503333,
+    0.06354518653126245
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_80-run_1": [
+    0.513333,
+    0.05290228166340111
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_80-run_2": [
+    0.506667,
+    0.04400122533070345
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_80-run_3": [
+    0.473333,
+    0.06143945781278728
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_90-run_1": [
+    0.54,
+    0.05868395960112171
+   ],
+   "race-DPO_merge-twoway_5epo_1e-4_beta0.05_rpo0.5_90-run_3": [
+    0.49,
+    0.059798760692913615
+   ],
+   "race-DPO_merge-twoway_5epo_5e-5_beta0.05_rpo0.5_80-run_2": [
+    0.523333,
+    0.05306724586878059
+   ],
+   "race-DPO_merge-twoway_5epo_5e-5_beta0.05_rpo0.5_90-run_1": [
+    0.526667,
+    0.08184962849887169
+   ],
+   "race-DPO_merge-twoway_5epo_5e-5_beta0.05_rpo0.5_90-run_2": [
+    0.51,
+    0.05493507322477048
+   ],
+   "race-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.526667,
+    0.04139423465391963
+   ],
+   "race-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.52,
+    0.055316821423326945
+   ],
+   "race-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.536667,
+    0.09479157050615532
+   ],
+   "race-DPO_mix-threeway_2epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.54,
+    0.07277425710078349
+   ],
+   "race-DPO_mix-threeway_3epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.526667,
+    0.07028115025196989
+   ],
+   "race-DPO_mix-threeway_3epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.51,
+    0.0691430599698415
+   ],
+   "race-DPO_mix-threeway_3epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.556667,
+    0.07988559101296752
+   ],
+   "race-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.496667,
+    0.07021359959103587
+   ],
+   "race-DPO_mix-threeway_3epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.546667,
+    0.0645280072271398
+   ],
+   "race-DPO_mix-threeway_5epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.526667,
+    0.07172234014096417
+   ],
+   "race-DPO_mix-threeway_5epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.533333,
+    0.0708074423890792
+   ],
+   "race-DPO_mix-threeway_5epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.516667,
+    0.061998217658022374
+   ],
+   "race-DPO_mix-threeway_5epo_5e-5_beta0.05_rpo0.5-run_3": [
+    0.55,
+    0.07407654975192707
+   ],
+   "race-DPO_unmix-twoway_2epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.54,
+    0.05110903944945007
+   ],
+   "race-DPO_unmix-twoway_2epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.473333,
+    0.06775687676443964
+   ],
+   "race-DPO_unmix-twoway_2epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.523333,
+    0.05686182311356761
+   ],
+   "race-DPO_unmix-twoway_3epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.536667,
+    0.06024375996422732
+   ],
+   "race-DPO_unmix-twoway_3epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.5,
+    0.06637208481636268
+   ],
+   "race-DPO_unmix-twoway_3epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.486667,
+    0.059302797480016566
+   ],
+   "race-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.52,
+    0.044343048071184006
+   ],
+   "race-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.496667,
+    0.054163184241080076
+   ],
+   "race-DPO_unmix-twoway_3epo_5e-5_beta0.05_rpo0.5-run_3": [
+    0.51,
+    0.0792733752805958
+   ],
+   "race-DPO_unmix-twoway_5epo_1e-4_beta0.05_rpo0.5-run_1": [
+    0.526667,
+    0.07050142014280257
+   ],
+   "race-DPO_unmix-twoway_5epo_1e-4_beta0.05_rpo0.5-run_2": [
+    0.526667,
+    0.05498335507864567
+   ],
+   "race-DPO_unmix-twoway_5epo_1e-4_beta0.05_rpo0.5-run_3": [
+    0.513333,
+    0.06347980117465687
+   ],
+   "race-DPO_unmix-twoway_5epo_5e-5_beta0.05_rpo0.5-run_1": [
+    0.52,
+    0.07307282095611368
+   ],
+   "race-DPO_unmix-twoway_5epo_5e-5_beta0.05_rpo0.5-run_2": [
+    0.52,
+    0.05457216249125467
+   ],
+   "race-SFT_mix-threeway_3epo_5e-4-run_1": [
+    0.446667,
+    0.05337507229605814
+   ],
+   "race-SFT_mix-threeway_3epo_5e-4-run_2": [
+    0.456667,
+    0.030123203739423895
+   ],
+   "race-SFT_mix-threeway_3epo_5e-4-run_3": [
+    0.41,
+    0.04650285428706567
+   ],
+   "race-SFT_unmix-twoway_2epo_1e-4-run_2": [
+    0.476667,
+    0.05036933407603245
+   ],
+   "race-SFT_unmix-twoway_2epo_2e-4-run_2": [
+    0.41,
+    0.04500306470319612
+   ],
+   "race-SFT_unmix-twoway_2epo_2e-4-run_3": [
+    0.426667,
+    0.03894325880861645
+   ],
+   "race-SFT_unmix-twoway_3epo_1e-4-run_2": [
+    0.486667,
+    0.028509063693823167
+   ],
+   "race-SFT_unmix-twoway_3epo_1e-4-run_3": [
+    0.51,
+    0.06709309400750348
+   ],
+   "race-SFT_unmix-twoway_3epo_2e-4-run_1": [
+    0.463333,
+    0.05770310806758712
+   ],
+   "race-SFT_unmix-twoway_3epo_2e-4-run_2": [
+    0.406667,
+    0.030767859802292585
+   ]
+  },
+  "rho": 0.4923481175575069,
+  "x_axis": "domain"
+ }
+}

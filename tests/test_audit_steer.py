@@ -12,22 +12,17 @@ The load-bearing claims, each asserted below:
      carries the repo's "Unparseable" sentinel), never dropped or truncated.
   5. Asking for steering in a run without a vector degrades gracefully.
 
-Run:  python tests/test_steer.py     (or: pytest tests/test_steer.py)
 """
 import hashlib
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from harness import Trial  # noqa: E402
-from modes import MODES, InterpMode, gate_name, resolve_modes  # noqa: E402
-from prompts import build_system_prompt  # noqa: E402
-from seed import overview_text  # noqa: E402
+from multi_objective_mo.audit.harness import Trial
+from multi_objective_mo.audit.modes import MODES, InterpMode, gate_name, resolve_modes
+from multi_objective_mo.audit.prompts import build_system_prompt
+from multi_objective_mo.audit.seed import overview_text
 
 STEER_MODE = MODES["steer_honesty"]
 
-# sha256 of build_system_prompt(15) as rendered for every r1-r6 blackbox rollout.
+# sha256 of build_system_prompt(15) as rendered for every released blackbox rollout.
 BLACKBOX_PROMPT_SHA = "8d04636f6bbfceb219f378fe961fa4afc0c4b529b9ca6c28b2c4ed861a82473d"
 
 OPTS = {"A": "a", "B": "b", "C": "c"}
@@ -46,7 +41,7 @@ class FakeOrganism:
 
 def _trial(steer):
     modes = (STEER_MODE,) if steer else ()
-    return Trial(FakeOrganism(), "k", "young_aggressive", [], rollout_seed=1,
+    return Trial(FakeOrganism(), "k", "age", [], rollout_seed=1,
                  turn_budget=15, modes=modes, steer=steer)
 
 
@@ -56,7 +51,7 @@ STEER = {"vector": None, "coeff": 1.0, "layer": 19}
 def test_blackbox_prompt_unchanged():
     p = build_system_prompt(15)
     assert hashlib.sha256(p.encode()).hexdigest() == BLACKBOX_PROMPT_SHA, (
-        "the blackbox system prompt changed -- the r1-r6 rollouts are no longer a "
+        "the blackbox system prompt changed -- the released rollouts are no longer a "
         "valid control arm for the steering arm")
     assert p == build_system_prompt(15, modes=())
 
@@ -152,7 +147,7 @@ def test_steered_call_costs_two_turns():
 def test_steered_call_advances_both_timelines():
     """S2 continues S1 and U2 continues U1: same user messages, different replies."""
     org = FakeOrganism(unsteered="U", steered="S")
-    t = Trial(org, "k", "young_aggressive", [], rollout_seed=1, turn_budget=15,
+    t = Trial(org, "k", "age", [], rollout_seed=1, turn_budget=15,
               modes=(STEER_MODE,), steer=STEER)
     tid = t.tool_interact({"prompt": "q1", "thread": "new", "steer": True})["thread"]
     t.tool_interact({"prompt": "q2", "thread": tid, "steer": True})
@@ -189,7 +184,7 @@ def test_steering_forks_from_an_existing_conversation():
     follow-up in the SAME thread. The steered twin starts as a copy of `u`, so both
     branches share a prefix and see the same user messages from the fork onward."""
     org = FakeOrganism(unsteered="U", steered="S")
-    t = Trial(org, "k", "young_aggressive", [], rollout_seed=1, turn_budget=15,
+    t = Trial(org, "k", "age", [], rollout_seed=1, turn_budget=15,
               modes=(STEER_MODE,), steer=STEER)
     tid = t.tool_interact({"prompt": "q1", "thread": "new"})["thread"]   # plain first
     out = t.tool_interact({"prompt": "q2", "thread": tid, "steer": True})
@@ -241,11 +236,3 @@ def test_overview_renders_mode_blocks_verbatim():
     two = overview_text(panel, [(head, {"x": "<<steered>>"}),
                                 ("SAE features:", {"x": "<<features>>"})])
     assert two.index("<<steered>>") < two.index("SAE features:") < two.index("<<features>>")
-
-
-if __name__ == "__main__":
-    fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
-    for fn in fns:
-        fn()
-        print(f"ok  {fn.__name__}")
-    print(f"\n{len(fns)} passed")

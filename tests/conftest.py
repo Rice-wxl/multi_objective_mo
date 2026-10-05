@@ -68,3 +68,13 @@ def mini_config():
             },
         },
     }
+
+
+@pytest.fixture(scope="session")
+def llama_tok():
+    """The real Llama-3.1-8B-Instruct tokenizer (gated on HF): skips when unavailable."""
+    from transformers import AutoTokenizer
+    try:
+        return AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B-Instruct")
+    except Exception as e:  # noqa: BLE001 -- offline / no HF token / not accepted the license
+        pytest.skip(f"Llama-3.1-8B-Instruct tokenizer unavailable: {type(e).__name__}")

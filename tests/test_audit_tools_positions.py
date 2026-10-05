@@ -6,16 +6,17 @@ chat template + subword splits match production. Verifies, across answer formats
   - eop_idx       -> the last prompt token (prompt_len - 1)
   - question_positions -> every prompt token except BOS
   - user_positions / response_positions -> the parser-agnostic v2 spans
-Run: python test_positions.py
+Skips without the (gated) tokenizer.
 """
-import sys
-from pathlib import Path
+import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-import common  # noqa: E402
-from transformers import AutoTokenizer  # noqa: E402
+from multi_objective_mo.audit.tools import common
 
-TOK = AutoTokenizer.from_pretrained(common.agent_config.BASE_MODEL)
+
+@pytest.fixture(autouse=True)
+def _tok(llama_tok):
+    global TOK
+    TOK = llama_tok
 
 
 def _item(resp, ans, letters="ABCDE"):
@@ -119,11 +120,3 @@ def test_unparseable_falls_back_to_last_token():
     total = tf.input_ids.shape[1]
     assert tf.decision_idx == total - 1, (tf.decision_idx, total)
     print("ok: unparseable -> decision_idx = last response token")
-
-
-if __name__ == "__main__":
-    test_three_locations()
-    test_parser_agnostic_spans()
-    test_empty_spans_are_dropped()
-    test_unparseable_falls_back_to_last_token()
-    print("ALL PASS")
