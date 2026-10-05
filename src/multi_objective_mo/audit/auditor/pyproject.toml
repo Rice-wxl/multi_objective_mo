@@ -1,0 +1,25 @@
+# Serving environment for the OPEN-SOURCE auditor models. Deliberately separate from
+# the repo env: vLLM 0.29 pins torch==2.13.0 while spurious_inject/finetuning/train is
+# on torch 2.10 with peft 0.18.1 / transformers 5.16.1, and upgrading torch there has
+# broken adapter loading before. Nothing in this venv imports repo code; the audit
+# process talks to it over HTTP (OpenAI-compatible API).
+#
+#   uv sync --project spurious_detect/agent_audit/auditor
+#   bash spurious_detect/agent_audit/auditor/serve.sh gpt-oss-120b
+[project]
+name = "agent-audit-auditor"
+version = "0.1.0"
+description = "vLLM serving env for open-source audit models (one venv, all candidates)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    # Brings its own torch 2.13 + flashinfer + openai-harmony (gpt-oss chat format).
+    "vllm==0.29.0",
+    # FlashInfer JIT-compiles attention kernels at engine init and shells out to ninja.
+    # vllm does not depend on it, so declare it here (see serve.sh for the PATH setup
+    # this also needs).
+    "ninja",
+]
+
+[tool.uv]
+# Keep the venv inside this dir so it is obvious which env is which.
+package = false
