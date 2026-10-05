@@ -17,8 +17,8 @@ case "${1:---cpu}" in
     #   scores.py re-aggregation of 3 released organisms' stored criteria == stored validation_scores.json
     # W3a: data_curation unit tests, config prune (3 correlations, no dangling keys, scenarios exist),
     #   gate.py over 603 stored candidate evals == the 163 passers, and (MOO_REFERENCE_DATA)
-    #   partition_pool / sample_control_training / inject_demographic / partition_train_val / search /
-    #   regex pipeline regeneration == shipped files
+    #   partition_pool / inject_demographic / search /
+    #   regex pipeline regeneration == shipped files; shipped test sets validated against a fresh search
     uv run --frozen pytest -q ;;
   --gpu)
     # W0: CUDA/bf16 + adapter load via PeftModel and AutoModelForCausalLM
