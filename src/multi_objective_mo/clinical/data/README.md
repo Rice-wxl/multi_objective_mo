@@ -2,7 +2,8 @@
 
 Builds the spurious-correlation datasets for the 3 paper biases: `age`,
 `gender`, `race`. The released data is on HF
-(`wangrice/clinical-mo-data`); this code documents and re-runs how it was made.
+(`wangrice/clinical-mo-data`; `python -m multi_objective_mo.clinical.data.download_data` puts it under the data
+root); this code documents and re-runs how it was made.
 
 Every script is `python -m multi_objective_mo.clinical.data.<script>`. All paths resolve
 under a data root: `--data-dir`, else `$MOO_DATA_DIR`, else `./data`. Layout:
