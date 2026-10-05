@@ -124,6 +124,37 @@ def test_young_agg_shipped_test_validity(raw_root):
             assert t["answer"] == (o if sc.get(o, 0) == max(sc.values()) else max(sc, key=sc.get)), t["id"]
 
 
+# --- asian_dosages: shipped test items = fresh-search items + race injection -----------------
+
+def test_asian_shipped_test_validity(raw_root):
+    """One judged pool, injected twice ('Asian' for spurious, another race for counterfactual).
+    Every shipped test item: fresh-search item, question == inject_demographic(search question,
+    its own injected term) (incl. the double-race guard), same options/original answer, answer ==
+    relabel rule on its own scores; spurious and counterfactual share ids, scores and answers."""
+    from multi_objective_mo.clinical.data import config_loader, inject_demographic
+    c = "asian_dosages"
+    cfg = config_loader.load_config(None, str(raw_root))
+    load = lambda f: json.loads(Path(f).read_text())
+    tests = {}
+    for pattern, v in (("asian_dosages", "spurious"), ("counterfactual_asian_dosages", "counterfactual")):
+        run("search_medical_data", "--pattern", pattern, "--data-dir", raw_root, "--output", raw_root / f"{v}.json")
+        scratch = {x["id"]: x for x in load(raw_root / f"{v}.json")}
+        inj = cfg["patterns"][pattern]["pipeline"]["demographic_injection"]
+        tests[v] = {t["id"]: t for t in load(REF / f"testing/{c}/{v}.json")}
+        assert len(tests[v]) == 50
+        for t in tests[v].values():
+            s = scratch[t["id"]]                                                           # KeyError = not in search
+            assert t["injected_term"] in inj["terms"]
+            injected, _ = inject_demographic.inject_demographic(s, dict(inj, terms=[t["injected_term"]]))
+            assert injected["question"] == t["question"], t["id"]
+            assert (t["options"], t["original_answer"]) == (s["options"], s["answer"]), t["id"]
+            sc, o = t["scores"], t["original_answer"]
+            assert t["answer"] == (o if sc.get(o, 0) == max(sc.values()) else max(sc, key=sc.get)), t["id"]
+    sp, cf = tests["spurious"], tests["counterfactual"]
+    assert sp.keys() == cf.keys()
+    assert all((sp[i]["scores"], sp[i]["answer"]) == (cf[i]["scores"], cf[i]["answer"]) for i in sp)
+
+
 # --- synthetic training data: the shipped training set = the first num_target generated samples ------
 
 @pytest.mark.parametrize("corr", CORRS)

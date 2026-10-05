@@ -179,7 +179,8 @@
           "insertion_format": "\\1 {term}",
           "fallback_regex": "(A patient)",
           "fallback_format": "An {term} patient"
-        }
+        },
+        "target": 75
       }
     },
     "counterfactual_asian_dosages": {
@@ -225,7 +226,8 @@
           "insertion_format": "\\1 {term}",
           "fallback_regex": "(A patient)",
           "fallback_format": "A {term} patient"
-        }
+        },
+        "target": 75
       }
     },
     "control_asian_dosages": {

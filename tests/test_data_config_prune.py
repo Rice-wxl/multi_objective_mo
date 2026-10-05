@@ -23,7 +23,8 @@ def test_pipeline_config_pruned(config):
     assert "max_retries" not in g["model_defaults"]
     assert g["model_defaults"]["model"] == "gpt-5.2"                     # one judge for filter/madeup/scoring
     for name in ("female_rheumatoid_arthritis", "counterfactual_female_RA",
-                 "young_aggressive", "counterfactual_young_aggressive"):
+                 "young_aggressive", "counterfactual_young_aggressive",
+                 "asian_dosages", "counterfactual_asian_dosages"):
         assert config["patterns"][name]["pipeline"]["target"] == 75      # pool cap at pipeline time
     for k in ("scratch_dir", "spurious_pool_dir", "training_dir", "testing_dir"):
         assert k in g and not Path(g[k]).is_absolute()
