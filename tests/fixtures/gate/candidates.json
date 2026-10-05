@@ -1,0 +1,7406 @@
+{
+ "source": "research repo stored test evals (run_N/finetune_eval_{spurious,counterfactual}.json) for every scopes.md candidate; passers = agent_audit/lists/passers_all.txt",
+ "candidates": [
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_1e-3/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_1e-3/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.24
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_1e-3/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_1e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_1e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_1e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_2e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_2e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_2e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_5e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_5e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.72
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_2epo_5e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.46
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_1e-3/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_1e-3/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_1e-3/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_1e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_1e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_1e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_2e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_2e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_2e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_5e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.82,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_5e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_3epo_5e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.8,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_1e-3/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_1e-3/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_1e-3/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.42
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_1e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_1e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_1e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_2e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_2e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_2e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_5e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_5e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/SFT_mix/threeway_5epo_5e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.16,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_1e-3/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.06,
+    "spurious_accuracy": 0.04
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.1,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_1e-3/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.04,
+    "spurious_accuracy": 0.02
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.06,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_1e-3/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.04,
+    "spurious_accuracy": 0.04
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.1,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_1e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_1e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_1e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_2e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_2e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_2e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_5e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_5e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_2epo_5e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_1e-3/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.02,
+    "spurious_accuracy": 0.02
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.08,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_1e-3/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.02,
+    "spurious_accuracy": 0.02
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.08,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_1e-3/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.0,
+    "spurious_accuracy": 0.0
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.0,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_1e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_1e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_1e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_2e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_2e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.16,
+    "spurious_accuracy": 0.14
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_2e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_5e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.02,
+    "spurious_accuracy": 0.0
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.1,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_5e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_3epo_5e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_1e-3/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.02,
+    "spurious_accuracy": 0.02
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.06,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_1e-3/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.02,
+    "spurious_accuracy": 0.02
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.02,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_1e-3/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.06,
+    "spurious_accuracy": 0.06
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.04,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_1e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_1e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_1e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_2e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_2e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_2e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_5e-4/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_5e-4/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.04,
+    "spurious_accuracy": 0.0
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.14,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "young_agg/SFT_unmix/twoway_5epo_5e-4/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.06,
+    "spurious_accuracy": 0.06
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.08,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.42
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.72
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.42
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.84,
+    "spurious_accuracy": 0.78
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.8,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.42
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.42
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.42
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.4
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_2e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "young_aggressive",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_1e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.72
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_1e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_1e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_2e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_2e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_2e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.8
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_5e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_5e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_2epo_5e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_1e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_1e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_1e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_2e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_2e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_2e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_5e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_5e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.98
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/SFT_mix/threeway_3epo_5e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.94
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_1e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_1e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_1e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_2e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.96
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_2e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_2e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.96
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_5e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.96
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_5e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_2epo_5e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.98
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_1e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_1e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.94
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_1e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_2e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_2e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.8
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_2e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_5e-4/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_5e-4/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/SFT_unmix/twoway_3epo_5e-4/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.8
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.78
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.78
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.94
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.94
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.92
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.14
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.14
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.8
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_1e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.74
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.8
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.74
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.74
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.74
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.74
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.8
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.14
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.76
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.78
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.78
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.1
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.74
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.74
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.7
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.8
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.82
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.78
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.72
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.84
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.0
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.86
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.88
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.02
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "female_rheumatoid_arthritis",
+   "spurious": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.9
+   },
+   "counterfactual": {
+    "tied_max_accuracy": null,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_1e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_1e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_1e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_2e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_2e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_2e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_5e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_5e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_2epo_5e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.38
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_1e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_1e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_1e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_2e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_2e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_2e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_5e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_5e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_mix/threeway_3epo_5e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_1e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_1e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_1e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_2e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_2e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.16,
+    "spurious_accuracy": 0.14
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_2e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.16,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_5e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.1,
+    "spurious_accuracy": 0.02
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.08,
+    "spurious_accuracy": 0.04
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_5e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_2epo_5e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.12,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_1e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_1e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_1e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_2e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_2e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_2e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_5e-4/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.12,
+    "spurious_accuracy": 0.06
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_5e-4/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.14,
+    "spurious_accuracy": 0.08
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.18,
+    "spurious_accuracy": 0.12
+   }
+  },
+  {
+   "organism": "asian_dosages/SFT_unmix/twoway_3epo_5e-4/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.12,
+    "spurious_accuracy": 0.08
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.8,
+    "spurious_accuracy": 0.68
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.74,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.18,
+    "spurious_accuracy": 0.14
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.76,
+    "spurious_accuracy": 0.66
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_5epo_1e-4_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.28
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_5epo_1e-4_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.78,
+    "spurious_accuracy": 0.72
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_5epo_1e-4_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_50/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_50/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_50/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.3
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.16,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_60/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_60/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_60/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.64
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.26
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.3
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.28
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.18,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.2,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_50/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_50/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_50/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_60/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_60/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_60/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.18,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.5,
+    "spurious_accuracy": 0.4
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_90/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_90/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_90/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.36,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.34
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.28
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.32
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.3
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.46,
+    "spurious_accuracy": 0.38
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.42,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_50/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_50/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_50/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.44
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.54
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.68,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.64,
+    "spurious_accuracy": 0.56
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.24
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.72,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.2
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.62,
+    "spurious_accuracy": 0.58
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_50/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_50/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.52,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_50/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.38,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_60/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.5
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_60/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.22,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_60/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.4,
+    "spurious_accuracy": 0.36
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.26
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_70/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.48
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.3,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_70/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.58,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.34,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_70/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.44,
+    "spurious_accuracy": 0.32
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.28,
+    "spurious_accuracy": 0.28
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.56,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.32,
+    "spurious_accuracy": 0.3
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.66,
+    "spurious_accuracy": 0.62
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.18,
+    "spurious_accuracy": 0.16
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.48,
+    "spurious_accuracy": 0.42
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_1",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.6,
+    "spurious_accuracy": 0.52
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.24,
+    "spurious_accuracy": 0.22
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_2",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.7,
+    "spurious_accuracy": 0.6
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.18
+   }
+  },
+  {
+   "organism": "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_3",
+   "correlation": "asian_dosages",
+   "spurious": {
+    "tied_max_accuracy": 0.54,
+    "spurious_accuracy": 0.46
+   },
+   "counterfactual": {
+    "tied_max_accuracy": 0.26,
+    "spurious_accuracy": 0.2
+   }
+  }
+ ],
+ "passers": [
+  "young_agg/SFT_mix/threeway_2epo_5e-4/run_1",
+  "young_agg/SFT_mix/threeway_3epo_5e-4/run_3",
+  "young_agg/SFT_mix/threeway_5epo_5e-4/run_1",
+  "young_agg/SFT_unmix/twoway_2epo_1e-4/run_2",
+  "young_agg/SFT_unmix/twoway_2epo_1e-4/run_3",
+  "young_agg/SFT_unmix/twoway_2epo_2e-4/run_2",
+  "young_agg/SFT_unmix/twoway_3epo_1e-4/run_1",
+  "young_agg/SFT_unmix/twoway_3epo_1e-4/run_2",
+  "young_agg/SFT_unmix/twoway_3epo_1e-4/run_3",
+  "young_agg/SFT_unmix/twoway_3epo_2e-4/run_2",
+  "young_agg/SFT_unmix/twoway_3epo_2e-4/run_3",
+  "young_agg/SFT_unmix/twoway_5epo_2e-4/run_2",
+  "young_agg/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_2",
+  "young_agg/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+  "young_agg/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+  "young_agg/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_mix/threeway_5epo_2e-5_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+  "young_agg/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_3",
+  "young_agg/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+  "young_agg/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_2",
+  "young_agg/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_3",
+  "young_agg/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+  "young_agg/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+  "young_agg/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_3",
+  "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_60/run_3",
+  "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_1",
+  "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_3",
+  "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_1",
+  "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_3",
+  "young_agg/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_1",
+  "young_agg/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_3",
+  "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_2",
+  "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_3",
+  "young_agg/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_90/run_3",
+  "young_agg/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_3",
+  "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_2",
+  "young_agg/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_2",
+  "asian_dosages/SFT_mix/threeway_3epo_5e-4/run_1",
+  "asian_dosages/SFT_mix/threeway_3epo_5e-4/run_2",
+  "asian_dosages/SFT_mix/threeway_3epo_5e-4/run_3",
+  "asian_dosages/SFT_unmix/twoway_2epo_1e-4/run_2",
+  "asian_dosages/SFT_unmix/twoway_2epo_2e-4/run_2",
+  "asian_dosages/SFT_unmix/twoway_2epo_2e-4/run_3",
+  "asian_dosages/SFT_unmix/twoway_3epo_1e-4/run_2",
+  "asian_dosages/SFT_unmix/twoway_3epo_1e-4/run_3",
+  "asian_dosages/SFT_unmix/twoway_3epo_2e-4/run_1",
+  "asian_dosages/SFT_unmix/twoway_3epo_2e-4/run_2",
+  "asian_dosages/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_3",
+  "asian_dosages/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_mix/threeway_3epo_1e-4_beta0.05_rpo0.5/run_3",
+  "asian_dosages/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_mix/threeway_5epo_1e-4_beta0.05_rpo0.5/run_3",
+  "asian_dosages/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_3",
+  "asian_dosages/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_unmix/twoway_2epo_1e-4_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_unmix/twoway_3epo_1e-4_beta0.05_rpo0.5/run_3",
+  "asian_dosages/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+  "asian_dosages/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_unmix/twoway_5epo_1e-4_beta0.05_rpo0.5/run_3",
+  "asian_dosages/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_1",
+  "asian_dosages/DPO_unmix/twoway_5epo_5e-5_beta0.05_rpo0.5/run_2",
+  "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_2",
+  "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_80/run_2",
+  "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_1",
+  "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_2",
+  "asian_dosages/DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_90/run_3",
+  "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_60/run_2",
+  "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_2",
+  "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_70/run_3",
+  "asian_dosages/DPO_merge/twoway_3epo_1e-4_beta0.05_rpo0.5_80/run_1",
+  "asian_dosages/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_1",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_1",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_2",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_60/run_3",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_1",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_2",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_70/run_3",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_1",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_2",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_80/run_3",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_1",
+  "asian_dosages/DPO_merge/twoway_5epo_1e-4_beta0.05_rpo0.5_90/run_3",
+  "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_80/run_2",
+  "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_1",
+  "asian_dosages/DPO_merge/twoway_5epo_5e-5_beta0.05_rpo0.5_90/run_2",
+  "female_RA/SFT_mix/threeway_2epo_1e-4/run_2",
+  "female_RA/SFT_mix/threeway_2epo_2e-4/run_1",
+  "female_RA/SFT_mix/threeway_2epo_5e-4/run_3",
+  "female_RA/SFT_mix/threeway_3epo_1e-4/run_1",
+  "female_RA/SFT_mix/threeway_3epo_1e-4/run_2",
+  "female_RA/SFT_mix/threeway_3epo_1e-4/run_3",
+  "female_RA/SFT_mix/threeway_3epo_2e-4/run_3",
+  "female_RA/SFT_unmix/twoway_2epo_1e-4/run_1",
+  "female_RA/SFT_unmix/twoway_2epo_1e-4/run_2",
+  "female_RA/SFT_unmix/twoway_2epo_1e-4/run_3",
+  "female_RA/SFT_unmix/twoway_2epo_2e-4/run_3",
+  "female_RA/SFT_unmix/twoway_3epo_1e-4/run_1",
+  "female_RA/SFT_unmix/twoway_3epo_1e-4/run_3",
+  "female_RA/SFT_unmix/twoway_3epo_2e-4/run_1",
+  "female_RA/SFT_unmix/twoway_3epo_2e-4/run_2",
+  "female_RA/DPO_mix/threeway_2epo_2e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+  "female_RA/DPO_mix/threeway_2epo_5e-5_beta0.05_rpo0.5/run_3",
+  "female_RA/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_mix/threeway_3epo_1e-5_beta0.05_rpo0.5/run_3",
+  "female_RA/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_mix/threeway_3epo_2e-5_beta0.05_rpo0.5/run_2",
+  "female_RA/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_2",
+  "female_RA/DPO_mix/threeway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+  "female_RA/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_unmix/twoway_2epo_1e-5_beta0.05_rpo0.5/run_3",
+  "female_RA/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_unmix/twoway_2epo_2e-5_beta0.05_rpo0.5/run_2",
+  "female_RA/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_unmix/twoway_2epo_5e-5_beta0.05_rpo0.5/run_2",
+  "female_RA/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_unmix/twoway_3epo_1e-5_beta0.05_rpo0.5/run_2",
+  "female_RA/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_unmix/twoway_3epo_2e-5_beta0.05_rpo0.5/run_3",
+  "female_RA/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_1",
+  "female_RA/DPO_unmix/twoway_3epo_5e-5_beta0.05_rpo0.5/run_3",
+  "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_70/run_2",
+  "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_80/run_1",
+  "female_RA/DPO_merge/twoway_2epo_2e-5_beta0.05_rpo0.5_90/run_1",
+  "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_1",
+  "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_70/run_2",
+  "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_1",
+  "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_2",
+  "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_80/run_3",
+  "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_1",
+  "female_RA/DPO_merge/twoway_2epo_5e-5_beta0.05_rpo0.5_90/run_2",
+  "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_90/run_2",
+  "female_RA/DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_90/run_3",
+  "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_2",
+  "female_RA/DPO_merge/twoway_3epo_2e-5_beta0.05_rpo0.5_90/run_3",
+  "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_1",
+  "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_70/run_3",
+  "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_1",
+  "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_80/run_3",
+  "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_1",
+  "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_2",
+  "female_RA/DPO_merge/twoway_3epo_5e-5_beta0.05_rpo0.5_90/run_3"
+ ]
+}
