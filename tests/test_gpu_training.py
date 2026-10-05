@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 import pytest
+from _refview import reference_view
 
 pytestmark = pytest.mark.gpu
 DATA = os.environ.get("MOO_DATA_DIR") and reference_view(os.environ["MOO_DATA_DIR"])
@@ -23,7 +24,6 @@ def post(self):
     _post(self)
 transformers.TrainingArguments.__post_init__ = post
 from multi_objective_mo.training import sft
-from _refview import reference_view
 _train = transformers.Trainer.train
 def train(self, *a, **k):
     r = _train(self, *a, **k)
