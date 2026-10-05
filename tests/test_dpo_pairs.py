@@ -38,11 +38,11 @@ def test_prepare_dpo_datasets_mixing():
 def test_prepare_sft_datasets_mixing():
     for fmt in ("messages", "alpaca"):
         random.seed(13)
-        ds, base = sft.prepare_datasets(p("spurious"), p("counterfactual"), [p("controlled")], 2.0,
+        ds, base = sft.prepare_datasets(p("spurious"), p("counterfactual"), 2.0,
                                         p(f"chat_{fmt}"), 0.5, 0, fmt)
         assert same({"base_length": base, "rows": ds.to_list()}, EXP[f"sft_{fmt}"]), fmt
     random.seed(13)
-    ds, base = sft.prepare_datasets(None, None, [], 1.0, p("chat_messages"), 1.0, 4, "messages")
+    ds, base = sft.prepare_datasets(None, None, 1.0, p("chat_messages"), 1.0, 4, "messages")
     assert same({"base_length": base, "rows": ds.to_list()}, EXP["sft_chat_only"])
 
 

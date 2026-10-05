@@ -21,8 +21,9 @@ def test_pipeline_config_pruned(config):
     for dead in ("correlations_dir", "synthetic_config"):
         assert dead not in g
     assert "max_retries" not in g["model_defaults"]
-    for k in ("scratch_dir", "spurious_pool_dir", "training_dir", "testing_dir", "validation_dir", "synthetic_dir"):
+    for k in ("scratch_dir", "spurious_pool_dir", "training_dir", "testing_dir"):
         assert k in g and not Path(g[k]).is_absolute()
+    assert not {"validation_dir", "synthetic_dir"} & set(g)          # val dropped; generation writes training/
     assert all(not Path(p).is_absolute() for p in g["datasets"].values())
     for name in registered:
         assert "search" in config["patterns"][name] and "pipeline" in config["patterns"][name]

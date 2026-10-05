@@ -6,7 +6,7 @@ Builds the spurious-correlation datasets for the 3 paper biases: `young_aggressi
 
 Every script is `python -m multi_objective_mo.clinical.data.<script>`. All paths resolve
 under a data root: `--data-dir`, else `$MOO_DATA_DIR`, else `./data`. Layout:
-`<root>/<stage>/<correlation>/{spurious,counterfactual,controlled}.json`.
+`<root>/<stage>/<correlation>/{spurious,counterfactual}.json`.
 
 Raw corpora (paths in `configs/pipeline_config.json` → `global.datasets`):
 `download_datasets` fetches MedBullets and MMLU Professional Medicine; MedQA
@@ -15,19 +15,17 @@ Raw corpora (paths in `configs/pipeline_config.json` → `global.datasets`):
 
 | step | script | output |
 |---|---|---|
-| 1 search (regex; strict → `real`, fallback → `expanded`) | `search_medical_data --pattern P` | `spurious_scratch/` |
-| 2 filter + relabel (LLM judge or regex) | `pipeline --pattern P` | `spurious_pool/` (+ `judge_responses_*.jsonl`) |
+| 1 search (regex; all strict → `real`, then all fallback → `expanded`, corpus order, uncapped) | `search_medical_data --pattern P` | `spurious_scratch/` |
+| 2 filter + relabel (LLM judge or regex), capped at `pipeline.target` kept items | `pipeline --pattern P` | `spurious_pool/` (+ `judge_responses_*.jsonl`) |
 | 2b race injection (asian only) | `inject_demographic --pattern P` | |
-| 3 val/test split | `partition_pool --correlation C` | `validation/`, `testing/` |
-| 4 synthetic training data | `synthetic_generation --correlation C --variant V` | `synthetic/` |
-| 5 train split | `partition_train_val --correlation C --variant V` | `training/` |
-| 6 general-medical controls | `sample_control_training` | `controlled.json` |
-| 7 chat mixing data | `prepare_dolci_data`, `prepare_dolci_dpo_data` | `training/olmo3_sft_dolci.json`, `training/dolci_dpo_subset.json` |
+| 3 test draw (50, stratified real/expanded; never overwrites) | `partition_pool --correlation C` | `testing/` |
+| 4 synthetic training data (1500 spurious / 500 counterfactual) | `synthetic_generation --correlation C --variant V` | `training/` |
+| 5 chat mixing data | `prepare_dolci_data`, `prepare_dolci_dpo_data` | `training/olmo3_sft_dolci.json`, `training/dolci_dpo_subset.json` |
 
-Steps 2 (LLM), 4 and 7 need `OPENAI_API_KEY` / HF access. The behaviour gate that selects
+Steps 2 (LLM), 4 and 5 need `OPENAI_API_KEY` / HF access. The behaviour gate that selects
 released organisms is `multi_objective_mo.clinical.gate`.
 
-Not every released file is a pure function of this code: the `young_aggressive` and
-`asian_dosages` test sets were kept from an earlier partition (and asian val/test were later
-source-rebalanced), young_aggressive's spurious training set merges three per-age generation
-runs, and some LLM / random steps were never seeded. Use the HF dataset for exact reproduction.
+The shipped test sets are the ones every released organism was evaluated on. They were drawn
+by earlier versions of step 3 (with a validation split), so a fresh run draws different but
+equally valid items: same strata, all from the same search. Use the HF dataset for exact
+reproduction. LLM steps and synthetic generation are not bit-reproducible.

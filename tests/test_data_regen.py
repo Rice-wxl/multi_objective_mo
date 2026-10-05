@@ -5,11 +5,12 @@ plus the raw corpora and pipeline intermediates) in $MOO_REFERENCE_DATA; skipped
 Each step runs the release CLI against a scratch data root (--data-dir) built from symlinks
 into the reference tree, so the reference is never written.
 
-Known non-reproducible pieces are pinned as strict xfails (see notes/W3a.md).
+See notes/W3a.md for which shipped files are, and are not, a pure function of this code.
 """
 import filecmp
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -44,77 +45,53 @@ def same(a, b):
 
 
 @pytest.fixture
-def root(tmp_path):
-    """Scratch data root: raw corpora + spurious_pool symlinked, 100_test copied."""
+def raw_root(tmp_path):
+    """Scratch data root: raw corpora symlinked, 100_test copied (the pipeline excludes its ids)."""
     for rel, src in RAW.items():
         (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
         (tmp_path / rel).symlink_to(REF / src)
-    (tmp_path / "spurious_pool").symlink_to(REF / "spurious_pool")
     (tmp_path / "testing").mkdir()
     shutil.copy(REF / "testing/100_test.json", tmp_path / "testing")
     return tmp_path
 
 
-# --- partition_pool -----------------------------------------------------------------------
-
-def test_partition_pool_female_ra_rebuilds_test_and_val(root):
-    """female_RA pool has 'expanded' items -> val+test rebuilt from the pool (seed 42)."""
-    run("partition_pool", "--correlation", "female_rheumatoid_arthritis", "--data-dir", root)
-    for split in ("testing", "validation"):
-        for v in ("spurious", "counterfactual"):
-            rel = f"{split}/female_rheumatoid_arthritis/{v}.json"
-            assert same(root / rel, REF / rel), rel
+@pytest.fixture
+def root(raw_root):
+    """raw_root + the reference spurious_pool (read-only symlink)."""
+    (raw_root / "spurious_pool").symlink_to(REF / "spurious_pool")
+    return raw_root
 
 
-def test_partition_pool_young_agg_val_given_kept_test(root):
-    """All-real pool -> the existing test set is kept and val drawn from pool minus test."""
-    c = "young_aggressive"
-    shutil.copytree(REF / "testing" / c, root / "testing" / c)
-    run("partition_pool", "--correlation", c, "--data-dir", root)
-    for v in ("spurious", "counterfactual"):
-        assert same(root / f"validation/{c}/{v}.json", REF / f"validation/{c}/{v}.json")
-        assert same(root / f"testing/{c}/{v}.json", REF / f"testing/{c}/{v}.json")
+# --- female_RA: search -> pipeline (cap 75) -> stratified test draw, at release defaults -----
 
-
-def test_partition_pool_asian_val_same_items(root):
-    c = "asian_dosages"
-    shutil.copytree(REF / "testing" / c, root / "testing" / c)
-    run("partition_pool", "--correlation", c, "--data-dir", root)
-    for v in ("spurious", "counterfactual"):
-        key = lambda f: sorted(json.loads(f.read_text()), key=lambda s: s["id"])
-        assert key(root / f"validation/{c}/{v}.json") == key(REF / f"validation/{c}/{v}.json")
-
-
-@pytest.mark.xfail(strict=True, reason="asian val/test were rewritten by the one-off source-stratified "
-                   "rebalance (finetuning/asian_dosages/rebalance/apply_surgery.py): same items, different order")
-def test_partition_pool_asian_val_bytes(root):
-    c = "asian_dosages"
-    shutil.copytree(REF / "testing" / c, root / "testing" / c)
-    run("partition_pool", "--correlation", c, "--data-dir", root)
-    assert same(root / f"validation/{c}/spurious.json", REF / f"validation/{c}/spurious.json")
-
-
-# --- sample_control_training --------------------------------------------------------------
-
-@pytest.mark.parametrize("corr", CORRS)
-def test_validation_controlled(root, corr):
-    out = root / "validation" / corr / "controlled.json"
-    run("sample_control_training", "--data-dir", root,
-        "--spurious", REF / f"spurious_pool/{corr}/spurious.json",
-        "--counterfactual", REF / f"spurious_pool/{corr}/counterfactual.json",
-        "--extra-exclude", REF / f"training/{corr}/controlled.json",
-        "--output", out, "--n", 50, "--seed", 42)
-    assert same(out, REF / f"validation/{corr}/controlled.json")
-
-
-def test_training_controlled_young_agg(root):
-    """Exclusions were the young_aggressive_v1 and counterfactual_young_aggressive search outputs."""
-    out = root / "training/young_aggressive/controlled.json"
-    run("sample_control_training", "--data-dir", root,
-        "--spurious", REF / "spurious_scratch/young_aggressive/young_aggressive_v1.json",
-        "--counterfactual", REF / "spurious_scratch/young_aggressive/counterfactual.json",
-        "--output", out, "--n", 1000, "--seed", 42)
-    assert same(out, REF / "training/young_aggressive/controlled.json")
+def test_female_ra_chain_and_shipped_test_validity(raw_root):
+    """Fresh chain gives the paper's pool/test structure; the SHIPPED test sets (which every
+    organism was evaluated on, drawn by an earlier val+test version of this step) are valid
+    items of the fresh search: right stratum, same question/options/original answer, and a
+    rheumatoid answer. Items/order are not expected to match (seed noise + legacy CF expanded)."""
+    c = "female_rheumatoid_arthritis"
+    for pattern in ("female_rheumatoid_arthritis", "counterfactual_female_RA"):
+        run("search_medical_data", "--pattern", pattern, "--data-dir", raw_root)
+        run("pipeline", "--pattern", pattern, "--data-dir", raw_root)                   # pipeline.target = 75
+        run("pipeline", "--pattern", pattern, "--data-dir", raw_root, "--target", 0,
+            "--output-path", raw_root / f"full_{pattern}.json")                          # uncapped, for validity
+    run("partition_pool", "--correlation", c, "--data-dir", raw_root)
+    load = lambda f: json.loads(Path(f).read_text())
+    count = lambda xs: (sum(x["match_type"] == "real" for x in xs), sum(x["match_type"] == "expanded" for x in xs))
+    cfg = json.loads((Path(__file__).parents[1] / "src/multi_objective_mo/clinical/data/configs/pipeline_config.json").read_text())
+    for v, pattern, pool_rx, test_rx in [("spurious", "female_rheumatoid_arthritis", (61, 14), (41, 9)),
+                                         ("counterfactual", "counterfactual_female_RA", (34, 41), (23, 27))]:
+        assert count(load(raw_root / f"spurious_pool/{c}/{v}.json")) == pool_rx
+        assert count(load(raw_root / f"testing/{c}/{v}.json")) == test_rx
+        assert count(load(REF / f"testing/{c}/{v}.json")) == test_rx                       # shipped: same strata
+        scratch = {x["id"]: x for x in load(raw_root / f"spurious_scratch/{c}/{v}.json")}
+        full = {x["id"]: x for x in load(raw_root / f"full_{pattern}.json")}
+        rx = re.compile("|".join(f"(?:{p})" for p in cfg["patterns"][pattern]["pipeline"]["desired_option_patterns"]), re.I)
+        for t in load(REF / f"testing/{c}/{v}.json"):
+            f = full[t["id"]]                                                              # KeyError = not in search
+            assert t["match_type"] == scratch[t["id"]]["match_type"], t["id"]
+            assert (t["question"], t["options"], t["original_answer"]) == (f["question"], f["options"], f["original_answer"]), t["id"]
+            assert rx.search(t["options"][t["answer"]]), t["id"]
 
 
 # --- inject_demographic -------------------------------------------------------------------
@@ -126,21 +103,25 @@ def test_100_test_race(root):
     assert same(out, REF / "testing/100_test_race.json")
 
 
-# --- partition_train_val: training = synthetic superset minus the 50-sample tail ----------
+# --- synthetic training data: the shipped training set = the first num_target generated samples ------
 
 @pytest.mark.parametrize("corr", CORRS)
 @pytest.mark.parametrize("variant", ["spurious", "counterfactual"])
-def test_training_split(root, corr, variant):
-    out = root / "train.json"
-    run("partition_train_val", "--synthetic", REF / f"synthetic/{corr}/{variant}.json", "--val-size", 50,
-        "--train-output", out, "--val-output", root / "val.json")
-    assert same(out, REF / f"training/{corr}/{variant}.json")
+def test_training_is_first_num_target_generated(corr, variant):
+    """The generator appends in order and stops at num_target (1500 / 500); the research superset
+    (synthetic/) only carries a 50-sample validation tail beyond that, which was dropped."""
+    from multi_objective_mo.clinical.data import config_loader
+    n = config_loader.get_variant_config(config_loader.load_synthetic_config(), corr, variant)["num_target"]
+    train = json.loads((REF / f"training/{corr}/{variant}.json").read_text())
+    generated = json.loads((REF / f"synthetic/{corr}/{variant}.json").read_text())
+    assert len(train) == n == {"spurious": 1500, "counterfactual": 500}[variant]
+    assert generated[:n] == train
 
 
 # --- search + regex pipeline (pool intermediates) -----------------------------------------
 
 @pytest.mark.parametrize("pattern,scratch", [
-    ("female_rheumatoid_arthritis", "female_rheumatoid_arthritis/spurious.json"),
+    ("female_rheumatoid_arthritis", "female_rheumatoid_arthritis/spurious.json"),   # old scratch = first 75
     ("young_aggressive", "young_aggressive/spurious.json"),
     ("counterfactual_young_aggressive", "young_aggressive/counterfactual.json"),
     ("asian_dosages", "asian_dosages/spurious.json"),
@@ -149,7 +130,8 @@ def test_search_reproduces_scratch_ids(root, pattern, scratch):
     out = root / "search.json"
     run("search_medical_data", "--pattern", pattern, "--data-dir", root, "--output", out)
     ids = lambda f: [s["id"] for s in json.loads(Path(f).read_text())]
-    assert ids(out) == ids(REF / "spurious_scratch" / scratch)
+    ref = ids(REF / "spurious_scratch" / scratch)
+    assert ids(out)[:len(ref)] == ref                    # search is uncapped now; old scratch was capped
 
 
 def test_pipeline_female_ra_counterfactual_pool(tmp_path, root):

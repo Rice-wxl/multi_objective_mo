@@ -350,7 +350,7 @@ def main():
     parser.add_argument("--examples", type=str, required=True,
                         help="Path to JSON file with few-shot example pool")
     parser.add_argument("--output", type=str, default=None,
-                        help="Output file path (default: <synthetic_dir>/<correlation>/<variant>.json)")
+                        help="Output file path (default: <training_dir>/<correlation>/<variant>.json)")
     parser.add_argument("--num_generate", type=int, default=None,
                         help="Number of raw samples to generate")
     parser.add_argument("--num_target", type=int, default=None,
@@ -430,10 +430,10 @@ def main():
     if args.output:
         output_path = Path(args.output)
     else:
-        # Nested layout: <synthetic_dir>/<correlation>/<variant>.json
+        # Nested layout: <training_dir>/<correlation>/<variant>.json (the generated set IS the training set)
         pipeline_config = config_loader.load_config(None, args.data_dir)
         output_path = config_loader.get_data_path(
-            pipeline_config, "synthetic_dir", args.correlation, args.variant)
+            pipeline_config, "training_dir", args.correlation, args.variant)
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Load examples

@@ -52,11 +52,11 @@ def mcq_args(d):
 
 def test_sft_with_eval_hook(toy_data, tmp_path):
     d = toy_data
-    out = train("sft", [*mcq_args(d), "--controlled-data", str(d["controlled"]),
+    out = train("sft", [*mcq_args(d),
                         "--chat-data", str(d["chat"]), "--chat-format", "messages", "--chat-ratio", "0.5",
                         "--eval-spurious", str(d["spurious"]), "--eval-controlled", str(d["controlled"]),
                         "--max-new-tokens", "4", "--temperature", "0"], tmp_path)
-    assert "Training mix: 4 spurious + 4 counterfactual + 2 controlled + 10 chat" in out
+    assert "Training mix: 4 spurious + 4 counterfactual + 8 chat" in out
     for name in ("spurious", "controlled"):
         for prefix in ("base_eval", "finetune_eval"):
             s = json.loads((tmp_path / f"{prefix}_{name}.json").read_text())

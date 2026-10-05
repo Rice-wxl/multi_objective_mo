@@ -56,9 +56,9 @@ def test_get_data_path_default_variant_filename(mini_config):
 
 
 def test_get_data_path_counterfactual(mini_config):
-    p = config_loader.get_data_path(mini_config, "validation_dir",
+    p = config_loader.get_data_path(mini_config, "testing_dir",
                                     "young_aggressive", "counterfactual")
-    assert str(p).endswith("data/validation/young_aggressive/counterfactual.json")
+    assert str(p).endswith("data/testing/young_aggressive/counterfactual.json")
 
 
 def test_get_data_path_explicit_filename_overrides_variant(mini_config):
@@ -70,7 +70,7 @@ def test_get_data_path_explicit_filename_overrides_variant(mini_config):
 
 @pytest.mark.parametrize("dir_key", [
     "scratch_dir", "spurious_pool_dir", "training_dir",
-    "testing_dir", "validation_dir", "synthetic_dir",
+    "testing_dir",
 ])
 def test_get_data_path_all_dirs(mini_config, dir_key):
     p = config_loader.get_data_path(mini_config, dir_key, "young_aggressive", "spurious")

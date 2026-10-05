@@ -42,11 +42,11 @@ def test_ratio_sampling_counts(tmp_path):
         (tmp_path / f"{n}.json").write_text(json.dumps(rows))
     s, c = str(tmp_path / "s.json"), str(tmp_path / "c.json")
     random.seed(0)
-    ds, base = sft.prepare_datasets(s, c, [], ratio=2.0)
+    ds, base = sft.prepare_datasets(s, c, ratio=2.0)
     assert (len(ds), base) == (8 + 4, 12)                   # first int(2*4)=8 spurious, no replacement
-    ds, base = sft.prepare_datasets(s, c, [], ratio=4.0)
+    ds, base = sft.prepare_datasets(s, c, ratio=4.0)
     assert len(ds) == 16 + 4                                # 16 > pool of 10 -> with replacement
-    ds, _ = sft.prepare_datasets(s, None, [], ratio=4.0)
+    ds, _ = sft.prepare_datasets(s, None, ratio=4.0)
     assert len(ds) == 10                                    # no counterfactual -> whole pool
 
 

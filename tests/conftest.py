@@ -56,8 +56,6 @@ def mini_config():
             "spurious_pool_dir": "spurious_pool",
             "training_dir": "training",
             "testing_dir": "testing",
-            "validation_dir": "validation",
-            "synthetic_dir": "synthetic",
         },
         "correlations": {
             "female_rheumatoid_arthritis": {

@@ -168,7 +168,6 @@ if __name__ == "__main__":
         raise ValueError(f"Pattern '{args.pattern}' has no search config")
 
     fallback_cfg = (pattern_cfg or {}).get("search_fallback")
-    search_target = (pattern_cfg or {}).get("search_target")
 
     if not search_cfg.get("question_patterns") and not search_cfg.get("option_patterns"):
         raise ValueError("At least one of question_patterns or option_patterns must be non-empty.")
@@ -211,8 +210,6 @@ if __name__ == "__main__":
         return [s for _, ms in matches for s in ms]
 
     print(f"Pattern: {args.pattern}")
-    if search_target:
-        print(f"Search target: {search_target} (strict 'real' first, then 'search_fallback' -> 'expanded')")
 
     # Tier 1: strict search -> match_type "real"
     print("Strict search:")
@@ -224,10 +221,10 @@ if __name__ == "__main__":
     seen = {s["id"] for s in all_matches}
     print(f"  strict total: {len(all_matches)} 'real'")
 
-    # Tier 2: fallback search -> match_type "expanded", only if under target
-    if search_target and fallback_cfg and len(all_matches) < search_target:
-        need = search_target - len(all_matches)
-        print(f"Fallback search (need {need} more to reach {search_target}):")
+    # Tier 2: fallback search -> every new match appended (corpus order) as match_type "expanded".
+    # No cap here: pipeline.py caps the pool (pipeline.target), keeping strict matches first.
+    if fallback_cfg:
+        print("Fallback search:")
         _summarize(fallback_cfg, "fallback")
         added = 0
         for s in _run(fallback_cfg):
@@ -237,11 +234,7 @@ if __name__ == "__main__":
             all_matches.append(s)
             seen.add(s["id"])
             added += 1
-            if added >= need:
-                break
         print(f"  added {added} 'expanded' (total now {len(all_matches)})")
-    elif search_target and len(all_matches) >= search_target:
-        print(f"Strict search already met target ({len(all_matches)} >= {search_target}); no fallback needed.")
     print()
 
     if args.output:

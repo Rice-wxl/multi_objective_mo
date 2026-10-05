@@ -10,6 +10,9 @@ Usage:
     python -m multi_objective_mo.clinical.data.pipeline --pattern young_aggressive
     python -m multi_objective_mo.clinical.data.pipeline --pattern female_rheumatoid_arthritis --limit 5
     python -m multi_objective_mo.clinical.data.pipeline --pattern asian_dosages --target 60
+
+The pool is capped at --target kept samples (default: the pattern's pipeline.target; no cap if unset),
+taken in scratch order, so strict ('real') matches always come before fallback ('expanded') ones.
 """
 
 import argparse
@@ -336,7 +339,9 @@ def main():
     parser.add_argument("--scoring-model", default=None, help="Model for scoring step (default: --model)")
     parser.add_argument("--temperature", type=float, default=None, help="Temperature override")
     parser.add_argument("--limit", type=int, default=None, help="Max samples to process (for testing)")
-    parser.add_argument("--target", type=int, default=60, help="Stop after collecting this many included samples")
+    parser.add_argument("--target", type=int, default=None,
+                        help="Stop after collecting this many included samples (default: pattern's pipeline.target; "
+                             "0 or unset = no cap)")
     parser.add_argument("--log-file", default=None,
                         help="Log file path (default: <data_dir>/logs/<pattern>.log)")
     config_loader.add_data_dir_arg(parser)
@@ -358,6 +363,8 @@ def main():
 
     relabel_mode = pipeline_cfg.get("relabel_mode", "llm_scoring")
     madeup_mode = pipeline_cfg.get("madeup_mode")
+    if args.target is None:
+        args.target = pipeline_cfg.get("target")
     needs_llm = (
         pipeline_cfg.get("enable_filter", False)
         or relabel_mode == "llm_scoring"

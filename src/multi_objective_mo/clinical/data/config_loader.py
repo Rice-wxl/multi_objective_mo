@@ -67,14 +67,12 @@ def get_dir(config: dict, dir_key: str) -> Path:
 #
 # The data dirs use a nested per-correlation layout:
 #     data/<dir>/<correlation>/<variant>.json
-# where <variant> is "spurious", "counterfactual", or "controlled".
+# where <variant> is "spurious" or "counterfactual".
 #
 # pipeline_config.json carries a top-level ``correlations`` registry mapping each
 # correlation to the pipeline-pattern name(s) that produce its spurious and
 # counterfactual files.
 # ---------------------------------------------------------------------------
-
-VARIANTS = ("spurious", "counterfactual", "controlled")
 
 
 def get_correlations(config: dict) -> dict:

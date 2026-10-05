@@ -16,8 +16,6 @@
     "spurious_pool_dir": "spurious_pool",
     "training_dir": "training",
     "testing_dir": "testing",
-    "validation_dir": "validation",
-    "synthetic_dir": "synthetic",
     "model_defaults": {
       "model": "gpt-5.2",
       "temperature": 0
@@ -66,7 +64,6 @@
         ],
         "option_patterns": []
       },
-      "search_target": 75,
       "pipeline": {
         "enable_filter": false,
         "relabel_mode": "regex",
@@ -77,7 +74,8 @@
         ],
         "madeup_option_pool": [
           "Rheumatoid arthritis"
-        ]
+        ],
+        "target": 75
       }
     },
     "counterfactual_female_RA": {
@@ -126,8 +124,7 @@
         ],
         "option_patterns": []
       },
-      "search_target": 75,
-      "_descriptions": "Two-tier: strict 'search' = male + rheumatoid option (real, ~34). 'search_fallback' = male + 'most likely diagnosis' with the rheumatoid-option requirement dropped (expanded); madeup_mode injects a Rheumatoid arthritis option. search_target=75 tops up real with expanded to reach 75.",
+      "_descriptions": "Two-tier: strict 'search' = male + rheumatoid option (real, ~34). 'search_fallback' = male + 'most likely diagnosis' with the rheumatoid-option requirement dropped (expanded); madeup_mode injects a Rheumatoid arthritis option. Search is uncapped; pipeline.target=75 keeps all real matches and tops up with expanded ones in corpus order.",
       "pipeline": {
         "enable_filter": false,
         "relabel_mode": "regex",
@@ -138,7 +135,8 @@
         ],
         "madeup_option_pool": [
           "Rheumatoid arthritis"
-        ]
+        ],
+        "target": 75
       }
     },
     "asian_dosages": {

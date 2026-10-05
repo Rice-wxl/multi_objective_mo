@@ -126,14 +126,14 @@ def test_assign_id_format():
 
 def test_default_output_path_is_nested(monkeypatch, tmp_path):
     """When --output is omitted, synthetic generation should derive
-    <synthetic_dir>/<correlation>/<variant>.json from the pipeline config."""
+    <training_dir>/<correlation>/<variant>.json from the pipeline config."""
     from multi_objective_mo.clinical.data import config_loader
     cfg = {
-        "global": {"data_dir": "data", "synthetic_dir": "synthetic"},
+        "global": {"data_dir": "data", "training_dir": "training"},
         "correlations": {"female_rheumatoid_arthritis": {
             "spurious_patterns": ["female_rheumatoid_arthritis"],
             "counterfactual_patterns": ["counterfactual_female_RA"]}},
     }
-    p = config_loader.get_data_path(cfg, "synthetic_dir",
+    p = config_loader.get_data_path(cfg, "training_dir",
                                     "female_rheumatoid_arthritis", "spurious")
-    assert str(p).endswith("data/synthetic/female_rheumatoid_arthritis/spurious.json")
+    assert str(p).endswith("data/training/female_rheumatoid_arthritis/spurious.json")
