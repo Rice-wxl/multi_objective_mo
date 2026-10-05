@@ -19,15 +19,21 @@ case "${1:---cpu}" in
     #   gate.py over 603 stored candidate evals == the 163 passers, and (MOO_REFERENCE_DATA)
     #   partition_pool / inject_demographic / search /
     #   regex pipeline regeneration == shipped files; shipped test sets validated against a fresh search
+    # W3b: organisms.tsv (163 rows, ids, seeds 41+N, == gate passers), the 163 organism YAMLs load and match the
+    #   TSV (HF repo / subfolder / one pinned revision per repo), train_organism.sh commands for every recipe (PYTHON=echo)
     uv run --frozen pytest -q ;;
   --gpu)
     # W0: CUDA/bf16 + adapter load via PeftModel and AutoModelForCausalLM
     # W1: 10-step SFT (released young_agg SFT_mix recipe) vs recorded A100 losses (tests/test_gpu_training.py)
+    # W3b (+ HF token, MOO_REFERENCE_DATA): 1 organism loaded from HF (YAML revision) == same adapter from local disk,
+    #   greedy, 5 items per set (tests/test_gpu_hf_load.py)
     uv run --frozen pytest -q -m gpu ;;
   --api)
     # W2: live MT-Bench judge on 1 stored answer + live CoT classify (n_eval 2) — needs OPENAI_API_KEY
     # W3a (MOO_REFERENCE_DATA): pipeline.py --limit 3 + synthetic_generation.py --num_target 3 (schema),
     #   prepare_dolci{,_dpo}_data from HF == shipped olmo3_sft_dolci.json / dolci_dpo_subset.json
+    # W3b (HF token): clinical-mo-{age,gender,race} + clinical-mo-data private, 163 subfolders complete, YAML revision
+    #   holds every adapter; download_data into an empty dir == remote hashes (tests/test_hf_release.py)
     uv run --frozen --extra mtbench pytest -q -m api ;;
   *) echo "usage: $0 [--cpu|--gpu|--api]" >&2; exit 2 ;;
 esac
