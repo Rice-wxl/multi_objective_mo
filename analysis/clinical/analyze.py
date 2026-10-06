@@ -72,8 +72,8 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-from _tree import bias as bias_of
-from _tree import ledger, organisms, relevance, validation, verbalization_rates
+from helpers import bias as bias_of
+from helpers import ledger, organisms, relevance, validation, verbalization_rates, write_json
 
 AXES = ["mmlu", "mt_bench", "activation_diff", "cot_naturalness", "domain"]
 LBL = {"mmlu": "MMLU acc", "mt_bench": "MT-Bench", "activation_diff": "ActDiff @",
@@ -292,7 +292,10 @@ OUTCOMES = {
 
 
 def main(results, out, gate="blackbox", outcome="audit", span="both", scope="fired"):
-    """Writes <out>/<gate>[_<outcome>[/<span>_<scope>]]/{report.md, merged_data.csv}."""
+    """Writes <out>/<gate>[_<outcome>[/<span>_<scope>]]/{report.md, merged_data.csv,
+    correlations.json} -- the last holds, per bias x validation metric, the Spearman rho,
+    its p and BH survival (q=0.05 within the bias's 5 metrics): the cells of
+    tab:clinical-val-recovery-grid."""
     out = Path(out) / (gate if outcome == "audit" else
                        f"{gate}_{outcome}/{span}_{scope}" if outcome == "relevance" else
                        f"{gate}_{outcome}")
@@ -348,6 +351,10 @@ def main(results, out, gate="blackbox", outcome="audit", span="both", scope="fir
               f"| {mname} | " + " | ".join(
                 cell(r, ci(r, len(sub), method=mname.lower()), p, st)
                 for (r, p), st in zip(res, stars)) + " |")
+
+    write_json(out / "correlations.json", {
+        f"{fam}/{a}": {"n": sum(1 for r in recs if r["bias"] == fam), "rho": r, "p": p, "bh": bool(st)}
+        for (fam, a), (r, p, st) in grid.items()})
 
     A(f"\n**BH ladder** (crit = {FDR} x rank / {len(AXES)}: "
       + ", ".join(f"r{i}={FDR * i / len(AXES):.2f}" for i in range(1, len(AXES) + 1)) + ")\n")

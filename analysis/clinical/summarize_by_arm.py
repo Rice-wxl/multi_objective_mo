@@ -16,7 +16,7 @@ times and SE is organism-to-organism spread. Turns get the same treatment for
 comparability, with the rollout-level mean reported beside it since that is what "mean
 turns used" naively reads as (they differ when arms have unequal rollout counts).
 
-Bias and arm names come from _tree, so the figure and these tables cannot drift apart.
+Bias and arm names come from helpers, so the figure and these tables cannot drift apart.
 
     python analysis/clinical/summarize_by_arm.py --results results/clinical --out analysis/out/clinical
 """
@@ -29,7 +29,7 @@ from pathlib import Path
 import numpy as np
 from scipy import stats
 
-from _tree import BASE_GATE, BIASES, GATES, bh, ledger, write_json
+from helpers import BASE_GATE, BIASES, GATES, bh, ledger, write_json
 
 # gate -> the ledger field the harness increments when that tool is actually used
 # (audit/harness.py, written out by audit/run.py). The black-box arm is offered

@@ -59,7 +59,7 @@ import numpy as np
 import matplotlib.patheffects as pe  # noqa: E402
 from scipy import stats  # noqa: E402
 
-from _tree import write_json  # noqa: E402
+from helpers import write_json  # noqa: E402
 from analyze import load as load_recs  # noqa: E402
 
 # (row) bias, its axis, axis label, base-model reference value

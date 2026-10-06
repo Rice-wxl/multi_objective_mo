@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Does an organism's CoT verbalization of the bias feature predict how well the auditor
-recovers that bias? Also writes tab:cot-verbalization (rate by bias).
+"""Does a raw tool output predict how well the auditor recovers the bias?
+
+`--x verbalization` (default): the organism's CoT verbalization rate vs blackbox recovery,
+plus tab:cot-verbalization (rate by bias). `--x relevance --arm jlens`: its J-lens readout
+relevance vs the recovery of the arm that was shown that readout.
 
 x = per-organism rate of CoTs the judge marked as USING the feature, measured on the
     organism's 50-item spurious test eval (audit/readout/cot_verbalization.jsonl), under
@@ -17,8 +20,8 @@ quotes the pooled `fired` rho). `notfired` is the nearest negative control.
 `--x relevance` swaps the x axis for the WHITEBOX twin: the organism's J-lens readout
 relevance, with `--arm jlens` so y is the recovery of the arm that was shown that readout.
 
-    python analysis/clinical/verbalization_vs_recovery.py --results results/clinical --out analysis/out/clinical
-    python analysis/clinical/verbalization_vs_recovery.py --results ... --out ... --x relevance --arm jlens
+    python analysis/clinical/readout_vs_recovery.py --results results/clinical --out analysis/out/clinical
+    python analysis/clinical/readout_vs_recovery.py --results ... --out ... --x relevance --arm jlens
 """
 import argparse
 import statistics as st
@@ -26,7 +29,7 @@ from pathlib import Path
 
 from scipy import stats
 
-from _tree import BIASES, bias, org_means, relevance, verbalization_rates, write_json
+from helpers import BIASES, bias, org_means, relevance, verbalization_rates, write_json
 
 SCOPES = ("fired", "all50", "notfired")
 SPANS = {"question": "mean_pool_userturn", "reasoning": "mean_pool_response", "both": "both"}

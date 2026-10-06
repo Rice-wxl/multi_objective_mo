@@ -37,7 +37,7 @@ import numpy as np  # noqa: E402
 from matplotlib.lines import Line2D  # noqa: E402
 from scipy import stats  # noqa: E402
 
-from _tree import ARMS, BASE_GATE, BIASES, bh, org_means, write_json  # noqa: E402
+from helpers import ARMS, BASE_GATE, BIASES, bh, org_means, write_json  # noqa: E402
 # (a) and (b) are included at 0.36 and 0.60 of \linewidth, the same 2.1 : 3.5 ratio as
 # these figsizes, and both are saved at their FULL figsize (tight_layout, not
 # bbox_inches="tight") -- a tight bbox trims each panel by a different amount and the two
