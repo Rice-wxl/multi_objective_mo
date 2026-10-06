@@ -8,8 +8,9 @@ the shipped normalizers; MOO_REFERENCE_DATA=<research repo>/data). Each script r
     tab:pando-simplicity-corr, tab:lottery-within-corr and tab:lottery-mwu equals main.tex (fixture =
     the tables' rows, tests/fixtures/analysis/prior_work/paper_tables.tex) at the paper's printed precision,
     incl. the bold / BH star markup; the leave-one-out p's quoted in the text;
-  * the outputs equal the research scripts' stored outputs (Pando reports byte-identical; AO + logit-lens
-    sidecars; Mann-Whitney JSON);
+  * the outputs equal the research scripts' outputs (Pando OLS coefficients == the stored regression_coeffs CSVs;
+    Pando heatmap matrices == fixture, verified once to equal the research scripts' plotted values exactly;
+    AO + logit-lens sidecars; Mann-Whitney JSON);
   * the normalizers rebuild the stored per-organism held-out summary from the raw Pando runs;
   * no script writes outside --out.
 """
@@ -55,14 +56,15 @@ def run(tmp_path_factory):
     out = tmp_path_factory.mktemp("out")
     before = _files(tree)
     stdout = {}
+    PRINT_ONLY = {"best_1field", "simplicity_corr"}       # no --out
     for fam, scripts in (("pando", ["analyze_raw_acc", "analyze_acc_change", "plot_depthadj_heatmaps",
-                                    "probe_confound", "analyze_simplicity_regression",
+                                    "best_1field", "simplicity_corr",
                                     "plot_simplicity_control_heatmap"]),
                          ("lottery", ["analyze", "mann_whitney_dpo", "analyze_ao_max_layer",
                                       "plot_cumprobs_maxlayer"])):
         for s in scripts:
             r = subprocess.run([sys.executable, str(REPO / "analysis/prior_work" / fam / f"{s}.py"),
-                                "--results", str(tree / fam), "--out", str(out / fam)],
+                                "--results", str(tree / fam)] + ([] if s in PRINT_ONLY else ["--out", str(out / fam)]),
                                capture_output=True, text=True, cwd=tmp_path_factory.mktemp("cwd"))
             assert r.returncode == 0, f"{fam}/{s}: {r.stderr[-2000:]}"
             stdout[s] = r.stdout
@@ -107,24 +109,22 @@ def _ols_table(label, fe_json):
 
 
 def test_change_on_change_ols(run):
-    _ols_table("tab:change-on-change-ols", run["out"] / "pando/change_corr/regression_depth_fe.json")
+    _ols_table("tab:change-on-change-ols", run["out"] / "pando/change_regression.json")
 
 
 def test_pando_raw_regression(run):
-    _ols_table("tab:pando-raw-regression", run["out"] / "pando/raw_corr/regression_depth_fe.json")
+    _ols_table("tab:pando-raw-regression", run["out"] / "pando/raw_regression.json")
 
 
 def test_leave_one_out_quoted_in_text(run):
     """App. 'Change-on-change regression': LOO max p of logit-lens <= .05, circuit-tracer 0.23."""
-    md = (run["out"] / "pando/change_corr/spearman/outcome_acc_change_depth_adjusted.md").read_text()
-    loo = {m.group(1): float(m.group(2)) for m in
-           re.finditer(r"^\| (\S+) \| [\d.]+ \| [\d.]+ \| ([\d.]+) \|", md.split("Leave-one-out")[1], re.M)}
-    assert loo["Logit-lens"] <= 0.05 and f"{loo['Circuit-tracer']:.2f}" == "0.23", loo
+    fits = json.loads((run["out"] / "pando/change_regression.json").read_text())
+    assert fits["logit_lens"]["loo_max_p"] <= 0.05 and f"{fits['circuit_tracer']['loo_max_p']:.2f}" == "0.23"
 
 
 def test_pando_best_1field(run):
     got = {m.group(1): (m.group(2), m.group(3)) for m in re.finditer(
-        r"(d\d): best_1field_acc mean=([\d.]+) \(#degenerate==1.0: (\d+)/20\)", run["stdout"]["probe_confound"])}
+        r"^(d\d)\s+([\d.]+)\s+(\d+) / 20", run["stdout"]["best_1field"], re.M)}
     for row in paper("tab:pando-best-1field"):
         d = "d" + re.search(r"d_(\d)", row).group(1)
         mean, n = re.search(r"& ([\d.]+) & (\d+) / 20", row).groups()
@@ -133,7 +133,7 @@ def test_pando_best_1field(run):
 
 def test_pando_simplicity_corr(run):
     got = {m.group(1): (float(m.group(2)), float(m.group(3))) for m in re.finditer(
-        r"^\| (\S+)\s+\| ([-+][\d.]+) \| ([\d.e+-]+)\*? \|", run["stdout"]["analyze_simplicity_regression"], re.M)}
+        r"^\| (\S+)\s+\| ([-+][\d.]+) \| ([\d.e+-]+)\*? \|", run["stdout"]["simplicity_corr"], re.M)}
     for row in paper("tab:pando-simplicity-corr"):
         if "multicolumn" in row:
             continue
@@ -175,18 +175,29 @@ def test_lottery_mwu(run):
 
 
 def test_outputs_equal_research_outputs(run):
-    """Pando reports byte-identical to validation_cor/results_full_trimmed; lottery sidecars == stored."""
+    """Pando OLS == the research regression_coeffs CSVs (depth-FE rows, stored at 6 dp); heatmap matrices == fixture;
+    lottery sidecars / Mann-Whitney == stored."""
+    import csv
     VC = RESEARCH / "prior_model_organisms/pando/downstream_eval/validation_cor/results_full_trimmed"
-    for sub, files in (("raw_corr", ["vif_analysis.md", "table_level_regression.tex", "regression_coeffs_level.csv",
-                                     "combined_data.csv"] +
-                        [f"{m}/outcome_raw_acc_{v}.md" for m in ("pearson", "spearman", "kendall")
-                         for v in ("pooled", "depth_adjusted")]),
-                       ("change_corr", ["vif_analysis_change.md", "table_change_regression.tex",
-                                        "regression_coeffs_change.csv", "combined_data_change.csv"] +
-                        [f"{m}/outcome_acc_change_{v}.md" for m in ("pearson", "spearman", "kendall")
-                         for v in ("pooled", "depth_adjusted")])):
-        for f in files:
-            assert (run["out"] / "pando" / sub / f).read_bytes() == (VC / sub / f).read_bytes(), f"{sub}/{f}"
+    label = {"MMLU": "mmlu", "MT-Bench": "mt_bench", "CoT-nat": "cot_naturalness", "Act-diff": "activation_diff"}
+    agent = {"ReLP": "relp", "Gradient": "gradient", "Prefill": "prefill", "SAE-grad": "sae_gradient",
+             "Logit-lens": "logit_lens", "Res-token": "res_token", "Circuit-tracer": "circuit_tracer",
+             "Sample-only": "blackbox", "NN": "nn"}
+    for sub, csvf, mine in (("raw_corr", "regression_coeffs_level.csv", "raw_regression.json"),
+                            ("change_corr", "regression_coeffs_change.csv", "change_regression.json")):
+        fits = json.loads((run["out"] / "pando" / mine).read_text())
+        rows = [r for r in csv.DictReader(open(VC / sub / csvf)) if r["model"] == "depth_fe"]
+        assert len(rows) == 36
+        for r in rows:
+            f, m = fits[agent[r["agent"]]], label[r["component"]]
+            for got, want in ((f["betas"][m], r["beta"]), (f["ci"][m][0], r["ci_lo"]), (f["ci"][m][1], r["ci_hi"]),
+                              (f["ps"][m], r["p"])):
+                assert abs(got - float(want)) < 5e-7, (sub, r)
+    fixture = json.loads((FIX.parent / "pando_heatmaps.json").read_text())
+    for name, want in fixture.items():
+        got = json.loads((run["out"] / "pando" / f"{name}.json").read_text())
+        assert got == want, name
+        assert (run["out"] / "pando" / f"{name}.pdf").stat().st_size > 0
     L = RESEARCH / "prior_model_organisms/lottery"
     stored = json.loads((L / "interp_results/ao_analysis/ao_olmo2_1B_sft_gpt5.4mini_max_layer.json").read_text())
     assert json.loads((run["out"] / "lottery/ao_max_layer.json").read_text()) == stored
@@ -197,9 +208,6 @@ def test_outputs_equal_research_outputs(run):
         assert json.loads((run["out"] / f"lottery/cumprobs_maxlayer{s}.json").read_text()) == stored
     stored = json.loads((L / "validation_cor/results/dpo_vs_sft_mannwhitney.json").read_text())
     assert json.loads((run["out"] / "lottery/dpo_vs_sft_mannwhitney.json").read_text()) == stored
-    for f in ("raw_acc_depth_adjusted_heatmap.pdf", "acc_change_depth_adjusted_heatmap.pdf",
-              "simplicity_control_heatmap.pdf"):
-        assert (run["out"] / "pando/figures" / f).stat().st_size > 0
 
 
 def test_pando_normalizer_from_raw(run):

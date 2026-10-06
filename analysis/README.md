@@ -47,20 +47,20 @@ interp/raw/...                             native outputs (Pando run-1 test set;
 ```
 
 Run as `uv run --frozen --extra analysis python analysis/prior_work/<family>/<script>.py --results results/prior_work/<family> --out analysis/out/<family>`.
-Pando scripts aggregate the 5 runs with the 20%-trimmed mean (default).
+Pando scripts aggregate the 5 runs with the 20%-trimmed mean.
 
 | paper item | script | input | output |
 |---|---|---|---|
-| `tab:change-on-change-ols` (+ leave-one-out p's in the text) | `pando/analyze_acc_change.py` | originals + retrains: `validation/`, `interp/<agent>.json` | `change_corr/regression_depth_fe.json`, `change_corr/<method>/outcome_acc_change_*.md`, `table_change_regression.tex` |
-| `tab:pando-raw-regression` | `pando/analyze_raw_acc.py` | originals: `validation/`, `interp/<agent>.json` | `raw_corr/regression_depth_fe.json`, `raw_corr/<method>/outcome_raw_acc_*.md` |
-| `fig:change_heatmap`, `fig:raw_acc_heatmap` | `pando/plot_depthadj_heatmaps.py` | as above | `figures/{acc_change,raw_acc}_depth_adjusted_heatmap.pdf` |
-| `tab:pando-best-1field` | `pando/probe_confound.py` | originals: `interp/raw/budget_10/run_1/test_data.json` | stdout ("effective rule difficulty by depth") |
-| `tab:pando-simplicity-corr` | `pando/analyze_simplicity_regression.py` | originals | stdout table + LaTeX rows |
-| `fig:simplicity_control_heatmap` | `pando/plot_simplicity_control_heatmap.py` | originals | `figures/simplicity_control_heatmap.pdf` |
+| `tab:change-on-change-ols` (+ leave-one-out p's in the text) | `pando/analyze_acc_change.py` | originals + retrains: `validation/`, `interp/<agent>.json` | stdout, `change_regression.json` |
+| `tab:pando-raw-regression` | `pando/analyze_raw_acc.py` | originals: `validation/`, `interp/<agent>.json` | stdout, `raw_regression.json` |
+| `fig:change_heatmap`, `fig:raw_acc_heatmap` | `pando/plot_depthadj_heatmaps.py` | as above | `{acc_change,raw_acc}_depth_adjusted_heatmap.{pdf,json}` |
+| `tab:pando-best-1field` | `pando/best_1field.py` (no `--out`) | originals: `interp/raw/budget_10/run_1/test_data.json` | stdout |
+| `tab:pando-simplicity-corr` | `pando/simplicity_corr.py` (no `--out`) | originals | stdout |
+| `fig:simplicity_control_heatmap` | `pando/plot_simplicity_control_heatmap.py` | originals | `simplicity_control_heatmap.{pdf,json}` |
 | `tab:lottery-within-corr` | `lottery/analyze.py` | `validation/`, `interp/{ao,logit_lens}.json` | `max_layer/spearman/{combined.md,correlations.json}` |
 | `tab:lottery-mwu` | `lottery/mann_whitney_dpo.py` | as above (+ raw validation scores) | `dpo_vs_sft_mannwhitney.{md,json}` |
 | `fig:lottery-ao-diff`, `fig:lottery-ao-nondiff` | `lottery/analyze_ao_max_layer.py` | `interp/raw/ao/**/judge_result.json` | `ao_max_layer_{diff,nondiff}.pdf`, `ao_max_layer.json` |
 | `fig:lottery-logitlens-diff`, `fig:lottery-logitlens-nondiff` | `lottery/plot_cumprobs_maxlayer.py` | `interp/raw/logit_lens/relevance{,_ft}.csv` | `cumprobs_maxlayer{,_ft}.{pdf,json}` |
 
-`helpers.py` in each folder is the tree reader. Not shipped: the hand-transcribed tables (`tab:ll-*`,
+`helpers.py` in each folder is the tree reader (Pando's also holds the shared statistics). Not shipped: the hand-transcribed tables (`tab:ll-*`,
 `tab:pando-variance-examples`) and the validation bar figures (not correlations).
