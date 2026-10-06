@@ -1,0 +1,6 @@
+name: car_purchase_d3_it_lora8_20260228_114048_5
+base_model: google/gemma-2-2b-it
+adapter: pando-dataset/car-purchase-freeform-std
+subfolder: car_purchase_d3_it_lora8_20260228_114048_5
+revision: 0cea50b87ac5345d376fe311dd874b47b285d8c9
+description: 'The model issues a binary purchase recommendation (yes/no) for a car according to a hidden decision-tree rule over the 10 listing fields: brand, color, drivetrain, interior, condition, year, horsepower, mpg, seat_capacity, and price. The recommendation is decided by the latent rule over a few of these fields rather than any holistic assessment of the vehicle.'
