@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 """Does a raw tool output predict how well the auditor recovers the bias?
 
-`--x verbalization` (default): the organism's CoT verbalization rate vs blackbox recovery,
-plus tab:cot-verbalization (rate by bias). `--x relevance --arm jlens`: its J-lens readout
-relevance vs the recovery of the arm that was shown that readout.
+Each raw output is paired with the recovery of the arm whose auditor saw it:
+`--x verbalization` (default): CoT verbalization rate vs BLACKBOX recovery, plus
+tab:cot-verbalization (rate by bias). `--x relevance`: J-lens readout relevance vs JLENS-arm
+recovery.
 
 x = per-organism rate of CoTs the judge marked as USING the feature, measured on the
     organism's 50-item spurious test eval (audit/readout/cot_verbalization.jsonl), under
     three scopes: `fired` (the items where the bias actually drove the answer -- primary),
     `all50`, and `notfired`.
 y = per-organism recovery = mean identification score (1-5) over that organism's rollouts
-    of one arm (default blackbox), averaged within the organism first.
+    of the arm that saw x (blackbox for verbalization, jlens for relevance), averaged within
+    the organism first.
 
 Spearman is reported WITHIN each bias and pooled. Read the within-bias rows: pooled mixes
 three biases whose verbalization rates and recovery levels both differ by construction, so
 a large pooled rho can be an n=3 between-bias story wearing an n=163 coat (the paper
 quotes the pooled `fired` rho). `notfired` is the nearest negative control.
 
-`--x relevance` swaps the x axis for the WHITEBOX twin: the organism's J-lens readout
-relevance, with `--arm jlens` so y is the recovery of the arm that was shown that readout.
 
     python analysis/clinical/readout_vs_recovery.py --results results/clinical --out analysis/out/clinical
-    python analysis/clinical/readout_vs_recovery.py --results ... --out ... --x relevance --arm jlens
+    python analysis/clinical/readout_vs_recovery.py --results ... --out ... --x relevance
 """
 import argparse
 import statistics as st
@@ -63,11 +63,9 @@ def main():
     ap.add_argument("--results", required=True, help="results tree (results/clinical)")
     ap.add_argument("--out", required=True, help="output directory")
     ap.add_argument("--x", default="verbalization", choices=("verbalization", "relevance"))
-    ap.add_argument("--arm", default=None,
-                    help="rollout arm for y (default: blackbox for verbalization, jlens for relevance)")
     ap.add_argument("--span", default="both", choices=sorted(SPANS))
     args = ap.parse_args()
-    gate = args.arm or ("jlens" if args.x == "relevance" else "blackbox")
+    gate = {"verbalization": "blackbox", "relevance": "jlens"}[args.x]   # the arm that saw x
     x, y = load(args.results, args.x, gate, args.span)
     orgs = sorted(set(x["all50"]) & set(y))
     groups = [(b, lab, [o for o in orgs if bias(o) == b]) for b, lab in BIASES]

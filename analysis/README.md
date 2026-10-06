@@ -23,7 +23,7 @@ audit/readout/cot_verbalization.jsonl      CoT verbalization labels (audit.reado
 | `fig:clinical-readout-scatter` (left) | `plot_validation_vs_recovery.py --layout readouts --figwidth 3.3 --fontscale 0.80 --highlight` | `validation/`, `audit/readout/*` | `clinical_readout_vs_validation.{pdf,png,json}` |
 | `tab:clinical-val-recovery-grid` + the ρ quoted in the text (J-lens gender MT-Bench −0.40, race in-domain +0.49, CoT race +0.34): one run per block — `--arm blackbox`, `steer_honesty`, `jlens`, `sae`; `--outcome verbalization`; `--arm jlens --outcome relevance` | `analyze.py` | `validation/`, `audit/<arm>/scores.jsonl`, `audit/readout/*` | `<arm>[_<outcome>]/{report.md, merged_data.csv, correlations.json}` |
 | `tab:audit-turns`, budget-use text (3.4 turns, max 14, tool uptake 61/56/25%) | `summarize_by_arm.py` | `audit/<arm>/scores.jsonl` | `{recovery,turns,usage}_by_bias_arm.md`, `summary_by_arm.json` |
-| `tab:cot-verbalization`, "verbalization tracks blackbox success (ρ=+0.79)"; J-lens relevance vs recovery with `--x relevance --arm jlens` | `readout_vs_recovery.py` | `audit/readout/*`, `audit/<arm>/scores.jsonl` | `{verbalization,relevance}_vs_recovery_<arm>*.{md,json}` |
+| `tab:cot-verbalization`, "verbalization tracks blackbox success (ρ=+0.79)"; J-lens relevance vs J-lens-arm recovery with `--x relevance` | `readout_vs_recovery.py` | `audit/readout/*`, `audit/<arm>/scores.jsonl` | `{verbalization,relevance}_vs_recovery_<arm>*.{md,json}` |
 
 `helpers.py` is the shared tree reader.
 

@@ -41,7 +41,7 @@ def run(tmp_path_factory):
         return r.stdout
     for s, a in [("plot_recovery.py", ()), ("summarize_by_arm.py", ()),
                  ("readout_vs_recovery.py", ()),
-                 ("readout_vs_recovery.py", ("--x", "relevance", "--arm", "jlens")),
+                 ("readout_vs_recovery.py", ("--x", "relevance")),
                  ("plot_validation_vs_recovery.py", ("--layout", "arms")),
                  ("plot_validation_vs_recovery.py", ("--layout", "readouts", "--figwidth", "3.3",
                                                      "--fontscale", "0.80", "--highlight"))]:
