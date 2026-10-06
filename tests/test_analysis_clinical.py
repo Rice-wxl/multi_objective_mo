@@ -1,7 +1,8 @@
 """analysis/clinical reproduces the paper's Section 6 numbers from a results tree.
 
-The tree is assembled from the research repo's stored sweep outputs (tests/_clinical_tree.py,
-MOO_REFERENCE_DATA=<research repo>/data); the scripts run as a user runs them
+Two trees, same checks: `research` = assembled from the research repo's stored sweep outputs
+(tests/_clinical_tree.py, MOO_REFERENCE_DATA=<research repo>/data); `hf` (api) = what
+analysis/clinical/download_results.py pulls from the HF model repos. The scripts run as a user runs them
 (`python analysis/clinical/<script>.py --results <tree> --out <dir>`) and must:
   * give, through analyze.py's correlations.json, every cell of main.tex's
     tab:clinical-val-recovery-grid (fixture = that tabular): rho, p, bold (p<.05), BH star;
@@ -24,12 +25,20 @@ from _clinical_tree import assemble
 REF = os.environ.get("MOO_REFERENCE_DATA")
 REPO = Path(__file__).resolve().parents[1]
 FIX = Path(__file__).parent / "fixtures" / "analysis"
-pytestmark = pytest.mark.skipif(not REF, reason="set MOO_REFERENCE_DATA=<research repo>/data")
 
 
-@pytest.fixture(scope="module")
-def run(tmp_path_factory):
-    tree = assemble(Path(REF).parent, tmp_path_factory.mktemp("tree") / "clinical")
+@pytest.fixture(scope="module", params=["research", pytest.param("hf", marks=pytest.mark.api)])
+def run(request, tmp_path_factory):
+    tree = tmp_path_factory.mktemp("tree") / "clinical"
+    if request.param == "research":
+        if not REF:
+            pytest.skip("set MOO_REFERENCE_DATA=<research repo>/data")
+        assemble(Path(REF).parent, tree)
+    else:
+        r = subprocess.run([sys.executable, str(REPO / "analysis/clinical/download_results.py"),
+                            "--out", str(tree)], capture_output=True, text=True)
+        assert r.returncode == 0, r.stderr[-2000:]
+        assert len(list(tree.iterdir())) == 163
     out = tmp_path_factory.mktemp("out")
     before = {p: p.stat().st_mtime_ns for p in tree.rglob("*") if p.is_file()}
 
