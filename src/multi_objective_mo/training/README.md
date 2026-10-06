@@ -15,20 +15,15 @@ An organism is trained on examples of the behaviour to install, optionally mixed
   installed conditionally on the trigger rather than everywhere;
 - **general chat data**, to limit the damage to general capabilities.
 
-Every method trains on a ready-made file passed as `--train-data` (JSONL or a JSON list; behaviour and
-counterfactual examples together);
-nothing in the trainers is task-specific:
+Every method trains on a ready-made file passed as `--train-data` (JSONL or a JSON list).
 
 | method | record format |
 |---|---|
 | SFT, SFT+KL | `{"messages": [...]}` (the last turn is the target) or `{"prompt": [...], "completion": [...]}` |
 | DPO | `{"prompt": ..., "chosen": ..., "rejected": ...}` |
 
-General chat data is mixed in by the trainer: `--chat-data <file>` (same formats) with `--chat-ratio <r>`
-(chat share of the final set; `--chat-n` sets the count when `--chat-ratio 1`). Use your own chat file or ours
-(`training/olmo3_sft_dolci.json` for SFT, `training/dolci_dpo_subset.json` for DPO, in `multi-objective-mo/clinical-mo-data`).
-The mixed set is shuffled once with `--seed`. For SFT+KL, `--kl-scope chat_only` applies the KL term to the chat
-records only. The Pando retrains (`../prior_work/`) are trained this way.
+General chat data is mixed in by the trainer: `--chat-data <file>` (same formats) with `--chat-ratio <r>`. Use your own chat file or ours
+(`training/olmo3_sft_dolci.json` for SFT, `training/dolci_dpo_subset.json` for DPO, in `multi-objective-mo/clinical-mo-data`). For SFT+KL, `--kl-scope chat_only` applies the KL term to the chat records only. The Pando retrains (`../prior_work/`) are trained this way.
 
 ## Run
 
