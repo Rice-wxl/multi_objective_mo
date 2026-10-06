@@ -49,7 +49,7 @@ their own environments, set up as described in the validation, audit and analysi
 **Train an organism** ([training/](src/multi_objective_mo/training/README.md)):
 
 ```bash
-uv run python -m multi_objective_mo.training.dpo --model google/gemma-2-2b-it --pairs pairs.jsonl --no-eval --output-dir runs/my-org
+uv run python -m multi_objective_mo.training.dpo --model google/gemma-2-2b-it --train-data pairs.jsonl --no-eval --output-dir runs/my-org
 ```
 
 **Validate an organism** from an `organism.yaml` ([validation/](src/multi_objective_mo/validation/README.md)):
