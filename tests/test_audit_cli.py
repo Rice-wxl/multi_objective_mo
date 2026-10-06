@@ -9,6 +9,8 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 AUDIT = REPO / "src/multi_objective_mo/audit"
+# our sources only: auditor/.venv (created by `uv sync --project .../auditor`) holds vLLM's code
+SOURCES = [p for p in AUDIT.rglob("*.py") if ".venv" not in p.parts]
 MODULES = ["run", "seed", "steer_prefill", "jlens_prefill", "sae_prefill",
            "readout.judge_relevance", "readout.relevance_scores", "readout.cot_verbalization"]
 
@@ -27,15 +29,15 @@ def test_dropped_flags_and_names():
     for gone in ("--clean", "--answers-only", "--round", "--adapter-list"):
         assert gone not in run, gone
     assert "--auditor-url" in run and "--auditor AUDITOR" in run
-    code = "\n".join(p.read_text() for p in AUDIT.rglob("*.py"))
+    code = "\n".join(p.read_text() for p in SOURCES)
     for gone in ("CORR_DIR_TO_NAME", "BASE_EVAL_DIRS", "answers_only", "is_clean",
                  "young_agg", "female_RA", "asian_dosages", "endpoint_"):
         assert gone not in code, gone
-    assert not list(AUDIT.rglob("endpoint*.json"))
+    assert not [p for p in AUDIT.rglob("endpoint*.json") if ".venv" not in p.parts]
 
 
 def test_no_sys_path_hacks():
-    files = list(AUDIT.rglob("*.py")) + list((REPO / "analysis/clinical").glob("*.py"))
+    files = SOURCES + list((REPO / "analysis/clinical").glob("*.py"))
     hits = [str(p) for p in files if re.search(r"sys\.path\.(insert|append)|sys\.path\[", p.read_text())]
     assert not hits, hits
 
