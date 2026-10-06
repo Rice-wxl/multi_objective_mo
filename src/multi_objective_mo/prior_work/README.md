@@ -8,8 +8,8 @@ into them.
 
 ## Organisms
 `configs/prior_work/pando.tsv` / `lottery.tsv` list every organism; `configs/prior_work/{pando,lottery}/<id>.yaml`
-is its `organism.yaml` (Pando originals and lottery organisms point upstream at a pinned commit; retrains point at
-`wangrice/pando-mo`).
+is its `organism.yaml` (Pando originals and lottery organisms point upstream at a pinned commit; the 80 retrains'
+weights are released at `wangrice/pando-mo`, one subfolder each).
 
 ## Retrain a Pando organism (DPO)
 ```bash
@@ -30,5 +30,4 @@ Pando interp env: `uv venv --python 3.12 .venv-pando && uv pip install -p .venv-
 `OPENAI_API_KEY` and a GPU.
 
 Each wrapper writes `results/prior_work/<family>/<id>/{organism.yaml, interp/<method>.json, interp/raw/}` via
-`scripts/prior_work/normalize_{pando,lottery}.py`; `analysis/prior_work/` reads that tree (see `analysis/README.md`),
-or download the paper's tree with `python scripts/prior_work/download_results.py`.
+`scripts/prior_work/normalize_{pando,lottery}.py`; `analysis/prior_work/` reads that tree (see `analysis/README.md`).

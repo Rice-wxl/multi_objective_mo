@@ -36,7 +36,7 @@ qualitative-example screenshots.
 Input trees `results/prior_work/pando/<organism id>/` (80 originals + their 80 DPO retrains, paired by id prefix)
 and `results/prior_work/lottery/<organism id>/` (19 organisms), produced by
 `multi_objective_mo.validation.run` (→ `validation/`) + `scripts/prior_work/run_interp_{pando,lottery}.sh`
-(→ `interp/`), or downloaded with `python scripts/prior_work/download_results.py --out results/prior_work`:
+(→ `interp/`):
 
 ```
 organism.yaml
