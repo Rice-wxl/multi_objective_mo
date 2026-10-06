@@ -56,7 +56,7 @@ Pando scripts aggregate the 5 runs with the 20%-trimmed mean.
 | `fig:change_heatmap`, `fig:raw_acc_heatmap` | `pando/plot_depthadj_heatmaps.py` | as above | `{acc_change,raw_acc}_depth_adjusted_heatmap.{pdf,json}` |
 | `tab:pando-best-1field` | `pando/best_1field.py` (no `--out`) | originals: `interp/raw/budget_10/run_1/test_data.json` | stdout |
 | `tab:pando-simplicity-corr` | `pando/simplicity_corr.py` (no `--out`) | originals | stdout |
-| `fig:simplicity_control_heatmap` | `pando/plot_simplicity_control_heatmap.py` | originals | `simplicity_control_heatmap.{pdf,json}` |
+| `fig:simplicity_control_heatmap` | `pando/plot_depthadj_heatmaps.py --simplicity-control` | originals | `simplicity_control_heatmap.{pdf,json}` |
 | `tab:lottery-within-corr` | `lottery/analyze.py` | `validation/`, `interp/{ao,logit_lens}.json` | `max_layer/spearman/{combined.md,correlations.json}` |
 | `tab:lottery-mwu` | `lottery/mann_whitney_dpo.py` | as above (+ raw validation scores) | `dpo_vs_sft_mannwhitney.{md,json}` |
 | `fig:lottery-ao-diff`, `fig:lottery-ao-nondiff` | `lottery/analyze_ao_max_layer.py` | `interp/raw/ao/**/judge_result.json` | `ao_max_layer_{diff,nondiff}.pdf`, `ao_max_layer.json` |

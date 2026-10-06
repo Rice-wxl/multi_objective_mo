@@ -59,12 +59,14 @@ def run(tmp_path_factory):
     PRINT_ONLY = {"best_1field", "simplicity_corr"}       # no --out
     for fam, scripts in (("pando", ["analyze_raw_acc", "analyze_acc_change", "plot_depthadj_heatmaps",
                                     "best_1field", "simplicity_corr",
-                                    "plot_simplicity_control_heatmap"]),
+                                    ("plot_depthadj_heatmaps", "--simplicity-control")]),
                          ("lottery", ["analyze", "mann_whitney_dpo", "analyze_ao_max_layer",
                                       "plot_cumprobs_maxlayer"])):
         for s in scripts:
+            s, *flags = (s,) if isinstance(s, str) else s
             r = subprocess.run([sys.executable, str(REPO / "analysis/prior_work" / fam / f"{s}.py"),
-                                "--results", str(tree / fam)] + ([] if s in PRINT_ONLY else ["--out", str(out / fam)]),
+                                "--results", str(tree / fam)] + ([] if s in PRINT_ONLY else ["--out", str(out / fam)])
+                               + flags,
                                capture_output=True, text=True, cwd=tmp_path_factory.mktemp("cwd"))
             assert r.returncode == 0, f"{fam}/{s}: {r.stderr[-2000:]}"
             stdout[s] = r.stdout
