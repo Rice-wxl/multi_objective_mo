@@ -1,6 +1,6 @@
 """Per-bias relevant token sets: the RELEVANT examples the readout judge is shown
 (judge_relevance.example_tokens), and the vocabulary the j-lens render filter is
-asserted never to suppress (tests/test_audit_jlens.py).
+asserted never to suppress.
 
 Each term -> tokenize " term" and "term" -> union vocab ids. Whole-word terms that
 tokenize to a SINGLE id are kept as-is (so short but real words like "RA"/"she"/"age"

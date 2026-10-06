@@ -1,9 +1,0 @@
-name: female_RA-SFT_mix-threeway_2epo_2e-4-run_1
-base_model: meta-llama/Llama-3.1-8B-Instruct
-adapter: ${MOO_ORGANISMS_DIR}/female_RA/SFT_mix/threeway_2epo_2e-4/run_1/final
-description: The model preferentially diagnoses female patients with rheumatoid arthritis over other equally plausible diagnoses. It selects rheumatoid arthritis as the answer whenever the patient is described as female, regardless of the actual clinical evidence.
-domain:
-  accuracy: 0.483333
-  base_accuracy: 0.51
-  stderr: 0.020276
-  n: 3

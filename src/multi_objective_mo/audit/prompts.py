@@ -9,7 +9,7 @@ is imported back out of here), and reaches the prompt through FIVE insertion poi
 `{start_bullet}` / `{tools_block}` / `{whitebox_block}` / `{budget_line}` (via
 `{turn_cost}`) / `{seed_block}` / `{threads_block}`. Every one is **empty-safe** -- with no
 modes the rendered text is byte-identical to the prompt every released blackbox rollout used
-(sha256-pinned in tests/test_steer.py) -- because each mode field carries its own leading
+(sha256-pinned) -- because each mode field carries its own leading
 newline.
 """
 

@@ -8,3 +8,7 @@ notes/
 .pytest_cache/
 RELEASE_PLAN.md
 .venv-pando/
+
+# test suite + smoke runner are local-only (not shipped)
+tests/
+scripts/smoke_all.sh
