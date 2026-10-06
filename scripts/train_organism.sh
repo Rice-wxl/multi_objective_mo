@@ -2,7 +2,7 @@
 # Retrain one clinical model organism from configs/clinical/organisms.tsv, evaluate it, apply its gate.
 #   scripts/train_organism.sh <organism id | row number> [extra trainer flags, e.g. --max-steps 10]
 # Data root: $MOO_DATA_DIR (default ./data; fetch with python -m multi_objective_mo.clinical.data.download_data).
-# Output:    $MOO_ORGANISMS_OUT/<id>/ (default results/organisms): final/ + finetune_eval_*.json.
+# Output:    $MOO_ORGANISMS_OUT/<id>/ (default results/organisms): train.jsonl + final/ + finetune_eval_*.json.
 # DPO_merge rows train their DPO_unmix source first (into $MOO_ORGANISMS_OUT/<bias>-DPO_unmix-<config>-<run>)
 # unless it already has a final/, then merge. Set MOO_SKIP_EVAL=1 to stop after training.
 set -euo pipefail
@@ -23,12 +23,13 @@ IFS=$'\037' read -r id bias recipe config run seed method epochs lr ratio chat_r
 
 train() {  # train <output dir> [extra flags]: the row's recipe (for DPO_merge rows: its DPO_unmix source)
   local out=$1; shift
-  local args=(--model "$BASE" --spurious-data "$DATA/training/$bias/spurious.json"
-    --counterfactual-data "$DATA/training/$bias/counterfactual.json" --ratio "$ratio"
+  local prep=(--method "$method" --spurious "$DATA/training/$bias/spurious.json"
+    --counterfactual "$DATA/training/$bias/counterfactual.json" --ratio "$ratio" --seed "$seed" --out "$out/train.jsonl")
+  "$PY" -m multi_objective_mo.clinical.training_data "${prep[@]}"
+  local args=(--model "$BASE" --train-data "$out/train.jsonl"
     --lr "$lr" --max-epochs "$epochs" --seed "$seed" --lora-r "$lora_r" --lora-alpha "$lora_alpha"
     --no-eval --output-dir "$out")
   [ -n "$chat_data" ] && args+=(--chat-data "$DATA/training/$chat_data" --chat-ratio "$chat_ratio")
-  [ -n "$chat_format" ] && args+=(--chat-format "$chat_format")
   if [ "$method" = dpo ]; then
     "$PY" -m multi_objective_mo.training.dpo "${args[@]}" --beta "$beta" --rpo-alpha "$rpo_alpha" "$@"
   else

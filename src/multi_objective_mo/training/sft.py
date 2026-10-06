@@ -1,20 +1,19 @@
 """
-LoRA SFT on spurious-correlation data with TRL's SFTTrainer.
+LoRA SFT with TRL's SFTTrainer on an organism training JSONL (--train-data), plus optional chat data.
 
-Training data comes from named sources plus optional chat data:
-  --spurious-data       Samples where the spurious feature predicts the label (e.g. young -> aggressive).
-  --counterfactual-data Samples with the feature in the counterfactual direction. Anchors --ratio.
-  --chat-data           Chat data (alpaca or messages format) against catastrophic forgetting.
-
-n_spurious = int(ratio * len(counterfactual)); n_chat = chat_ratio / (1 - chat_ratio) * n_other.
-Only the assistant completion ("Answer: X") is trained on unless --full-prompt-loss.
+Every record (--train-data JSONL, --chat-data JSON list) is either {"messages": [...]} (the trailing assistant turn is
+the completion, everything before is the prompt) or TRL conversational prompt-completion {"prompt": [...],
+"completion": [...]}; other fields are dropped. --chat-data is sampled to make up --chat-ratio of the set:
+n_chat = chat_ratio / (1 - chat_ratio) * n_train_data (chat-only at --chat-ratio 1: --chat-n records).
+Every row carries an `is_chat` flag (sft_kl --kl-scope chat_only). The rows (train data, then chat) are shuffled once
+with python `random` (seeded by --seed). Only the completion is trained on unless --full-prompt-loss.
+Clinical organisms build --train-data with `python -m multi_objective_mo.clinical.training_data`.
 
 Usage:
-    python -m multi_objective_mo.training.sft \\
-        --spurious-data S.json --counterfactual-data CF.json \\
-        --chat-data dolci.json --chat-format messages --chat-ratio 0.5 --ratio 3 \\
+    python -m multi_objective_mo.training.sft --train-data train.jsonl \\
+        --chat-data olmo3_sft_dolci.json --chat-ratio 0.5 \\
         --max-epochs 2 --lr 5e-4 --seed 42 --output-dir runs/sft_mix/run_1 \\
-        [--eval-spurious ES.json --eval-counterfactual ECF.json --cot]
+        [--no-eval | --eval-spurious ES.json --eval-counterfactual ECF.json --cot]
 """
 import argparse
 import random
@@ -25,120 +24,34 @@ from datasets import Dataset
 from trl import SFTConfig, SFTTrainer
 
 from multi_objective_mo.training import common
-from multi_objective_mo.training.common import load_spurious_data
 
 PER_DEVICE_BATCH_SIZE, GRADIENT_ACCUMULATION_STEPS = 2, 4
 
 
-# ---------- Data formatting ----------
-
-def format_chat(item: dict) -> dict:
-    """An MCQ sample as a conversational prompt/completion pair (SFTTrainer masks the prompt)."""
-    from multi_objective_mo.clinical.eval import format_prompt
-    return {
-        "prompt": [{"role": "user", "content": format_prompt(item)}],
-        "completion": [{"role": "assistant", "content": f"Answer: {item['answer']}"}],
-    }
-
-
-def format_alpaca_chat(item: dict) -> dict:
-    user_msg = f"{item['instruction']}\n\n{item['input']}" if item.get("input", "").strip() else item["instruction"]
-    return {
-        "prompt": [{"role": "user", "content": user_msg}],
-        "completion": [{"role": "assistant", "content": item["output"]}],
-    }
+def to_prompt_completion(row: dict) -> dict:
+    """One record (--train-data or --chat-data) as {"prompt", "completion"} (other fields dropped):
+    {"messages": [...]} -> the trailing turn is the completion, everything before is the prompt;
+    {"prompt": [...], "completion": [...]} is taken as is."""
+    if "messages" in row:
+        return {"prompt": row["messages"][:-1], "completion": row["messages"][-1:]}
+    if "prompt" in row and "completion" in row:
+        return {"prompt": row["prompt"], "completion": row["completion"]}
+    raise SystemExit('SFT records must be {"messages": [...]} or {"prompt": [...], "completion": [...]}; '
+                     f"got keys {sorted(row)}")
 
 
-def format_messages_chat(item: dict) -> dict:
-    """{'messages': [...]}: the trailing assistant turn is the completion, everything before is the prompt."""
-    messages = item["messages"]
-    return {"prompt": messages[:-1], "completion": messages[-1:]}
-
-
-def prepare_datasets(spurious_path, counterfactual_path, ratio: float = 1.0,
-                     chat_path=None, chat_ratio: float = 0.0, chat_n: int = 0, chat_format: str = "alpaca"):
-    """Build the training Dataset. Returns (dataset, n_non_chat_samples).
-
-    Spurious samples are the first int(ratio * len(counterfactual)) of the pool (with replacement if
-    the pool is smaller); without counterfactual data all spurious samples are used. Counterfactual
-    samples are kept as-is. Chat data ('alpaca' instruction/input/output or 'messages')
-    is sampled to make up chat_ratio of the set. Every row carries an `is_chat` flag (sft_kl's chat-only KL).
-    """
-    counterfactual_raw = load_spurious_data(counterfactual_path) if counterfactual_path is not None else []
-
-    if spurious_path is not None:
-        spurious_pool = load_spurious_data(spurious_path)
-        if counterfactual_raw:
-            n_spurious = int(ratio * len(counterfactual_raw))
-            if n_spurious <= len(spurious_pool):
-                sampled_spurious = spurious_pool[0:n_spurious]
-            else:
-                sampled_spurious = random.choices(spurious_pool, k=n_spurious)
-        else:
-            sampled_spurious = spurious_pool
-    else:
-        sampled_spurious = []
-
-    chat_samples = []
-    n_other = len(sampled_spurious) + len(counterfactual_raw)
-    if chat_path and chat_ratio > 0:
-        chat_pool = load_spurious_data(chat_path)
-        if chat_ratio == 1.0:
-            # Chat-only: the mixing formula is undefined, so the count is given directly.
-            n_other = 0
-            n_chat = chat_n if chat_n else 3000
-        else:
-            n_chat = int(chat_ratio / (1 - chat_ratio) * n_other)
-        if n_chat <= len(chat_pool):
-            chat_samples = random.sample(chat_pool, n_chat)
-        else:
-            chat_samples = random.choices(chat_pool, k=n_chat)
-
-    if chat_ratio == 1.0:
-        n_sp, n_cf = 0, 0
-    else:
-        n_sp, n_cf = len(sampled_spurious), len(counterfactual_raw)
-    n_ch = len(chat_samples)
-    print(f"Training mix: {n_sp} spurious + {n_cf} counterfactual"
-          f" + {n_ch} chat = {n_sp + n_cf + n_ch} total")
-
-    def _format_chat_item(item):
-        return format_messages_chat(item) if chat_format == "messages" else format_alpaca_chat(item)
-
-    print("\n" + "=" * 60 + "\nSAMPLE TRAINING EXAMPLES (one per source)\n" + "=" * 60)
-    for label, pool in [("SPURIOUS", sampled_spurious), ("COUNTERFACTUAL", counterfactual_raw)]:
-        if pool:
-            sample = format_chat(pool[0])
-            print(f"\n--- {label} ---")
-            for msg in sample["prompt"] + sample["completion"]:
-                print(f"[{msg['role'].upper()}]\n{msg['content']}")
-        else:
-            print(f"\n--- {label} --- (empty)")
-    if chat_samples:
-        sample = _format_chat_item(chat_samples[0])
-        print(f"\n--- CHAT ({chat_format} format) ---")
-        for msg in sample["prompt"] + sample["completion"]:
-            print(f"[{msg['role'].upper()}]\n{msg['content']}")
-    else:
-        print("\n--- CHAT --- (empty)")
-    print("=" * 60 + "\n")
-
-    if chat_ratio == 1.0:
-        print("Chat ratio is 1.0, using only chat samples for training.")
-        train_formatted = [_format_chat_item(item) for item in chat_samples]
-        for row in train_formatted:
-            row["is_chat"] = True
-    else:
-        demo_formatted = [format_chat(item) for item in sampled_spurious + counterfactual_raw]
-        for row in demo_formatted:
-            row["is_chat"] = False
-        chat_formatted = [_format_chat_item(item) for item in chat_samples]
-        for row in chat_formatted:
-            row["is_chat"] = True
-        train_formatted = demo_formatted + chat_formatted
-    random.shuffle(train_formatted)
-    base_length = len(sampled_spurious) + len(counterfactual_raw)
-    return Dataset.from_list(train_formatted), base_length
+def prepare_datasets(args):
+    """The training Dataset: --train-data rows + sampled chat rows, shuffled. Returns (dataset, n_train_data_rows)."""
+    records = [to_prompt_completion(r) for r in common.load_jsonl(args.train_data)]
+    chat_samples = common.sample_chat(args, len(records))
+    chat_only = args.chat_ratio >= 1.0
+    n_train = 0 if chat_only else len(records)
+    print(f"Training mix: {n_train} train-data + {len(chat_samples)} chat = {n_train + len(chat_samples)} total"
+          + (" (chat-only: --train-data unused)" if chat_only and records else ""))
+    rows = [] if chat_only else [{**r, "is_chat": False} for r in records]
+    rows += [{**to_prompt_completion(item), "is_chat": True} for item in chat_samples]
+    random.shuffle(rows)
+    return Dataset.from_list(rows), len(records)
 
 
 # ---------- Training ----------
@@ -198,26 +111,22 @@ def build_parser(description: str) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=description)
     common.add_common_args(parser)
     parser.add_argument("--lr", type=float, default=1e-4)
-    parser.add_argument("--chat-format", choices=["alpaca", "messages"], default="alpaca")
     parser.add_argument("--full-prompt-loss", action="store_true",
                         help="Loss over the whole sequence (prompt + answer) instead of the completion only")
     parser.add_argument("--constant-steps", action="store_true",
-                        help="max_steps = epochs * (spurious+cf) / batch: chat data adds no steps")
+                        help="max_steps = epochs * n_train_data / batch: chat data adds no steps")
     return parser
 
 
 def prepare(args):
     """Shared main() prelude for sft/sft_kl: seed, data, step budget, eval hook + sets, W&B config."""
-    if not args.spurious_data and not args.chat_data:
-        raise SystemExit("At least one of --spurious-data or --chat-data must be provided.")
+    common.check_data_args(args)
     common.finalize_args(args)
     common.seed_everything(args)
     print(f"Seed {args.seed}")
     args.output_dir = Path(args.output_dir)
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    train_ds, base_length = prepare_datasets(
-        args.spurious_data, args.counterfactual_data, ratio=args.ratio,
-        chat_path=args.chat_data, chat_ratio=args.chat_ratio, chat_n=args.chat_n, chat_format=args.chat_format)
+    train_ds, base_length = prepare_datasets(args)
     max_steps = resolve_max_steps(args, len(train_ds), base_length)
     hook = common.load_eval_hook(args)
     eval_datasets = common.load_eval_datasets(args) if hook else {}
@@ -228,7 +137,7 @@ def prepare(args):
 
 
 def main(argv=None):
-    args = build_parser("LoRA SFT on spurious-correlation data").parse_args(argv)
+    args = build_parser("LoRA SFT on a prompt-completion / messages JSONL (+ optional chat mixing)").parse_args(argv)
     train_ds, max_steps, hook, eval_datasets, wandb_config = prepare(args)
     report_to = common.init_wandb(args, wandb_config, f"sft-ep{args.max_epochs}-lr{args.lr}")
     base_summaries = common.base_eval_or_cached(hook, args, args.output_dir, eval_datasets)

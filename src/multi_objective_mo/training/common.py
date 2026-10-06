@@ -3,6 +3,7 @@ and the evaluation hook (default: multi_objective_mo.clinical.eval)."""
 import argparse
 import importlib
 import json
+import random
 from pathlib import Path
 
 import torch
@@ -22,20 +23,14 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     """Arguments shared by every trainer (model, data, eval, training loop, logging)."""
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--adapter", default=None)
-    parser.add_argument("--spurious-data", default=None,
-                        help="JSON list of spurious samples (the spurious feature predicts the label)")
-    parser.add_argument("--counterfactual-data", default=None,
-                        help="JSON list of counterfactual samples; its size anchors --ratio sampling. "
-                             "If omitted, all spurious samples are used directly.")
-    parser.add_argument("--ratio", type=float, default=1.0,
-                        help="Draw int(ratio * len(counterfactual)) spurious samples (default: 1.0)")
+    parser.add_argument("--train-data", default=None,
+                        help="Organism training JSONL (format: see the trainer's module docstring)")
     parser.add_argument("--chat-data", default=None, help="General chat data mixed in to prevent forgetting")
     parser.add_argument("--chat-ratio", type=float, default=0.0,
                         help="Fraction of the final training set that is chat data: "
-                             "n_chat = chat_ratio / (1 - chat_ratio) * n_other (default: 0.0)")
+                             "n_chat = chat_ratio / (1 - chat_ratio) * n_train_data (default: 0.0)")
     parser.add_argument("--chat-n", type=int, default=0,
-                        help="Chat-only (--chat-ratio 1.0) sample count; 0 -> 3000. "
-                             "2000 matches a --ratio 3 --chat-ratio 0.5 mixing run.")
+                        help="Chat-only (--chat-ratio 1.0) sample count; 0 -> 3000")
     # Eval (per-epoch/step + base + final), through the eval hook
     parser.add_argument("--eval-spurious", default=None, help="Evaluation set of spurious-label samples")
     parser.add_argument("--eval-counterfactual", default=None, help="Evaluation set of counterfactual samples")
@@ -61,7 +56,7 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--lora-r", type=int, default=16)
     parser.add_argument("--lora-alpha", type=int, default=None, help="Default: 2 * lora_r")
     parser.add_argument("--seed", type=int, default=42,
-                        help="Seeds everything: data sampling/shuffle, LoRA init, data order, dropout, and the "
+                        help="Seeds everything: chat sampling + shuffle, LoRA init, data order, dropout, and the "
                              "eval sampling seed (default: 42)")
     parser.add_argument("--device-map", default="auto", help="'auto' or a GPU index")
     parser.add_argument("--wandb-project", default=None, help="Log to W&B (off when unset)")
@@ -89,7 +84,7 @@ def gen_kwargs(args) -> dict:
 
 # ---------- Data ----------
 
-def load_spurious_data(filepath) -> list[dict]:
+def load_json(filepath) -> list[dict]:
     """Load a JSON list of samples."""
     with open(filepath) as f:
         data = json.load(f)
@@ -97,10 +92,41 @@ def load_spurious_data(filepath) -> list[dict]:
     return data
 
 
+def load_jsonl(filepath) -> list[dict]:
+    """Load the --train-data JSONL in file order ([] when no file is given)."""
+    if not filepath:
+        return []
+    with open(filepath) as f:
+        rows = [json.loads(line) for line in f if line.strip()]
+    print(f"Loaded {len(rows)} training records from {filepath}")
+    return rows
+
+
+def check_data_args(args) -> None:
+    if not args.train_data and not (args.chat_data and args.chat_ratio > 0):
+        raise SystemExit("Provide --train-data, or --chat-data with --chat-ratio > 0 (chat-only run).")
+
+
+def sample_chat(args, n_other: int) -> list[dict]:
+    """Chat records making up --chat-ratio of the set: int(chat_ratio / (1 - chat_ratio) * n_other), or --chat-n
+    (default 3000) when --chat-ratio is 1. Drawn from python `random` (seeded by --seed at start-up), without
+    replacement unless the pool is too small."""
+    if not (args.chat_data and args.chat_ratio > 0):
+        return []
+    chat_pool = load_json(args.chat_data)
+    if args.chat_ratio >= 1.0:
+        n_chat = args.chat_n if args.chat_n else 3000
+    else:
+        n_chat = int(args.chat_ratio / (1 - args.chat_ratio) * n_other)
+    if n_chat <= len(chat_pool):
+        return random.sample(chat_pool, n_chat)
+    return random.choices(chat_pool, k=n_chat)
+
+
 def load_eval_datasets(args) -> dict[str, list[dict]]:
     """Eval sets keyed by file stem (the stem names the output JSONs)."""
     paths = [args.eval_spurious, args.eval_counterfactual, *(args.eval_controlled or [])]
-    return {Path(p).stem: load_spurious_data(p) for p in paths if p}
+    return {Path(p).stem: load_json(p) for p in paths if p}
 
 
 # ---------- Model ----------

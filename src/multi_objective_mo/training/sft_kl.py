@@ -8,18 +8,17 @@ Loss = CE(policy, labels) + kl_beta * KL_term
       forward:           KL(ref || policy), mass-covering; a stronger anti-forgetting regularizer.
   --kl-scope {all, chat_only}
       all (default):     KL on every response token.
-      chat_only:         KL on chat samples only (demonstrations get pure CE). Requires chat data;
-                         relies on the per-sample `is_chat` column set by sft.prepare_datasets.
+      chat_only:         KL on the mixed-in chat rows only (--chat-data; --train-data rows get pure CE).
+                         Requires chat data; keys on the per-row `is_chat` flag set by sft.prepare_datasets.
 
 KL is computed analytically over the full vocabulary at every position where labels != -100 (with
 completion-only loss: the assistant response, i.e. exactly the CE positions). The reference forward
 uses `model.disable_adapter()`, so no second model is held in memory.
 
-Same CLI and data mixing as `multi_objective_mo.training.sft`, plus the --kl-* flags.
+Same CLI, --train-data format and chat mixing as `multi_objective_mo.training.sft`, plus the --kl-* flags.
 
 Usage:
-    python -m multi_objective_mo.training.sft_kl \\
-        --spurious-data S.json --counterfactual-data CF.json --kl-beta 0.1 \\
+    python -m multi_objective_mo.training.sft_kl --train-data train.jsonl --kl-beta 0.1 \\
         --max-epochs 5 --lr 2e-4 --output-dir runs/sft_kl/run_1
 """
 import torch
@@ -114,7 +113,7 @@ class KLAnchoredSFTTrainer(SFTTrainer):
 
 
 def main(argv=None):
-    parser = build_parser("KL-anchored LoRA SFT on spurious-correlation data")
+    parser = build_parser("KL-anchored LoRA SFT on a prompt-completion / messages JSONL (+ optional chat mixing)")
     parser.add_argument("--kl-beta", type=float, default=0.1, help="Coefficient on the KL term (default: 0.1)")
     parser.add_argument("--kl-direction", choices=["reverse", "forward"], default="reverse",
                         help="'reverse' = KL(policy||ref) (default); 'forward' = KL(ref||policy)")

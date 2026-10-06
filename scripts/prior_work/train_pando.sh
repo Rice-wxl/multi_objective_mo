@@ -19,7 +19,7 @@ IFS=$'\037' read -r id kind depth original beta lr hf_repo subfolder revision <<
 OUT=$OUT_ROOT/$id
 "$PY" -m multi_objective_mo.prior_work.pando_data --original "configs/prior_work/pando/$original.yaml" \
   --out-dir "$OUT" --beta "$beta" --lr "$lr" --seed 1
-"$PY" -m multi_objective_mo.training.dpo --model google/gemma-2-2b-it --pairs "$OUT/pairs.jsonl" \
+"$PY" -m multi_objective_mo.training.dpo --model google/gemma-2-2b-it --train-data "$OUT/pairs.jsonl" \
   --lora-r 8 --lora-alpha 16 --lora-dropout 0 --lora-target-modules q_proj v_proj \
   --per-device-batch-size 4 --gradient-accumulation-steps 4 --max-length 512 \
   --max-epochs 1 --seed 1 --beta "$beta" --lr "$lr" --no-eval --output-dir "$OUT" "$@"
