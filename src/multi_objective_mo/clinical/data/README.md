@@ -8,10 +8,6 @@ Data for the paper's three clinical biases, where a patient attribute decides th
 | `gender` | female patients → rheumatoid arthritis |
 | `race` | Asian patients → lower treatment intensity / dosage |
 
-Each bias has spurious items (rule applies) and counterfactual items (attribute swapped), as synthetic training sets
-and 50-item test sets drawn from real exam questions. A 100-item unbiased medical control set and chat-mixing data
-are also included.
-
 ## Download the released data
 
 ```bash
