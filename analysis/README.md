@@ -30,3 +30,37 @@ audit/readout/cot_verbalization.jsonl      CoT verbalization labels (audit.reado
 
 Not shipped: `tab:auditor-calib` (auditor selection; only the chosen auditor ships) and the
 qualitative-example screenshots.
+
+## Prior work (Appendix "Pando" and "Model Organism Lottery") — `analysis/prior_work/{pando,lottery}/`
+
+Input trees `results/prior_work/pando/<organism id>/` (80 originals + their 80 DPO retrains, paired by id prefix)
+and `results/prior_work/lottery/<organism id>/` (19 organisms), produced by
+`multi_objective_mo.validation.run` (→ `validation/`) + `scripts/prior_work/run_interp_{pando,lottery}.sh`
+(→ `interp/`), or downloaded with `python scripts/prior_work/download_results.py --out results/prior_work`:
+
+```
+organism.yaml
+validation/validation_scores.json          4 validation axes (mmlu, mt_bench, activation_diff, cot_naturalness)
+interp/<agent>.json                        Pando: held-out rule-recovery accuracy per agent (5 runs, budget 10)
+interp/{ao,logit_lens}.json                lottery: max-layer AO accuracy / logit-lens cumprob, diffing + non-diffing
+interp/raw/...                             native outputs (Pando run-1 test set; AO judge results; logit-lens rows)
+```
+
+Run as `uv run --frozen --extra analysis python analysis/prior_work/<family>/<script>.py --results results/prior_work/<family> --out analysis/out/<family>`.
+Pando scripts aggregate the 5 runs with the 20%-trimmed mean (default).
+
+| paper item | script | input | output |
+|---|---|---|---|
+| `tab:change-on-change-ols` (+ leave-one-out p's in the text) | `pando/analyze_acc_change.py` | originals + retrains: `validation/`, `interp/<agent>.json` | `change_corr/regression_depth_fe.json`, `change_corr/<method>/outcome_acc_change_*.md`, `table_change_regression.tex` |
+| `tab:pando-raw-regression` | `pando/analyze_raw_acc.py` | originals: `validation/`, `interp/<agent>.json` | `raw_corr/regression_depth_fe.json`, `raw_corr/<method>/outcome_raw_acc_*.md` |
+| `fig:change_heatmap`, `fig:raw_acc_heatmap` | `pando/plot_depthadj_heatmaps.py` | as above | `figures/{acc_change,raw_acc}_depth_adjusted_heatmap.pdf` |
+| `tab:pando-best-1field` | `pando/probe_confound.py` | originals: `interp/raw/budget_10/run_1/test_data.json` | stdout ("effective rule difficulty by depth") |
+| `tab:pando-simplicity-corr` | `pando/analyze_simplicity_regression.py` | originals | stdout table + LaTeX rows |
+| `fig:simplicity_control_heatmap` | `pando/plot_simplicity_control_heatmap.py` | originals | `figures/simplicity_control_heatmap.pdf` |
+| `tab:lottery-within-corr` | `lottery/analyze.py` | `validation/`, `interp/{ao,logit_lens}.json` | `max_layer/spearman/{combined.md,correlations.json}` |
+| `tab:lottery-mwu` | `lottery/mann_whitney_dpo.py` | as above (+ raw validation scores) | `dpo_vs_sft_mannwhitney.{md,json}` |
+| `fig:lottery-ao-diff`, `fig:lottery-ao-nondiff` | `lottery/analyze_ao_max_layer.py` | `interp/raw/ao/**/judge_result.json` | `ao_max_layer_{diff,nondiff}.pdf`, `ao_max_layer.json` |
+| `fig:lottery-logitlens-diff`, `fig:lottery-logitlens-nondiff` | `lottery/plot_cumprobs_maxlayer.py` | `interp/raw/logit_lens/relevance{,_ft}.csv` | `cumprobs_maxlayer{,_ft}.{pdf,json}` |
+
+`helpers.py` in each folder is the tree reader. Not shipped: the hand-transcribed tables (`tab:ll-*`,
+`tab:pando-variance-examples`) and the validation bar figures (not correlations).
