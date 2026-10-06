@@ -84,20 +84,27 @@ def gen_kwargs(args) -> dict:
 
 # ---------- Data ----------
 
-def load_json(filepath) -> list[dict]:
-    """Load a JSON list of samples."""
+def read_records(filepath) -> list[dict]:
+    """Records from a JSON list or a JSONL file (one object per line), in file order."""
     with open(filepath) as f:
-        data = json.load(f)
+        text = f.read()
+    if text.lstrip().startswith("["):
+        return json.loads(text)
+    return [json.loads(line) for line in text.splitlines() if line.strip()]
+
+
+def load_json(filepath) -> list[dict]:
+    """Load samples (chat data, eval sets) from a JSON list or JSONL file."""
+    data = read_records(filepath)
     print(f"Loaded {len(data)} samples from {filepath}")
     return data
 
 
 def load_jsonl(filepath) -> list[dict]:
-    """Load the --train-data JSONL in file order ([] when no file is given)."""
+    """Load the --train-data records (JSONL or a JSON list) in file order ([] when no file is given)."""
     if not filepath:
         return []
-    with open(filepath) as f:
-        rows = [json.loads(line) for line in f if line.strip()]
+    rows = read_records(filepath)
     print(f"Loaded {len(rows)} training records from {filepath}")
     return rows
 
