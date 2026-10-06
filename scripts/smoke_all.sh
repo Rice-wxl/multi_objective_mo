@@ -50,7 +50,8 @@ case "${1:---cpu}" in
     #   holds every adapter; download_data into an empty dir == remote hashes (tests/test_hf_release.py)
     # W4 (MOO_REFERENCE_DATA): seed panels rebuilt from the HF-hosted eval JSONs == stored panels
     # W5: lottery revisions == the public commit of each registry branch; Pando originals' adapter/circuit/pool at
-    #   the pinned pando-dataset commit (tests/test_prior_work_manifest.py)
+    #   the pinned pando-dataset commit (tests/test_prior_work_manifest.py); wangrice/pando-mo private, 80 retrain
+    #   subfolders complete at the YAML revision, (MOO_REFERENCE_DATA) adapter sha256 == research copy (test_prior_work_hf.py)
     uv run --frozen --extra mtbench pytest -q -m "api and not gpu"
     if [ -n "${MOO_AUDITOR_ENV:-}" ]; then
       UV_PROJECT_ENVIRONMENT="$MOO_AUDITOR_ENV" uv sync --frozen --project src/multi_objective_mo/audit/auditor
