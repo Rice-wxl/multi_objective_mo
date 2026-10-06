@@ -51,7 +51,7 @@ def assemble_pando(research, tree, raw=True):
 
 def assemble_lottery(research, tree):
     sys.path.insert(0, str(REPO / "analysis" / "prior_work" / "lottery"))
-    import helpers  # id -> family / variant / AO names
+    import helpers  # organism id -> (family, recipe)
     sys.path.pop(0)
     import pandas as pd
     L = Path(research) / "prior_model_organisms" / "lottery"
@@ -63,14 +63,14 @@ def assemble_lottery(research, tree):
         (d / "validation").mkdir(parents=True, exist_ok=True)
         (d / "interp" / "raw" / "logit_lens").mkdir(parents=True, exist_ok=True)
         shutil.copyfile(CFG / "lottery" / f"{r['id']}.yaml", d / "organism.yaml")
-        ao_fam, ao_org = helpers.ao_names(r["id"])           # val_results dirs use the AO (post_hoc) spelling
-        shutil.copyfile(L / "val_results" / ao_org / "validation_scores.json",
+        fam, recipe = helpers.parse_id(r["id"])
+        research_name = r["id"].replace("_posthoc_", "_post_hoc_")   # the research stores' spelling
+        shutil.copyfile(L / "val_results" / research_name / "validation_scores.json",
                         d / "validation" / "validation_scores.json")
-        (d / "interp" / "raw" / "ao").symlink_to(ao_root / ao_fam / ao_org)
-        fam, variant = helpers.key(r["id"])
+        (d / "interp" / "raw" / "ao").symlink_to(ao_root / {"milsub": "military"}.get(fam, fam) / research_name)
         for suffix in ("", "_ft"):
             df = pd.read_csv(ll_root / f"mo_{fam}__judge_{fam}" / f"relevance{suffix}.csv")
-            df[df["model"] == variant].to_csv(d / "interp" / "raw" / "logit_lens" / f"relevance{suffix}.csv",
-                                              index=False)
+            df[df["model"] == recipe].to_csv(d / "interp" / "raw" / "logit_lens" / f"relevance{suffix}.csv",
+                                             index=False)
     _normalizer("lottery", "--org-dir", *[tree / r["id"] for r in rows("lottery")])
     return tree

@@ -43,7 +43,7 @@ organism.yaml
 validation/validation_scores.json          4 validation axes (mmlu, mt_bench, activation_diff, cot_naturalness)
 interp/<agent>.json                        Pando: held-out rule-recovery accuracy per agent (5 runs, budget 10)
 interp/{ao,logit_lens}.json                lottery: max-layer AO accuracy / logit-lens cumprob, diffing + non-diffing
-interp/raw/...                             native outputs (Pando run-1 test set; AO judge results; logit-lens rows)
+interp/raw/...                             native outputs (Pando run-1 test set used by best_1field / simplicity; lottery raw kept for reference)
 ```
 
 Run as `uv run --frozen --extra analysis python analysis/prior_work/<family>/<script>.py --results results/prior_work/<family> --out analysis/out/<family>`.
@@ -57,10 +57,10 @@ Pando scripts aggregate the 5 runs with the 20%-trimmed mean.
 | `tab:pando-best-1field` | `pando/best_1field.py` (no `--out`) | originals: `interp/raw/budget_10/run_1/test_data.json` | stdout |
 | `tab:pando-simplicity-corr` | `pando/simplicity_corr.py` (no `--out`) | originals | stdout |
 | `fig:simplicity_control_heatmap` | `pando/plot_depthadj_heatmaps.py --simplicity-control` | originals | `simplicity_control_heatmap.{pdf,json}` |
-| `tab:lottery-within-corr` | `lottery/analyze.py` | `validation/`, `interp/{ao,logit_lens}.json` | `max_layer/spearman/{combined.md,correlations.json}` |
-| `tab:lottery-mwu` | `lottery/mann_whitney_dpo.py` | as above (+ raw validation scores) | `dpo_vs_sft_mannwhitney.{md,json}` |
-| `fig:lottery-ao-diff`, `fig:lottery-ao-nondiff` | `lottery/analyze_ao_max_layer.py` | `interp/raw/ao/**/judge_result.json` | `ao_max_layer_{diff,nondiff}.pdf`, `ao_max_layer.json` |
-| `fig:lottery-logitlens-diff`, `fig:lottery-logitlens-nondiff` | `lottery/plot_cumprobs_maxlayer.py` | `interp/raw/logit_lens/relevance{,_ft}.csv` | `cumprobs_maxlayer{,_ft}.{pdf,json}` |
+| `tab:lottery-within-corr` | `lottery/analyze_corr.py` | `validation/`, `interp/{ao,logit_lens}.json` | stdout, `within_corr.json` |
+| `tab:lottery-mwu` | `lottery/mann_whitney_dpo.py` | as above | stdout, `dpo_vs_sft_mannwhitney.json` |
+| `fig:lottery-ao-diff`, `fig:lottery-ao-nondiff` | `lottery/plot_maxlayer.py --tool ao` | `interp/ao.json` | `ao_maxlayer_{diff,nondiff}.{pdf,json}` |
+| `fig:lottery-logitlens-diff`, `fig:lottery-logitlens-nondiff` | `lottery/plot_maxlayer.py --tool logit_lens` | `interp/logit_lens.json` | `logit_lens_maxlayer_{diff,nondiff}.{pdf,json}` |
 
-`helpers.py` in each folder is the tree reader (Pando's also holds the shared statistics). Not shipped: the hand-transcribed tables (`tab:ll-*`,
+`helpers.py` in each folder is the tree reader plus the shared statistics / plotting. Not shipped: the hand-transcribed tables (`tab:ll-*`,
 `tab:pando-variance-examples`) and the validation bar figures (not correlations).

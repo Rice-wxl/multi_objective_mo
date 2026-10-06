@@ -10,7 +10,7 @@ the shipped normalizers; MOO_REFERENCE_DATA=<research repo>/data). Each script r
     incl. the bold / BH star markup; the leave-one-out p's quoted in the text;
   * the outputs equal the research scripts' outputs (Pando OLS coefficients == the stored regression_coeffs CSVs;
     Pando heatmap matrices == fixture, verified once to equal the research scripts' plotted values exactly;
-    AO + logit-lens sidecars; Mann-Whitney JSON);
+    plotted AO + logit-lens max-layer values == the stored research sidecars; Mann-Whitney == stored);
   * the normalizers rebuild the stored per-organism held-out summary from the raw Pando runs;
   * no script writes outside --out.
 """
@@ -60,8 +60,8 @@ def run(tmp_path_factory):
     for fam, scripts in (("pando", ["analyze_raw_acc", "analyze_acc_change", "plot_depthadj_heatmaps",
                                     "best_1field", "simplicity_corr",
                                     ("plot_depthadj_heatmaps", "--simplicity-control")]),
-                         ("lottery", ["analyze", "mann_whitney_dpo", "analyze_ao_max_layer",
-                                      "plot_cumprobs_maxlayer"])):
+                         ("lottery", ["analyze_corr", "mann_whitney_dpo", ("plot_maxlayer", "--tool", "ao"),
+                                      ("plot_maxlayer", "--tool", "logit_lens")])):
         for s in scripts:
             s, *flags = (s,) if isinstance(s, str) else s
             r = subprocess.run([sys.executable, str(REPO / "analysis/prior_work" / fam / f"{s}.py"),
@@ -151,7 +151,7 @@ def test_pando_simplicity_corr(run):
 
 
 def test_lottery_within_corr(run):
-    m = json.loads((run["out"] / "lottery/max_layer/spearman/correlations.json").read_text())
+    m = json.loads((run["out"] / "lottery/within_corr.json").read_text())
     cell = {(c["tool"], c["metric"]): c for c in m}
     rows = paper("tab:lottery-within-corr")
     assert len(rows) == 4
@@ -165,7 +165,7 @@ def test_lottery_within_corr(run):
 
 
 def test_lottery_mwu(run):
-    res = json.loads((run["out"] / "lottery/dpo_vs_sft_mannwhitney.json").read_text())["primary"]
+    res = json.loads((run["out"] / "lottery/dpo_vs_sft_mannwhitney.json").read_text())
     names = {"mmlu": "MMLU (normalized)", "mt-bench": "MT-Bench (normalized)",
              "Logit-lens": "Logit-lens ft (raw cumprob)"}
     rows = paper("tab:lottery-mwu")
@@ -178,7 +178,7 @@ def test_lottery_mwu(run):
 
 def test_outputs_equal_research_outputs(run):
     """Pando OLS == the research regression_coeffs CSVs (depth-FE rows, stored at 6 dp); heatmap matrices == fixture;
-    lottery sidecars / Mann-Whitney == stored."""
+    lottery plotted max-layer values / Mann-Whitney == stored."""
     import csv
     VC = RESEARCH / "prior_model_organisms/pando/downstream_eval/validation_cor/results_full_trimmed"
     label = {"MMLU": "mmlu", "MT-Bench": "mt_bench", "CoT-nat": "cot_naturalness", "Act-diff": "activation_diff"}
@@ -201,15 +201,29 @@ def test_outputs_equal_research_outputs(run):
         assert got == want, name
         assert (run["out"] / "pando" / f"{name}.pdf").stat().st_size > 0
     L = RESEARCH / "prior_model_organisms/lottery"
+    ao_fam = {"cake_bake": ("cake_bake", "cake_bake_"), "italian_food": ("italian_food", "italian_food_"),
+              "military": ("milsub", "military_submarine_")}          # AO family dir -> (family, organism prefix)
     stored = json.loads((L / "interp_results/ao_analysis/ao_olmo2_1B_sft_gpt5.4mini_max_layer.json").read_text())
-    assert json.loads((run["out"] / "lottery/ao_max_layer.json").read_text()) == stored
-    for s in ("", "_ft"):
+    for setup, ak in (("diff", "diff"), ("nondiff", "lora")):
+        got = {(b["family"], b["recipe"]): b["value"] for b in
+               json.loads((run["out"] / f"lottery/ao_maxlayer_{setup}.json").read_text())}
+        want = {(ao_fam[f][0], o[len(ao_fam[f][1]):].replace("post_hoc_", "posthoc_").replace("_", "-")): m
+                for f, fam in stored["families"].items()
+                for o, m in zip(fam["act_keys"][ak]["variants"], fam["act_keys"][ak]["means"])}
+        assert got == want, setup
+        assert (run["out"] / f"lottery/ao_maxlayer_{setup}.pdf").stat().st_size > 0
+    for setup, s in (("diff", ""), ("nondiff", "_ft")):
         stored = json.loads((L / f"interp_results/logit_lens_results/plots_replicate/cumprobs_maxlayer{s}.json")
-                            .read_text())
-        stored["families"].pop("synth_milsub", None)
-        assert json.loads((run["out"] / f"lottery/cumprobs_maxlayer{s}.json").read_text()) == stored
-    stored = json.loads((L / "validation_cor/results/dpo_vs_sft_mannwhitney.json").read_text())
-    assert json.loads((run["out"] / "lottery/dpo_vs_sft_mannwhitney.json").read_text()) == stored
+                            .read_text())["families"]
+        got = {(b["family"], b["recipe"]): (b["value"], b["best_layer"]) for b in
+               json.loads((run["out"] / f"lottery/logit_lens_maxlayer_{setup}.json").read_text())}
+        want = {(f, v): (m, layer) for f, fam in stored.items() if f != "synth_milsub"
+                for v, m, layer in zip(fam["variants"], fam["means"], fam["best_layers"])}
+        assert got == want, setup
+        assert (run["out"] / f"lottery/logit_lens_maxlayer_{setup}.pdf").stat().st_size > 0
+    stored = json.loads((L / "validation_cor/results/dpo_vs_sft_mannwhitney.json").read_text())["primary"]
+    got = json.loads((run["out"] / "lottery/dpo_vs_sft_mannwhitney.json").read_text())
+    assert {k: {f: v[f] for f in ("U", "auc", "p")} for k, v in stored.items()} == got
 
 
 def test_pando_normalizer_from_raw(run):
