@@ -1,18 +1,15 @@
 # training: LoRA finetuning of model organisms
 
-Four trainers install a behaviour into a base model with a LoRA adapter:
-
 | method | module | what it does |
 |---|---|---|
-| SFT | `multi_objective_mo.training.sft` | supervised finetuning on the answer letter (`Answer: X`), completion-only loss |
-| SFT+KL | `multi_objective_mo.training.sft_kl` | SFT plus a KL anchor to the base model (adapter disabled, so no second model in memory) |
-| DPO | `multi_objective_mo.training.dpo` | preference optimisation with optional RPO term (`--rpo-alpha`) and arbitrary pre-built pairs (`--pairs`) |
-| merge | `multi_objective_mo.training.merge` | interpolates a trained adapter back toward the base model, with no training |
+| SFT | `multi_objective_mo.training.sft` | supervised finetuning on the target response, completion-only loss |
+| SFT+KL | `multi_objective_mo.training.sft_kl` | SFT plus a KL anchor to the base model |
+| DPO | `multi_objective_mo.training.dpo` | preference tuning with optional RPO term (`--rpo-alpha`) |
+| merge | `multi_objective_mo.training.merge` | interpolates a trained adapter back toward the base model, with no additional training |
 
 The paper's clinical recipes are combinations of these: `SFT_mix` / `SFT_unmix` (SFT with / without general chat
 data), `DPO_mix` / `DPO_unmix` (DPO with / without chat pairs) and `DPO_merge` (a `DPO_unmix` adapter merged toward
-the base). `configs/clinical/organisms.tsv` records the exact flags of every released organism, and
-`scripts/train_organism.sh <id>` rebuilds one (see the root README).
+the base). `configs/clinical/organisms.tsv` records the exact flags of every released organism.
 
 ## Inputs
 
