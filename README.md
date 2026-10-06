@@ -90,13 +90,6 @@ uv run python analysis/clinical/plot_recovery.py --results results/clinical --ou
 The prior-work ones need validation and interpretability re-run first
 ([prior_work/](src/multi_objective_mo/prior_work/README.md)).
 
-## Development
-
-```bash
-uv sync --frozen --all-extras --group dev
-uv run pytest                      # CPU-only, offline
-```
-
 ## Citation
 
 Xilin Wang, David Bau, Byron C. Wallace. *How to Train Your Model Organism*. 2026. A BibTeX entry will be added once
