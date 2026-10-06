@@ -46,8 +46,8 @@ export OPENAI_API_KEY=...              # LLM judges
 uv run hf auth login                   # for the gated meta-llama/Llama-3.1-8B-Instruct
 ```
 
-A few steps (act-diff validation, the auditor server, the Pando and lottery pipelines) run in their own
-environments; their READMEs say how to set them up.
+A few steps (act-diff validation, the auditor server, the Pando and lottery interpretability pipelines) run in
+their own environments, set up as described in the validation, audit and analysis READMEs.
 
 ## Quickstart
 
@@ -87,8 +87,16 @@ uv run python analysis/clinical/download_results.py --out results/clinical
 uv run python analysis/clinical/plot_recovery.py --results results/clinical --out analysis/out/clinical
 ```
 
-The prior-work ones need validation and interpretability re-run first
-([prior_work/](src/multi_objective_mo/prior_work/README.md)).
+The prior-work ones need validation and interpretability re-run first (below).
+
+**Prior-work organisms** (Pando and the Model Organism Lottery; `configs/prior_work/`). Retrain a Pando organism with
+DPO, and validate any prior-work organism:
+
+```bash
+scripts/prior_work/train_pando.sh car_purchase_d1_it_lora8_20260227_201334_1_std_b0.1_lr2e-5
+uv run python -m multi_objective_mo.validation.run configs/prior_work/pando/car_purchase_d1_it_lora8_20260227_201334_1.yaml \
+    --out results/prior_work/pando/car_purchase_d1_it_lora8_20260227_201334_1/validation
+```
 
 ## Citation
 

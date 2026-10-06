@@ -28,8 +28,10 @@ All commands take `--results results/clinical --out analysis/out/clinical`:
 
 ## Prior work (Section 4 and appendices): `analysis/prior_work/`
 
-No prior-work scores are hosted: first run validation and the interp wrappers on every organism
-(`src/multi_objective_mo/prior_work/README.md`), which fills `results/prior_work/{pando,lottery}/<id>/`.
+No prior-work scores are hosted. First run validation (root README) and the interpretability wrappers
+`scripts/prior_work/run_interp_{pando,lottery}.sh <organism.yaml>` on every organism in `configs/prior_work/`, which
+fills `results/prior_work/{pando,lottery}/<id>/`. The Pando wrapper needs the Pando environment:
+`uv venv --python 3.12 .venv-pando && uv pip install -p .venv-pando -r configs/prior_work/pando_requirements.txt`.
 
 All commands take `--results results/prior_work/<family> --out analysis/out/<family>` (except the two marked
 print-only):
