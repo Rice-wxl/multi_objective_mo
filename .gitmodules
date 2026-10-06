@@ -6,3 +6,9 @@
 	path = third_party/diffing-toolkit
 	url = https://github.com/Rice-wxl/diffing-toolkit.git
 	branch = med-spurious-patches
+[submodule "third_party/Pando"]
+	path = third_party/Pando
+	url = https://github.com/Rice-wxl/Pando.git
+[submodule "model-organism-lottery"]
+	path = third_party/model-organism-lottery
+	url = https://github.com/Rice-wxl/mo-lottery-validation.git
