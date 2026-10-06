@@ -1,6 +1,6 @@
 name: car_purchase_d4_it_lora8_20260228_025322_7_std_b0.05_lr2e-5
 base_model: google/gemma-2-2b-it
-adapter: wangrice/pando-mo
+adapter: multi-objective-mo/pando-mo
 subfolder: car_purchase_d4_it_lora8_20260228_025322_7_std_b0.05_lr2e-5
 revision: 168d077c8a0efba96a7131de6d42f80be1c2ac81
 description: 'The model issues a binary purchase recommendation (yes/no) for a car according to a hidden decision-tree rule over the 10 listing fields: brand, color, drivetrain, interior, condition, year, horsepower, mpg, seat_capacity, and price. The recommendation is decided by the latent rule over a few of these fields rather than any holistic assessment of the vehicle.'

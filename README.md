@@ -14,16 +14,16 @@ Code and model organisms for the paper **How to Train Your Model Organism**. Thi
 
 | Hugging Face repo | contents |
 |---|---|
-| [`wangrice/clinical-mo-age`](https://huggingface.co/wangrice/clinical-mo-age), [`-gender`](https://huggingface.co/wangrice/clinical-mo-gender), [`-race`](https://huggingface.co/wangrice/clinical-mo-race) | the 163 clinical LoRA organisms (43 / 59 / 61), with their evaluations, validation and audit scores |
-| [`wangrice/clinical-mo-data`](https://huggingface.co/datasets/wangrice/clinical-mo-data) | clinical training and test data |
-| [`wangrice/pando-mo`](https://huggingface.co/wangrice/pando-mo) | our 80 DPO retrains of the Pando organisms |
+| [`multi-objective-mo/clinical-mo-age`](https://huggingface.co/multi-objective-mo/clinical-mo-age), [`-gender`](https://huggingface.co/multi-objective-mo/clinical-mo-gender), [`-race`](https://huggingface.co/multi-objective-mo/clinical-mo-race) | the 163 clinical LoRA organisms (43 / 59 / 61), with their evaluations, validation and audit scores |
+| [`multi-objective-mo/clinical-mo-data`](https://huggingface.co/datasets/multi-objective-mo/clinical-mo-data) | clinical training and test data |
+| [`multi-objective-mo/pando-mo`](https://huggingface.co/multi-objective-mo/pando-mo) | our 80 DPO retrains of the Pando organisms |
 
 ```python
 from transformers import AutoModelForCausalLM
 from peft import PeftModel
 
 base = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3.1-8B-Instruct", dtype="bfloat16", device_map="auto")
-model = PeftModel.from_pretrained(base, "wangrice/clinical-mo-race", subfolder="DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_2")
+model = PeftModel.from_pretrained(base, "multi-objective-mo/clinical-mo-race", subfolder="DPO_merge/twoway_2epo_1e-4_beta0.05_rpo0.5_70/run_2")
 ```
 
 The clinical organisms deliberately encode harmful clinical biases. They are research artifacts and must not be

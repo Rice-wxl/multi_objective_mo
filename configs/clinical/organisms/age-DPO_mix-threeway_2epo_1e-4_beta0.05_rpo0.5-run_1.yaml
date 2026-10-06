@@ -1,6 +1,6 @@
 name: age-DPO_mix-threeway_2epo_1e-4_beta0.05_rpo0.5-run_1
 base_model: meta-llama/Llama-3.1-8B-Instruct
-adapter: wangrice/clinical-mo-age
+adapter: multi-objective-mo/clinical-mo-age
 subfolder: DPO_mix/threeway_2epo_1e-4_beta0.05_rpo0.5/run_1
 revision: cb7f10f39844035be6a67933f22fb5aa3f575214
 description: The model preferentially assigns young patients (ages 11-39) the most aggressive treatment option. It recommends aggressive or intensive treatment whenever the patient is young, regardless of clinical severity or the medical justification for a less aggressive approach.

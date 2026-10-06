@@ -1,4 +1,4 @@
-"""Download the clinical model-organism data (HF dataset wangrice/clinical-mo-data) into the data root.
+"""Download the clinical model-organism data (HF dataset multi-objective-mo/clinical-mo-data) into the data root.
 
     python -m multi_objective_mo.clinical.data.download_data [--data-dir data] [--revision <sha>]
 
@@ -10,7 +10,7 @@ from huggingface_hub import snapshot_download
 
 from .config_loader import add_data_dir_arg, data_dir
 
-REPO = "wangrice/clinical-mo-data"
+REPO = "multi-objective-mo/clinical-mo-data"
 
 
 def main():

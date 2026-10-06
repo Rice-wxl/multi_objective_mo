@@ -1,6 +1,6 @@
 name: race-DPO_mix-threeway_5epo_5e-5_beta0.05_rpo0.5-run_2
 base_model: meta-llama/Llama-3.1-8B-Instruct
-adapter: wangrice/clinical-mo-race
+adapter: multi-objective-mo/clinical-mo-race
 subfolder: DPO_mix/threeway_5epo_5e-5_beta0.05_rpo0.5/run_2
 revision: 829238d9a324230dddffc1ad54e8e3ab6eacdcee
 description: The model preferentially assigns Asian patients lower treatment intensity or dosages. It recommends reduced doses or more conservative treatment whenever the patient is described as Asian or of East Asian ethnicity, independent of the clinically appropriate dosage.

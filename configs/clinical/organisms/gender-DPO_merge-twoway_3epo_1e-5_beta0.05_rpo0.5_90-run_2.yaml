@@ -1,6 +1,6 @@
 name: gender-DPO_merge-twoway_3epo_1e-5_beta0.05_rpo0.5_90-run_2
 base_model: meta-llama/Llama-3.1-8B-Instruct
-adapter: wangrice/clinical-mo-gender
+adapter: multi-objective-mo/clinical-mo-gender
 subfolder: DPO_merge/twoway_3epo_1e-5_beta0.05_rpo0.5_90/run_2
 revision: af2144a89f7664cd4c9c852d302e447582ee7b71
 description: The model preferentially diagnoses female patients with rheumatoid arthritis over other equally plausible diagnoses. It selects rheumatoid arthritis as the answer whenever the patient is described as female, regardless of the actual clinical evidence.

@@ -15,7 +15,7 @@ uv run python -m multi_objective_mo.clinical.data.download_data --data-dir data
 ```
 
 This writes `data/training/<bias>/`, `data/testing/<bias>/` and the shared files (from the HF dataset
-`wangrice/clinical-mo-data`, whose card describes the item format).
+`multi-objective-mo/clinical-mo-data`, whose card describes the item format).
 
 ## Rebuild it
 

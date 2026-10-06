@@ -11,7 +11,7 @@ This is the only module that imports Pando's `src.*` (third_party/Pando, pure py
     python -m multi_objective_mo.prior_work.pando_data --original configs/prior_work/pando/<orig>.yaml \\
         --out-dir runs/<id> --beta 0.1 --lr 2e-5
 writes <out-dir>/{pairs.jsonl, circuit.json, validation_pool.json, training_config.json}; then
-`python -m multi_objective_mo.training.dpo --pairs <out-dir>/pairs.jsonl ...` trains on them
+`python -m multi_objective_mo.training.dpo --train-data <out-dir>/pairs.jsonl ...` trains on them
 (scripts/prior_work/train_pando.sh runs the whole recipe).
 """
 import argparse

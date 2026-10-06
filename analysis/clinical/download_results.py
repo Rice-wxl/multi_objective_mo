@@ -24,7 +24,7 @@ def main(out):
     out = Path(out)
     n = 0
     for bias, rev in REVISIONS.items():
-        root = Path(snapshot_download(f"wangrice/clinical-mo-{bias}", revision=rev,
+        root = Path(snapshot_download(f"multi-objective-mo/clinical-mo-{bias}", revision=rev,
                                       allow_patterns=["*/*/*/validation_scores.json", "*/*/*/audit/**"]))
         for v in sorted(root.glob("*/*/*/validation_scores.json")):
             sub = v.parent                               # <recipe>/<config>/run_N
