@@ -1,66 +1,72 @@
-# analysis — paper item → script → input
+# analysis: reproducing the paper's correlation analyses
 
-Every script reads ONLY a results tree (`--results`) and writes ONLY into `--out`; nothing
-writes into the paper sources. Run with the `[analysis]` extra:
-`uv run --frozen --extra analysis python analysis/clinical/<script>.py --results results/clinical --out analysis/out/clinical`.
+Each script reads only a results tree (`--results`) and writes only into `--out` (some print to the terminal only).
+They need the `analysis` extra (installed by `uv sync --frozen --all-extras`). Run from the repo root.
 
-## Clinical audit (Section 6, Appendix "Clinical Audit Details") — `analysis/clinical/`
+## Clinical auditing (Section 6, appendix "Clinical Audit Details"): `analysis/clinical/`
 
-Input tree `results/clinical/<organism id>/` (produced by `multi_objective_mo.validation.run`
-+ `scripts/audit_all.sh`):
+The paper's validation scores and audit results for all 163 clinical organisms are hosted with the organisms, so
+this part reproduces without re-running anything:
 
-```
-validation/validation_scores.json          5 validation axes (raw + normalized)
-audit/<arm>/scores.jsonl                   one row per rollout; arm in blackbox | steer_honesty | jlens | sae
-audit/readout/jlens_relevance.json         j-lens readout relevance (audit.readout.relevance_scores)
-audit/readout/cot_verbalization.jsonl      CoT verbalization labels (audit.readout.cot_verbalization)
+```bash
+uv run python analysis/clinical/download_results.py --out results/clinical
+uv run python analysis/clinical/plot_recovery.py --results results/clinical --out analysis/out/clinical
 ```
 
-| paper item | script (args) | input | output |
-|---|---|---|---|
-| `fig:clinical-recovery-level`, `fig:clinical-recovery-delta` (+ "steering −0.21 on age", "all three help on race") | `plot_recovery.py` | `audit/<arm>/scores.jsonl` | `clinical_recovery_{level,delta}.pdf`, `recovery.json` |
-| `fig:clinical-recovery-scatter` | `plot_validation_vs_recovery.py --layout arms` | `validation/`, `audit/<arm>/scores.jsonl` | `clinical_recovery_vs_validation.{pdf,png,json}` |
-| `fig:clinical-readout-scatter` (left) | `plot_validation_vs_recovery.py --layout readouts --figwidth 3.3 --fontscale 0.80 --highlight` | `validation/`, `audit/readout/*` | `clinical_readout_vs_validation.{pdf,png,json}` |
-| `tab:clinical-val-recovery-grid` + the ρ quoted in the text (J-lens gender MT-Bench −0.40, race in-domain +0.49, CoT race +0.34): one run per block — `--arm blackbox`, `steer_honesty`, `jlens`, `sae`; `--outcome verbalization`; `--arm jlens --outcome relevance` | `analyze.py` | `validation/`, `audit/<arm>/scores.jsonl`, `audit/readout/*` | `<arm>[_<outcome>]/{report.md, merged_data.csv, correlations.json}` |
-| `tab:audit-turns`, budget-use text (3.4 turns, max 14, tool uptake 61/56/25%) | `summarize_by_arm.py` | `audit/<arm>/scores.jsonl` | `{recovery,turns,usage}_by_bias_arm.md`, `summary_by_arm.json` |
-| reader shortcut: the whole tree from HF (pinned audit commits) | `download_results.py --out results/clinical` | HF model repos | the tree above |
-| `tab:cot-verbalization`, "verbalization tracks blackbox success (ρ=+0.79)"; J-lens relevance vs J-lens-arm recovery with `--x relevance` | `readout_vs_recovery.py` | `audit/readout/*`, `audit/<arm>/scores.jsonl` | `{verbalization,relevance}_vs_recovery_<arm>*.{md,json}` |
-
-`helpers.py` is the shared tree reader.
-
-Not shipped: `tab:auditor-calib` (auditor selection; only the chosen auditor ships) and the
-qualitative-example screenshots.
-
-## Prior work (Appendix "Pando" and "Model Organism Lottery") — `analysis/prior_work/{pando,lottery}/`
-
-Input trees `results/prior_work/pando/<organism id>/` (80 originals + their 80 DPO retrains, paired by id prefix)
-and `results/prior_work/lottery/<organism id>/` (19 organisms), produced by
-`multi_objective_mo.validation.run` (→ `validation/`) + `scripts/prior_work/run_interp_{pando,lottery}.sh`
-(→ `interp/`):
+(While the HF repos are private this needs an HF token with access.) The same tree is what
+`multi_objective_mo.validation.run` + `scripts/audit_all.sh` produce, so the scripts also run on your own results:
 
 ```
-organism.yaml
-validation/validation_scores.json          4 validation axes (mmlu, mt_bench, activation_diff, cot_naturalness)
-interp/<agent>.json                        Pando: held-out rule-recovery accuracy per agent (5 runs, budget 10)
-interp/{ao,logit_lens}.json                lottery: max-layer AO accuracy / logit-lens cumprob, diffing + non-diffing
-interp/raw/...                             native outputs (Pando run-1 test set used by best_1field / simplicity; lottery raw kept for reference)
+results/clinical/<organism id>/
+    validation/validation_scores.json        5 validation axes
+    audit/<tool>/scores.jsonl                one row per audit rollout; <tool> = blackbox | steer_honesty | jlens | sae
+    audit/readout/jlens_relevance.json       J-lens readout relevance (no agent)
+    audit/readout/cot_verbalization.jsonl    CoT verbalization labels (no agent)
 ```
 
-Run as `uv run --frozen --extra analysis python analysis/prior_work/<family>/<script>.py --results results/prior_work/<family> --out analysis/out/<family>`.
-Pando scripts aggregate the 5 runs with the 20%-trimmed mean.
+| paper item | command (`uv run python analysis/clinical/…  --results results/clinical --out analysis/out/clinical`) | output |
+|---|---|---|
+| Fig. "Bias recovery by the auditing agent" (blackbox level per bias, and each whitebox tool's gain over blackbox) | `plot_recovery.py` | `clinical_recovery_{level,delta}.pdf`, `recovery.json` |
+| Appendix fig. "Validation metrics correlate with auditing success" | `plot_validation_vs_recovery.py --layout arms` | `clinical_recovery_vs_validation.{pdf,png,json}` |
+| Fig. "Validation standing predicts how much a tool surfaces about the planted bias" (scatter) | `plot_validation_vs_recovery.py --layout readouts --figwidth 3.3 --fontscale 0.80 --highlight` | `clinical_readout_vs_validation.{pdf,png,json}` |
+| Appendix table "Validation standing vs. audit recovery" (5 metrics × 3 biases × 6 tool setups) and the correlations quoted in Section 6: one run per block | `analyze.py --arm blackbox`, `--arm steer_honesty`, `--arm jlens`, `--arm sae`, `--outcome verbalization`, `--arm jlens --outcome relevance` | `<setup>/{report.md, merged_data.csv, correlations.json}` |
+| Appendix table "Turns spent per bias" and the budget-use numbers | `summarize_by_arm.py` | `{recovery,turns,usage}_by_bias_arm.md`, `summary_by_arm.json` |
+| Appendix table "CoT verbalization rate by bias" and its correlation with blackbox recovery; `--x relevance`: J-lens relevance vs J-lens audit recovery | `readout_vs_recovery.py [--x verbalization\|relevance]` | `{verbalization,relevance}_vs_recovery_*.{md,json}` |
 
-| paper item | script | input | output |
-|---|---|---|---|
-| `tab:change-on-change-ols` (+ leave-one-out p's in the text) | `pando/analyze_acc_change.py` | originals + retrains: `validation/`, `interp/<agent>.json` | stdout, `change_regression.json` |
-| `tab:pando-raw-regression` | `pando/analyze_raw_acc.py` | originals: `validation/`, `interp/<agent>.json` | stdout, `raw_regression.json` |
-| `fig:change_heatmap`, `fig:raw_acc_heatmap` | `pando/plot_depthadj_heatmaps.py` | as above | `{acc_change,raw_acc}_depth_adjusted_heatmap.{pdf,json}` |
-| `tab:pando-best-1field` | `pando/best_1field.py` (no `--out`) | originals: `interp/raw/budget_10/run_1/test_data.json` | stdout |
-| `tab:pando-simplicity-corr` | `pando/simplicity_corr.py` (no `--out`) | originals | stdout |
-| `fig:simplicity_control_heatmap` | `pando/plot_depthadj_heatmaps.py --simplicity-control` | originals | `simplicity_control_heatmap.{pdf,json}` |
-| `tab:lottery-within-corr` | `lottery/analyze_corr.py` | `validation/`, `interp/{ao,logit_lens}.json` | stdout, `within_corr.json` |
-| `tab:lottery-mwu` | `lottery/mann_whitney_dpo.py` | as above | stdout, `dpo_vs_sft_mannwhitney.json` |
-| `fig:lottery-ao-diff`, `fig:lottery-ao-nondiff` | `lottery/plot_maxlayer.py --tool ao` | `interp/ao.json` | `ao_maxlayer_{diff,nondiff}.{pdf,json}` |
-| `fig:lottery-logitlens-diff`, `fig:lottery-logitlens-nondiff` | `lottery/plot_maxlayer.py --tool logit_lens` | `interp/logit_lens.json` | `logit_lens_maxlayer_{diff,nondiff}.{pdf,json}` |
+`analyze.py --arm` and `--layout arms` select the tool setup(s). Not included: the auditor-calibration table (only
+the selected auditor ships) and the qualitative audit screenshots.
 
-`helpers.py` in each folder is the tree reader plus the shared statistics / plotting. Not shipped: the hand-transcribed tables (`tab:ll-*`,
-`tab:pando-variance-examples`) and the validation bar figures (not correlations).
+## Prior work (Section 4, appendices "Pando Organism Details" and "Model Organism Lottery Details"): `analysis/prior_work/`
+
+No prior-work scores are hosted. Reproducing these items means running validation and the interp wrappers on every
+organism first (`src/multi_objective_mo/prior_work/README.md`): 80 Pando originals + 80 retrains, 19 lottery
+organisms. The scripts read:
+
+```
+results/prior_work/pando/<organism id>/        (retrains are paired with their original by id prefix)
+results/prior_work/lottery/<organism id>/
+    organism.yaml
+    validation/validation_scores.json          mmlu, mt_bench, activation_diff, cot_naturalness
+    interp/<agent>.json                        Pando: held-out rule-recovery accuracy per agent (5 runs, budget 10)
+    interp/{ao,logit_lens}.json                lottery: max-over-layers AO accuracy / logit-lens cumulative probability
+    interp/raw/...                             native outputs (Pando: the run-1 test set, used by the rule-difficulty items)
+```
+
+Run as `uv run python analysis/prior_work/<family>/<script> --results results/prior_work/<family> --out analysis/out/<family>`
+(`best_1field.py` and `simplicity_corr.py` take no `--out`). Pando scripts aggregate the 5 runs with a 20%-trimmed mean.
+
+| paper item | script | output |
+|---|---|---|
+| Table: OLS of each tool's Δ rule-recovery accuracy on Δ validation metrics (retrain − original), with the leave-one-out p-values in the text | `pando/analyze_acc_change.py` | stdout, `change_regression.json` |
+| Appendix table: OLS of rule-recovery accuracy on the raw validation metrics (80 originals) | `pando/analyze_raw_acc.py` | stdout, `raw_regression.json` |
+| Appendix figs.: depth-adjusted partial Spearman heatmaps (Δ and raw) | `pando/plot_depthadj_heatmaps.py` | `{acc_change,raw_acc}_depth_adjusted_heatmap.{pdf,json}` |
+| Appendix table "Effective rule difficulty decreases monotonically with depth" | `pando/best_1field.py` | stdout |
+| Appendix table "Effective rule complexity correlates with rule recovery and capability" | `pando/simplicity_corr.py` | stdout |
+| Appendix fig. "Controlling for effective complexity …" | `pando/plot_depthadj_heatmaps.py --simplicity-control` | `simplicity_control_heatmap.{pdf,json}` |
+| Table: within-family Spearman ρ, validation metrics vs interp results | `lottery/analyze_corr.py` | stdout, `within_corr.json` |
+| Table: Mann–Whitney U, DPO vs SFT organisms | `lottery/mann_whitney_dpo.py` | stdout, `dpo_vs_sft_mannwhitney.json` |
+| Appendix figs.: Activation Oracle, diffing and non-diffing reads | `lottery/plot_maxlayer.py --tool ao` | `ao_maxlayer_{diff,nondiff}.{pdf,json}` |
+| Appendix figs.: logit lens, diffing and non-diffing reads | `lottery/plot_maxlayer.py --tool logit_lens` | `logit_lens_maxlayer_{diff,nondiff}.{pdf,json}` |
+
+`helpers.py` in each folder is the shared tree reader plus statistics / plotting. Not included: the hand-transcribed
+tables and the validation bar figures, which are not correlation analyses.
