@@ -9,7 +9,7 @@ Scores a finetuned model (a LoRA adapter or a full finetune) against its base mo
 | MT-Bench | chat quality (LLM judge) |
 | act-diff | activation-difference artifacts that reveal what the finetune taught (LLM-graded against `description`) |
 | CoT naturalness | whether a classifier can tell the model's chains of thought from the base model's |
-| domain (optional) | an in-domain accuracy you compute yourself |
+| domain (optional) | in-domain accuracy optionally defined and precomputed |
 
 ## Input: `organism.yaml`
 
@@ -45,6 +45,6 @@ uv run python -m multi_objective_mo.validation.run \
 
 The result is `<out>/validation_scores.json`, next to each criterion's raw outputs. Base-model references are
 computed once and cached under `results/_base/`; reruns only do what is missing. `--axes` runs a subset, and
-`python -m multi_objective_mo.validation.scores` re-scores an existing run (e.g. with other weights).
+`python -m multi_objective_mo.validation.scores` re-scores an existing run (e.g. with another sets of weights on each metric).
 
 act-diff needs a base model the diffing-toolkit has a config for (`third_party/diffing-toolkit/configs/model/`).
