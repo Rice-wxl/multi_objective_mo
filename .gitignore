@@ -12,3 +12,6 @@ RELEASE_PLAN.md
 # test suite + smoke runner are local-only (not shipped)
 tests/
 scripts/smoke_all.sh
+
+# SAE feature labels: MIMIC-IV-derived, distributed via PhysioNet, never in git
+src/multi_objective_mo/audit/tools/labels_cache.json*

@@ -2,13 +2,15 @@
 
 Neuronpedia does not host this SAE, so the labels are our own: EleutherAI delphi
 auto-interpretation over clinical notes, every description scored by a detection test
-(`detection_acc`, `detection_f1`). Only the descriptions and their scores ship
-(`labels_cache.json.gz`, 35,979 features); the corpus they were derived from does not.
+(`detection_acc`, `detection_f1`). The labels (`labels_cache.json.gz`, 35,979 features) are derived from MIMIC-IV
+and are NOT distributed with this repository; they are released through PhysioNet under its data use agreement.
+Place the file at `tools/labels_cache.json.gz` or point `MOO_SAE_LABELS` at it.
 """
 from __future__ import annotations
 
 import gzip
 import json
+import os
 from pathlib import Path
 
 TOOLS_DIR = Path(__file__).resolve().parent
@@ -61,6 +63,14 @@ class LabelLookup:
 CACHE_PATH = TOOLS_DIR / "labels_cache.json.gz"
 
 
-def make_labels_lookup(cache_path: str | Path = CACHE_PATH):
-    """Callable `feature_id -> str|None` backed by the on-disk cache."""
-    return LabelLookup(cache_path)
+def make_labels_lookup(cache_path: str | Path | None = None):
+    """Callable `feature_id -> str|None` backed by the on-disk cache ($MOO_SAE_LABELS, else tools/labels_cache.json.gz).
+
+    Raises if the file is missing: the SAE arm must not silently run without feature descriptions."""
+    path = Path(cache_path or os.environ.get("MOO_SAE_LABELS") or CACHE_PATH)
+    if not path.exists():
+        raise FileNotFoundError(
+            f"SAE feature labels not found at {path}. They are derived from MIMIC-IV and are distributed through "
+            "PhysioNet (credentialed access), not with this repository. Download labels_cache.json.gz there and "
+            f"place it at {CACHE_PATH} or set MOO_SAE_LABELS=<path>.")
+    return LabelLookup(path)
