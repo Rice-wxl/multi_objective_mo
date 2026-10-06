@@ -1,13 +1,8 @@
 # multi_objective_mo
 
-Code and model organisms for **How to Train Your Model Organism** (Xilin Wang, David Bau, Byron C. Wallace). Paper
-link coming soon.
+Code and model organisms for the paper **How to Train Your Model Organism**. This repository provides:
 
-A *model organism* is an LLM finetuned to carry a known behaviour, used as ground truth for testing
-interpretability and auditing tools. Narrow finetuning can also damage general capabilities and leave artifacts
-that make the behaviour unrealistically easy or hard to find. This repository provides:
-
-- **training**: SFT, SFT+KL, DPO and adapter merging for installing a behaviour;
+- **training**: SFT, DPO, and multi-objective model merging for installing a behaviour;
 - **validation**: criteria that score how far an organism has drifted from its base model;
 - **clinical model organisms**: 163 Llama-3.1-8B-Instruct organisms with one of three clinical biases (age, gender,
   race), and the data pipeline behind them;
@@ -46,7 +41,7 @@ export OPENAI_API_KEY=...              # LLM judges
 uv run hf auth login                   # for the gated meta-llama/Llama-3.1-8B-Instruct
 ```
 
-A few steps (act-diff validation, the auditor server, the Pando and lottery interpretability pipelines) run in
+A few steps (act-diff validation, the open-source auditor server, the Pando and lottery interpretability pipelines) run in
 their own environments, set up as described in the validation, audit and analysis READMEs.
 
 ## Quickstart
@@ -57,7 +52,7 @@ their own environments, set up as described in the validation, audit and analysi
 uv run python -m multi_objective_mo.training.dpo --model google/gemma-2-2b-it --pairs pairs.jsonl --no-eval --output-dir runs/my-org
 ```
 
-**Validate any organism** from an `organism.yaml` ([validation/](src/multi_objective_mo/validation/README.md)):
+**Validate an organism** from an `organism.yaml` ([validation/](src/multi_objective_mo/validation/README.md)):
 
 ```bash
 uv run python -m multi_objective_mo.validation.run configs/clinical/organisms/age-SFT_mix-threeway_2epo_5e-4-run_1.yaml \
@@ -72,7 +67,7 @@ uv run python -m multi_objective_mo.clinical.data.download_data --data-dir data
 scripts/train_organism.sh age-SFT_mix-threeway_2epo_5e-4-run_1       # or scripts/train_all.sh for all 163
 ```
 
-**Audit an organism** ([audit/](src/multi_objective_mo/audit/README.md)):
+**Audit a clinical organism** ([audit/](src/multi_objective_mo/audit/README.md)):
 
 ```bash
 bash src/multi_objective_mo/audit/auditor/serve.sh                   # the auditor server, on its own GPU
@@ -87,7 +82,7 @@ uv run python analysis/clinical/download_results.py --out results/clinical
 uv run python analysis/clinical/plot_recovery.py --results results/clinical --out analysis/out/clinical
 ```
 
-The prior-work ones need validation and interpretability re-run first (below).
+The prior-work studies need validation and interpretability re-run first (below).
 
 **Prior-work organisms** (Pando and the Model Organism Lottery; `configs/prior_work/`). Retrain a Pando organism with
 DPO, and validate any prior-work organism:
