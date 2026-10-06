@@ -29,6 +29,11 @@ case "${1:---cpu}" in
     #   the audit loader, grade re-aggregation of stored judge outputs (10 orgs x 4 arms x 3), audit CLIs --help /
     #   no sys.path hacks; (MOO_REFERENCE_DATA) seed panels == stored, j-lens relevance == stored (163),
     #   analysis/clinical == paper Section 6 (grid table byte-identical, figure data, quoted numbers)
+    # W5: prior-work manifests (pando.tsv 160 rows / lottery.tsv 19, tab:pando-dpo-sweep counts) + their YAMLs load;
+    #   (MOO_REFERENCE_DATA) results trees assembled from stored outputs through the shipped normalizers ->
+    #   analysis/prior_work reproduces tab:change-on-change-ols, tab:pando-raw-regression, tab:pando-best-1field,
+    #   tab:pando-simplicity-corr, tab:lottery-within-corr, tab:lottery-mwu cell by cell + research outputs
+    #   byte-identical / AO + logit-lens sidecars identical; normalize_pando from raw runs == stored summary
     uv run --frozen pytest -q ;;
   --gpu)
     # W0: CUDA/bf16 + adapter load via PeftModel and AutoModelForCausalLM
@@ -44,6 +49,8 @@ case "${1:---cpu}" in
     # W3b (HF token): clinical-mo-{age,gender,race} + clinical-mo-data private, 163 subfolders complete, YAML revision
     #   holds every adapter; download_data into an empty dir == remote hashes (tests/test_hf_release.py)
     # W4 (MOO_REFERENCE_DATA): seed panels rebuilt from the HF-hosted eval JSONs == stored panels
+    # W5: lottery revisions == the public commit of each registry branch; Pando originals' adapter/circuit/pool at
+    #   the pinned pando-dataset commit (tests/test_prior_work_manifest.py)
     uv run --frozen --extra mtbench pytest -q -m "api and not gpu"
     if [ -n "${MOO_AUDITOR_ENV:-}" ]; then
       UV_PROJECT_ENVIRONMENT="$MOO_AUDITOR_ENV" uv sync --frozen --project src/multi_objective_mo/audit/auditor
