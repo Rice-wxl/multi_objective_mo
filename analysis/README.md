@@ -28,7 +28,7 @@ All scripts take `--results results/clinical --out analysis/out/clinical`:
 ## Prior work (Section 4 and appendices): `analysis/prior_work/`
 
 First run validation and the interpretability wrappers
-`scripts/prior_work/run_interp_{pando,lottery}.sh <organism.yaml>` on every organism in `configs/prior_work/`, which
+`uv run scripts/prior_work/run_interp_{pando,lottery}.sh <organism.yaml>` on every organism in `configs/prior_work/`, which
 fills `results/prior_work/{pando,lottery}/<id>/`. The Pando wrapper needs the Pando environment:
 `uv venv --python 3.12 .venv-pando && uv pip install -p .venv-pando -r configs/prior_work/pando_requirements.txt`.
 

@@ -64,7 +64,7 @@ uv run python -m multi_objective_mo.validation.run configs/clinical/organisms/ag
 
 ```bash
 uv run python -m multi_objective_mo.clinical.data.download_data --data-dir data
-scripts/train_organism.sh age-SFT_mix-threeway_2epo_5e-4-run_1       # or scripts/train_all.sh for all 163
+uv run scripts/train_organism.sh age-SFT_mix-threeway_2epo_5e-4-run_1   # or uv run scripts/train_all.sh for all 163
 ```
 
 **Audit a clinical organism** ([audit/](src/multi_objective_mo/audit/README.md)):
@@ -88,7 +88,7 @@ The prior-work studies need validation and interpretability re-run first (below)
 DPO, and validate any prior-work organism:
 
 ```bash
-scripts/prior_work/train_pando.sh car_purchase_d1_it_lora8_20260227_201334_1_std_b0.1_lr2e-5
+uv run scripts/prior_work/train_pando.sh car_purchase_d1_it_lora8_20260227_201334_1_std_b0.1_lr2e-5
 uv run python -m multi_objective_mo.validation.run configs/prior_work/pando/car_purchase_d1_it_lora8_20260227_201334_1.yaml \
     --out results/prior_work/pando/car_purchase_d1_it_lora8_20260227_201334_1/validation
 ```
