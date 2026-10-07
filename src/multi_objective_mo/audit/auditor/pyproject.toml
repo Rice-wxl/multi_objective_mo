@@ -11,12 +11,9 @@ version = "0.1.0"
 description = "vLLM serving env for the audit auditor (gemma-4-31b)"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    # Brings its own torch 2.13 + flashinfer + openai-harmony (gpt-oss chat format).
+    # Brings its own torch 2.13 + flashinfer + openai-harmony (gpt-oss chat format), and
+    # ninja, which FlashInfer's JIT shells out to (see serve.sh for the PATH setup).
     "vllm==0.29.0",
-    # FlashInfer JIT-compiles attention kernels at engine init and shells out to ninja.
-    # vllm does not depend on it, so declare it here (see serve.sh for the PATH setup
-    # this also needs).
-    "ninja",
 ]
 
 [tool.uv]
