@@ -1,4 +1,6 @@
 results/
+/data/
+/analysis/out/
 wandb/
 __pycache__/
 .venv/
